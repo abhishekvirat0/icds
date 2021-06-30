@@ -1,0 +1,1035 @@
+{% extends "icds/base.html" %}
+
+{% load static %}
+    {% block head %}
+        <link rel="stylesheet" href="{% static 'css/foodselection.css' %}">
+    {% endblock %}
+
+    {% block body %}
+    <body class="bgPic">
+
+        <nav class="navbar fixed-top navbar-light navbar-expand-lg">
+            <div class="container">
+                <div class="header d-flex align-items-center">
+                    <img width="63px" height="86px" src="/static/images/logo.svg" alt="logo" />
+                    <p class="ml-2">Integrated Child
+                        <br>Development Scheme</p>
+                </div>
+            </div>
+        </nav>
+
+        <section>
+            <div class="container">
+
+                <div class="row">
+                    <div class="col col-12 col-md-4" style="margin-top: 190px;">
+                        <div class="d-flex">
+                            <img src="/static/images/decorationTHR.png" alt="" style="margin-left:-50px; margin-top: -55px;" width="104px" height="101px">
+                            <p class="page-heading">Select food for each categories</p>
+                        </div>
+                    </div>
+
+
+                    <div class="col col-12 col-md-8" style="margin-top: 190px;">
+                    <form style="display: contents;" action="{% url 'FoodSelection' %}" method="post" id="frmTest">
+                        {% csrf_token %}
+
+                    <div id="accordion" class="accordion ">
+
+                        {% if infant > 0 %}
+                        <div class="card mb-3">
+                                <div class="card-header collapsed" data-toggle="collapse" href="#collapseOne">
+                                    <a class="card-title">
+                                        <img src="/static/images/newBorn.svg" alt="" width="26px" height="30px" class="mr-1"/>
+                                        6 mo to 1 yr
+                                    </a>
+                                </div>
+                                <div id="collapseOne" class="card-body collapse show" data-parent="#accordion" >
+                                    <div class="row">
+
+                                        <!-- 6 mo to 1 yr Cereals -->
+
+                                        <div class="col col-12 col-md-12">
+                                            <div class="d-flex align-items-center">
+                                                <span class="checkbox-heading">CEREALS</span>
+                                                <button class="btn ml-auto checkbox-selectAll" id="checkAll1" type="button">select all</button>
+                                            </div>
+                                            <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">
+
+                                            <div class="col col-12 col-md-12 check" id="checkboxes1">
+                                                    <label tabindex="0">
+                                                      <input tabindex="-1" type="checkbox" name="Cereals" value="Jowar" />
+                                                        <div class="icon-box">
+                                                            <span>Jowar</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                        <input tabindex="-1" type="checkbox" name="Cereals" value="Ragi" />
+                                                        <div class="icon-box">
+                                                            <span>Ragi</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                      <input tabindex="-1" type="checkbox" name="Cereals" value="Wheat" />
+                                                        <div class="icon-box">
+                                                            <span>Wheat</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                        <input tabindex="-1" type="checkbox" name="Cereals" value="Wheat flour Atta" />
+                                                        <div class="icon-box">
+                                                            <span>Wheat Flour Atta</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                      <input tabindex="-1" type="checkbox" name="Cereals" value="Wheat Broken" />
+                                                        <div class="icon-box">
+                                                            <span>Wheat Broken</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                        <input tabindex="-1" type="checkbox" name="Cereals" value="Maize" />
+                                                        <div class="icon-box">
+                                                            <span>Maize</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                      <input tabindex="-1" type="checkbox" name="Cereals" value="Rava" />
+                                                        <div class="icon-box">
+                                                            <span>Rava</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                        <input tabindex="-1" type="checkbox" name="Cereals" value="Rice" />
+                                                        <div class="icon-box">
+                                                            <span>Rice</span>
+                                                        </div>
+                                                    </label>
+
+                                            </div>
+                                        </div>
+
+                                        <!-- 6 mo to 1 yr Pulses -->
+
+                                        <div class="col col-12 col-md-12 mt-4">
+                                            <div class="d-flex align-items-center">
+                                                <span class="checkbox-heading">PULSES</span>
+                                                <button class="btn ml-auto checkbox-selectAll" id="checkAll2" type="button">select all</button>
+                                            </div>
+                                            <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">
+
+                                            <div class="col col-12 col-md-12 check" id="checkboxes2">
+                                                    <label tabindex="0">
+                                                      <input tabindex="-1" type="checkbox" name="Pulses" value="Rajma Red (Kidney beans)" />
+                                                        <div class="icon-box">
+                                                            <span>Rajma Red (Kidney beans)</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                        <input tabindex="-1" type="checkbox" name="Pulses" value="Soya bean (Brown)" />
+                                                        <div class="icon-box">
+                                                            <span>Soya bean (Brown)</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                      <input tabindex="-1" type="checkbox" name="Pulses" value="Soya bean (White)" />
+                                                        <div class="icon-box">
+                                                            <span>Soya bean (White)</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                        <input tabindex="-1" type="checkbox" name="Pulses" value="Bengal Gram (Channa dal)" />
+                                                        <div class="icon-box">
+                                                            <span>Bengal Gram (Channa dal)</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                      <input tabindex="-1" type="checkbox" name="Pulses" value="Black Gram (Urad dal)" />
+                                                        <div class="icon-box">
+                                                            <span>Black Gram (Urad dal)</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                        <input tabindex="-1" type="checkbox" name="Pulses" value="Yellow Lentil (Mung dal)" />
+                                                        <div class="icon-box">
+                                                            <span>Yellow Lentil (Mung dal)</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                      <input tabindex="-1" type="checkbox" name="Pulses" value="Peas" />
+                                                        <div class="icon-box">
+                                                            <span>Peas</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                        <input tabindex="-1" type="checkbox" name="Pulses" value="Red Gram (Arhar dal)(Toor dal)" />
+                                                        <div class="icon-box">
+                                                            <span>Red Gram (Arhar dal)(Toor dal)</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                      <input tabindex="-1" type="checkbox" name="Pulses" value="Green Gram (Moong dal)" />
+                                                        <div class="icon-box">
+                                                            <span>Green Gram (Moong dal)</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                        <input tabindex="-1" type="checkbox" name="Pulses" value="Red Lentil (Masoor dal)" />
+                                                        <div class="icon-box">
+                                                            <span>Red Lentil (Masoor dal)</span>
+                                                        </div>
+                                                    </label>
+
+                                            </div>
+                                        </div>
+
+                                         <!-- 6 mo to 1 yr Others -->
+
+                                        <div class="col col-12 col-md-12 mt-4">
+                                            <div class="d-flex align-items-center">
+                                                <span class="checkbox-heading">OTHERS</span>
+                                                <button class="btn ml-auto checkbox-selectAll" id="checkAll3" type="button">select all</button>
+                                            </div>
+                                            <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">
+
+                                            <div class="col col-12 col-md-12 check" id="checkboxes3">
+                                                    <label tabindex="0">
+                                                      <input tabindex="-1" type="checkbox" name="Others" value="Jaggery" />
+                                                        <div class="icon-box">
+                                                            <span>Jaggery</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                        <input tabindex="-1" type="checkbox" name="Others" value="Sugar" />
+                                                        <div class="icon-box">
+                                                            <span>Sugar</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                      <input tabindex="-1" type="checkbox" name="Others" value="Ghee" />
+                                                        <div class="icon-box">
+                                                            <span>Ghee</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                        <input tabindex="-1" type="checkbox" name="Others" value="Oil" />
+                                                        <div class="icon-box">
+                                                            <span>Oil</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                      <input tabindex="-1" type="checkbox" name="Others" value="Ground nut" />
+                                                        <div class="icon-box">
+                                                            <span>Ground nut</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                        <input tabindex="-1" type="checkbox" name="Others" value="Egg" />
+                                                        <div class="icon-box">
+                                                            <span>Egg</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                      <input tabindex="-1" type="checkbox" name="Others" value="Banana" />
+                                                        <div class="icon-box">
+                                                            <span>Banana</span>
+                                                        </div>
+                                                    </label>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        {% if toddler > 0 %}
+                        <div class="card mb-3">
+                                <div class="card-header collapsed" data-toggle="collapse" href="#collapseTwo">
+                                    <a class="card-title">
+                                        <img src="/static/images/Baby.svg" alt="" width="26px" height="30px" class="mr-1"/>
+                                        1 yr to 3 yrs
+                                    </a>
+                                </div>
+                                <div id="collapseTwo" class="card-body collapse" data-parent="#accordion" >
+                                    <div class="row">
+
+                                        <!-- 1 yr to 3 yrs Cereals -->
+
+                                        <div class="col col-12 col-md-12">
+                                            <div class="d-flex align-items-center">
+                                                <span class="checkbox-heading">CEREALS</span>
+                                                <button class="btn ml-auto checkbox-selectAll" id="checkAll4" type="button">select all</button>
+                                            </div>
+                                            <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">
+
+                                            <div class="col col-12 col-md-12 check" id="checkboxes4">
+                                                    <label tabindex="0">
+                                                      <input tabindex="-1" type="checkbox" name="toddlersCereals" value="Jowar" />
+                                                        <div class="icon-box">
+                                                            <span>Jowar</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                        <input tabindex="-1" type="checkbox" name="toddlersCereals" value="Ragi" />
+                                                        <div class="icon-box">
+                                                            <span>Ragi</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                      <input tabindex="-1" type="checkbox" name="toddlersCereals" value="Wheat" />
+                                                        <div class="icon-box">
+                                                            <span>Wheat</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                        <input tabindex="-1" type="checkbox" name="toddlersCereals" value="Wheat flour Atta" />
+                                                        <div class="icon-box">
+                                                            <span>Wheat Flour Atta</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                      <input tabindex="-1" type="checkbox" name="toddlersCereals" value="Wheat Broken" />
+                                                        <div class="icon-box">
+                                                            <span>Wheat Broken</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                        <input tabindex="-1" type="checkbox" name="toddlersCereals" value="Maize" />
+                                                        <div class="icon-box">
+                                                            <span>Maize</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                      <input tabindex="-1" type="checkbox" name="toddlersCereals" value="Rava" />
+                                                        <div class="icon-box">
+                                                            <span>Rava</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                        <input tabindex="-1" type="checkbox" name="toddlersCereals" value="Rice" />
+                                                        <div class="icon-box">
+                                                            <span>Rice</span>
+                                                        </div>
+                                                    </label>
+
+                                            </div>
+                                        </div>
+
+                                        <!-- 1 yr to 3 yrs Pulses -->
+
+                                        <div class="col col-12 col-md-12 mt-4">
+                                            <div class="d-flex align-items-center">
+                                                <span class="checkbox-heading">PULSES</span>
+                                                <button class="btn ml-auto checkbox-selectAll" id="checkAll5" type="button">select all</button>
+                                            </div>
+                                            <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">
+
+                                            <div class="col col-12 col-md-12 check" id="checkboxes5">
+                                                    <label tabindex="0">
+                                                      <input tabindex="-1" type="checkbox" name="toddlersPulses" value="Rajma Red (Kidney beans)" />
+                                                        <div class="icon-box">
+                                                            <span>Rajma Red (Kidney beans)</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                        <input tabindex="-1" type="checkbox" name="toddlersPulses" value="Soya bean (Brown)" />
+                                                        <div class="icon-box">
+                                                            <span>Soya bean (Brown)</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                      <input tabindex="-1" type="checkbox" name="toddlersPulses" value="Soya bean (White)" />
+                                                        <div class="icon-box">
+                                                            <span>Soya bean (White)</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                        <input tabindex="-1" type="checkbox" name="toddlersPulses" value="Bengal Gram (Channa dal)" />
+                                                        <div class="icon-box">
+                                                            <span>Bengal Gram (Channa dal)</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                      <input tabindex="-1" type="checkbox" name="toddlersPulses" value="Black Gram (Urad dal)" />
+                                                        <div class="icon-box">
+                                                            <span>Black Gram (Urad dal)</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                        <input tabindex="-1" type="checkbox" name="toddlersPulses" value="Yellow Lentil (Mung dal)" />
+                                                        <div class="icon-box">
+                                                            <span>Yellow Lentil (Mung dal)</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                      <input tabindex="-1" type="checkbox" name="toddlersPulses" value="Peas" />
+                                                        <div class="icon-box">
+                                                            <span>Peas</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                        <input tabindex="-1" type="checkbox" name="toddlersPulses" value="Red Gram (Arhar dal)(Toor dal)" />
+                                                        <div class="icon-box">
+                                                            <span>Red Gram (Arhar dal)(Toor dal)</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                      <input tabindex="-1" type="checkbox" name="toddlersPulses" value="Green Gram (Moong dal)" />
+                                                        <div class="icon-box">
+                                                            <span>Green Gram (Moong dal)</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                        <input tabindex="-1" type="checkbox" name="toddlersPulses" value="Red Lentil (Masoor dal)" />
+                                                        <div class="icon-box">
+                                                            <span>Red Lentil (Masoor dal)</span>
+                                                        </div>
+                                                    </label>
+
+
+                                            </div>
+                                        </div>
+
+                                        <!-- 1 yr to 3 yrs Others -->
+                                        <div class="col col-12 col-md-12 mt-4">
+                                            <div class="d-flex align-items-center">
+                                                <span class="checkbox-heading">OTHERS</span>
+                                                <button class="btn ml-auto checkbox-selectAll" id="checkAll6" type="button">select all</button>
+                                            </div>
+                                            <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">
+
+                                            <div class="col col-12 col-md-12 check" id="checkboxes6">
+                                                    <label tabindex="0">
+                                                      <input tabindex="-1" type="checkbox" name="toddlersOthers" value="Jaggery" />
+                                                        <div class="icon-box">
+                                                            <span>Jaggery</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                        <input tabindex="-1" type="checkbox" name="toddlersOthers" value="Sugar" />
+                                                        <div class="icon-box">
+                                                            <span>Sugar</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                      <input tabindex="-1" type="checkbox" name="toddlersOthers" value="Ghee" />
+                                                        <div class="icon-box">
+                                                            <span>Ghee</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                        <input tabindex="-1" type="checkbox" name="toddlersOthers" value="Oil" />
+                                                        <div class="icon-box">
+                                                            <span>Oil</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                      <input tabindex="-1" type="checkbox" name="toddlersOthers" value="Ground nut" />
+                                                        <div class="icon-box">
+                                                            <span>Ground nut</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                        <input tabindex="-1" type="checkbox" name="toddlersOthers" value="Egg" />
+                                                        <div class="icon-box">
+                                                            <span>Egg</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                      <input tabindex="-1" type="checkbox" name="toddlersOthers" value="Banana" />
+                                                        <div class="icon-box">
+                                                            <span>Banana</span>
+                                                        </div>
+                                                    </label>
+
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        {% if pregnant > 0 %}
+                        <div class="card mb-3">
+                                <div class="card-header collapsed" data-toggle="collapse" href="#collapseThree">
+                                    <a class="card-title">
+                                        <img src="/static/images/newBorn.svg" alt="" width="26px" height="30px" class="mr-1"/>
+                                        pregnant women
+                                    </a>
+                                </div>
+                                <div id="collapseThree" class="card-body collapse" data-parent="#accordion" >
+                                    <div class="row">
+
+                                        <!-- pregnant women Cereals -->
+
+                                        <div class="col col-12 col-md-12">
+                                            <div class="d-flex align-items-center">
+                                                <span class="checkbox-heading">CEREALS</span>
+                                                <button class="btn ml-auto checkbox-selectAll" id="checkAll7" type="button">select all</button>
+                                            </div>
+                                            <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">
+
+                                            <div class="col col-12 col-md-12 check" id="checkboxes7">
+                                                    <label tabindex="0">
+                                                      <input tabindex="-1" type="checkbox" name="pregnantCereals" value="Jowar" />
+                                                        <div class="icon-box">
+                                                            <span>Jowar</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                        <input tabindex="-1" type="checkbox" name="pregnantCereals" value="Ragi" />
+                                                        <div class="icon-box">
+                                                            <span>Ragi</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                      <input tabindex="-1" type="checkbox" name="pregnantCereals" value="Wheat" />
+                                                        <div class="icon-box">
+                                                            <span>Wheat</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                        <input tabindex="-1" type="checkbox" name="pregnantCereals" value="Wheat flour Atta" />
+                                                        <div class="icon-box">
+                                                            <span>Wheat Flour Atta</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                      <input tabindex="-1" type="checkbox" name="pregnantCereals" value="Wheat Broken" />
+                                                        <div class="icon-box">
+                                                            <span>Wheat Broken</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                        <input tabindex="-1" type="checkbox" name="pregnantCereals" value="Maize" />
+                                                        <div class="icon-box">
+                                                            <span>Maize</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                      <input tabindex="-1" type="checkbox" name="pregnantCereals" value="Rava" />
+                                                        <div class="icon-box">
+                                                            <span>Rava</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                        <input tabindex="-1" type="checkbox" name="pregnantCereals" value="Rice" />
+                                                        <div class="icon-box">
+                                                            <span>Rice</span>
+                                                        </div>
+                                                    </label>
+
+                                            </div>
+                                        </div>
+
+                                        <!-- pregnant women pulses -->
+
+                                        <div class="col col-12 col-md-12 mt-4">
+                                            <div class="d-flex align-items-center">
+                                                <span class="checkbox-heading">PULSES</span>
+                                                <button class="btn ml-auto checkbox-selectAll" id="checkAll8" type="button">select all</button>
+                                            </div>
+                                            <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">
+
+                                            <div class="col col-12 col-md-12 check" id="checkboxes8">
+                                                    <label tabindex="0">
+                                                      <input tabindex="-1" type="checkbox" name="pregnantPulses" value="Rajma Red (Kidney beans)" />
+                                                        <div class="icon-box">
+                                                            <span>Rajma Red (Kidney beans)</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                        <input tabindex="-1" type="checkbox" name="pregnantPulses" value="Soya bean (Brown)" />
+                                                        <div class="icon-box">
+                                                            <span>Soya bean (Brown)</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                      <input tabindex="-1" type="checkbox" name="pregnantPulses" value="Soya bean (White)" />
+                                                        <div class="icon-box">
+                                                            <span>Soya bean (White)</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                        <input tabindex="-1" type="checkbox" name="pregnantPulses" value="Bengal Gram (Channa dal)" />
+                                                        <div class="icon-box">
+                                                            <span>Bengal Gram (Channa dal)</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                      <input tabindex="-1" type="checkbox" name="pregnantPulses" value="Black Gram (Urad dal)" />
+                                                        <div class="icon-box">
+                                                            <span>Black Gram (Urad dal)</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                        <input tabindex="-1" type="checkbox" name="pregnantPulses" value="Yellow Lentil (Mung dal)" />
+                                                        <div class="icon-box">
+                                                            <span>Yellow Lentil (Mung dal)</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                      <input tabindex="-1" type="checkbox" name="pregnantPulses" value="Peas" />
+                                                        <div class="icon-box">
+                                                            <span>Peas</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                        <input tabindex="-1" type="checkbox" name="pregnantPulses" value="Red Gram (Arhar dal)(Toor dal)" />
+                                                        <div class="icon-box">
+                                                            <span>Red Gram (Arhar dal)(Toor dal)</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                      <input tabindex="-1" type="checkbox" name="pregnantPulses" value="Green Gram (Moong dal)" />
+                                                        <div class="icon-box">
+                                                            <span>Green Gram (Moong dal)</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                        <input tabindex="-1" type="checkbox" name="pregnantPulses" value="Red Lentil (Masoor dal)" />
+                                                        <div class="icon-box">
+                                                            <span>Red Lentil (Masoor dal)</span>
+                                                        </div>
+                                                    </label>
+
+
+                                            </div>
+                                        </div>
+
+                                        <!-- pregnant women Others -->
+
+                                        <div class="col col-12 col-md-12 mt-4">
+                                            <div class="d-flex align-items-center">
+                                                <span class="checkbox-heading">OTHERS</span>
+                                                <button class="btn ml-auto checkbox-selectAll" id="checkAll9" type="button">select all</button>
+                                            </div>
+                                            <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">
+
+                                            <div class="col col-12 col-md-12 check" id="checkboxes9">
+                                                    <label tabindex="0">
+                                                      <input tabindex="-1" type="checkbox" name="pregnantOthers" value="Jaggery" />
+                                                        <div class="icon-box">
+                                                            <span>Jaggery</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                        <input tabindex="-1" type="checkbox" name="pregnantOthers" value="Sugar" />
+                                                        <div class="icon-box">
+                                                            <span>Sugar</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                      <input tabindex="-1" type="checkbox" name="pregnantOthers" value="Ghee" />
+                                                        <div class="icon-box">
+                                                            <span>Ghee</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                        <input tabindex="-1" type="checkbox" name="pregnantOthers" value="Oil" />
+                                                        <div class="icon-box">
+                                                            <span>Oil</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                      <input tabindex="-1" type="checkbox" name="pregnantOthers" value="Ground nut" />
+                                                        <div class="icon-box">
+                                                            <span>Ground nut</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                        <input tabindex="-1" type="checkbox" name="pregnantOthers" value="Egg" />
+                                                        <div class="icon-box">
+                                                            <span>Egg</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                      <input tabindex="-1" type="checkbox" name="pregnantOthers" value="Banana" />
+                                                        <div class="icon-box">
+                                                            <span>Banana</span>
+                                                        </div>
+                                                    </label>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        {% if lactating > 0 %}
+                        <div class="card mb-0">
+                                <div class="card-header collapsed" data-toggle="collapse" href="#collapseFour">
+                                    <a class="card-title">
+                                        <img src="/static/images/lactating.svg" alt="" width="26px" height="30px" class="mr-1"/>
+                                        lactating women
+                                    </a>
+                                </div>
+                                <div id="collapseFour" class="card-body collapse" data-parent="#accordion" >
+                                    <div class="row">
+
+                                        <!-- lactating women Cereals -->
+
+                                        <div class="col col-12 col-md-12">
+                                            <div class="d-flex align-items-center">
+                                                <span class="checkbox-heading">CEREALS</span>
+                                                <button class="btn ml-auto checkbox-selectAll" id="checkAll10" type="button">select all</button>
+                                            </div>
+                                            <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">
+
+                                            <div class="col col-12 col-md-12 check" id="checkboxes10">
+                                                    <label tabindex="0">
+                                                      <input tabindex="-1" type="checkbox" name="lactatingCereals" value="Jowar" />
+                                                        <div class="icon-box">
+                                                            <span>Jowar</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                        <input tabindex="-1" type="checkbox" name="lactatingCereals" value="Ragi" />
+                                                        <div class="icon-box">
+                                                            <span>Ragi</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                      <input tabindex="-1" type="checkbox" name="lactatingCereals" value="Wheat" />
+                                                        <div class="icon-box">
+                                                            <span>Wheat</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                        <input tabindex="-1" type="checkbox" name="lactatingCereals" value="Wheat flour Atta" />
+                                                        <div class="icon-box">
+                                                            <span>Wheat Flour Atta</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                      <input tabindex="-1" type="checkbox" name="lactatingCereals" value="Wheat Broken" />
+                                                        <div class="icon-box">
+                                                            <span>Wheat Broken</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                        <input tabindex="-1" type="checkbox" name="lactatingCereals" value="Maize" />
+                                                        <div class="icon-box">
+                                                            <span>Maize</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                      <input tabindex="-1" type="checkbox" name="lactatingCereals" value="Rava" />
+                                                        <div class="icon-box">
+                                                            <span>Rava</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                        <input tabindex="-1" type="checkbox" name="lactatingCereals" value="Rice" />
+                                                        <div class="icon-box">
+                                                            <span>Rice</span>
+                                                        </div>
+                                                    </label>
+
+                                            </div>
+                                        </div>
+
+                                        <!-- lactating women Pulses -->
+
+                                        <div class="col col-12 col-md-12 mt-4">
+                                            <div class="d-flex align-items-center">
+                                                <span class="checkbox-heading">PULSES</span>
+                                                <button class="btn ml-auto checkbox-selectAll" id="checkAll11" type="button">select all</button>
+                                            </div>
+                                            <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">
+
+                                            <div class="col col-12 col-md-12 check" id="checkboxes11">
+                                                    <label tabindex="0">
+                                                      <input tabindex="-1" type="checkbox" name="lactatingPulses" value="Rajma Red (Kidney beans)" />
+                                                        <div class="icon-box">
+                                                            <span>Rajma Red (Kidney beans)</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                        <input tabindex="-1" type="checkbox" name="lactatingPulses" value="Soya bean (Brown)" />
+                                                        <div class="icon-box">
+                                                            <span>Soya bean (Brown)</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                      <input tabindex="-1" type="checkbox" name="lactatingPulses" value="Soya bean (White)" />
+                                                        <div class="icon-box">
+                                                            <span>Soya bean (White)</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                        <input tabindex="-1" type="checkbox" name="lactatingPulses" value="Bengal Gram (Channa dal)" />
+                                                        <div class="icon-box">
+                                                            <span>Bengal Gram (Channa dal)</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                      <input tabindex="-1" type="checkbox" name="lactatingPulses" value="Black Gram (Urad dal)" />
+                                                        <div class="icon-box">
+                                                            <span>Black Gram (Urad dal)</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                        <input tabindex="-1" type="checkbox" name="lactatingPulses" value="Yellow Lentil (Mung dal)" />
+                                                        <div class="icon-box">
+                                                            <span>Yellow Lentil (Mung dal)</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                      <input tabindex="-1" type="checkbox" name="lactatingPulses" value="Peas" />
+                                                        <div class="icon-box">
+                                                            <span>Peas</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                        <input tabindex="-1" type="checkbox" name="lactatingPulses" value="Red Gram (Arhar dal)(Toor dal)" />
+                                                        <div class="icon-box">
+                                                            <span>Red Gram (Arhar dal)(Toor dal)</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                      <input tabindex="-1" type="checkbox" name="lactatingPulses" value="Green Gram (Moong dal)" />
+                                                        <div class="icon-box">
+                                                            <span>Green Gram (Moong dal)</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                        <input tabindex="-1" type="checkbox" name="lactatingPulses" value="Red Lentil (Masoor dal)" />
+                                                        <div class="icon-box">
+                                                            <span>Red Lentil (Masoor dal)</span>
+                                                        </div>
+                                                    </label>
+
+                                            </div>
+                                        </div>
+
+                                        <!-- lactating women Others -->
+
+                                        <div class="col col-12 col-md-12 mt-4">
+                                            <div class="d-flex align-items-center">
+                                                <span class="checkbox-heading">OTHERS</span>
+                                                <button class="btn ml-auto checkbox-selectAll" id="checkAll12" type="button">select all</button>
+                                            </div>
+                                            <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">
+
+                                            <div class="col col-12 col-md-12 check" id="checkboxes12">
+                                                    <label tabindex="0">
+                                                      <input tabindex="-1" type="checkbox" name="lactatingOthers" value="Jaggery" />
+                                                        <div class="icon-box">
+                                                            <span>Jaggery</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                        <input tabindex="-1" type="checkbox" name="lactatingOthers" value="Sugar" />
+                                                        <div class="icon-box">
+                                                            <span>Sugar</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                      <input tabindex="-1" type="checkbox" name="lactatingOthers" value="Ghee" />
+                                                        <div class="icon-box">
+                                                            <span>Ghee</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                        <input tabindex="-1" type="checkbox" name="lactatingOthers" value="Oil" />
+                                                        <div class="icon-box">
+                                                            <span>Oil</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                      <input tabindex="-1" type="checkbox" name="lactatingOthers" value="Ground nut" />
+                                                        <div class="icon-box">
+                                                            <span>Ground nut</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                        <input tabindex="-1" type="checkbox" name="lactatingOthers" value="Egg" />
+                                                        <div class="icon-box">
+                                                            <span>Egg</span>
+                                                        </div>
+                                                    </label>
+
+                                                    <label tabindex="0">
+                                                      <input tabindex="-1" type="checkbox" name="lactatingOthers" value="Banana" />
+                                                        <div class="icon-box">
+                                                            <span>Banana</span>
+                                                        </div>
+                                                    </label>
+
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+
+
+
+                     <div class="col col-12 col-md-12 text-right mt-4 mb-3">
+                        <button class="btn btnSubmit footer">SUBMIT</button>
+                     </div>
+                        </form>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </section>
+            <script>
+                $(window).scroll(function(e) {
+                    $('.navbar')[$(window).scrollTop() >= 100 ? 'addClass' : 'removeClass']('navbar-hide');
+                });
+            </script>
+        <script>
+                    $(document).ready(function() {
+                        $('#checkAll1').click(function() {
+                            var checked = $(this).prop('click');
+                            $('#checkboxes1').find('input:checkbox').prop('checked', true);
+                        });
+                        $('#checkAll2').click(function() {
+                            var checked = $(this).prop('click');
+                            $('#checkboxes2').find('input:checkbox').prop('checked', true);
+                        });
+                        $('#checkAll3').click(function() {
+                            var checked = $(this).prop('click');
+                            $('#checkboxes3').find('input:checkbox').prop('checked', true);
+                        });
+                        $('#checkAll4').click(function() {
+                            var checked = $(this).prop('click');
+                            $('#checkboxes4').find('input:checkbox').prop('checked', true);
+                        });
+                        $('#checkAll5').click(function() {
+                            var checked = $(this).prop('click');
+                            $('#checkboxes5').find('input:checkbox').prop('checked', true);
+                        });
+                        $('#checkAll6').click(function() {
+                            var checked = $(this).prop('click');
+                            $('#checkboxes6').find('input:checkbox').prop('checked', true);
+                        });
+                        $('#checkAll7').click(function() {
+                            var checked = $(this).prop('click');
+                            $('#checkboxes7').find('input:checkbox').prop('checked', true);
+                        });
+                        $('#checkAll8').click(function() {
+                            var checked = $(this).prop('click');
+                            $('#checkboxes8').find('input:checkbox').prop('checked', true);
+                        });
+                        $('#checkAll9').click(function() {
+                            var checked = $(this).prop('click');
+                            $('#checkboxes9').find('input:checkbox').prop('checked', true);
+                        });
+                        $('#checkAll10').click(function() {
+                            var checked = $(this).prop('click');
+                            $('#checkboxes10').find('input:checkbox').prop('checked', true);
+                        });
+                        $('#checkAll11').click(function() {
+                            var checked = $(this).prop('click');
+                            $('#checkboxes11').find('input:checkbox').prop('checked', true);
+                        });
+                        $('#checkAll12').click(function() {
+                            var checked = $(this).prop('click');
+                            $('#checkboxes12').find('input:checkbox').prop('checked', true);
+                        });
+                    })
+        </script>
+
+   </body>
+    {% endblock %}

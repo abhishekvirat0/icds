@@ -1,0 +1,130 @@
+{% extends "icds/base.html" %}
+
+{% load static %}
+    {% block head %}
+        <link rel="stylesheet" href="{% static 'css/category.css' %}">
+    {% endblock %}
+
+    {% block body %}
+    <body class="bgPic">
+
+        <nav class="navbar fixed-top navbar-light navbar-expand-lg">
+            <div class="container">
+                <div class="header d-flex align-items-center">
+                    <img width="63px" height="86px" src="/static/images/logo.svg" alt="logo" />
+                    <p class="ml-2">Integrated Child
+                        <br>Development Scheme</p>
+                </div>
+            </div>
+        </nav>          
+
+        <section>
+            <div class="container">
+                
+                <div class="row">
+                    <div class="col col-12 col-md-12" style="margin-top: 190px;">
+                        <div class="d-flex">
+                            <img src="/static/images/decorationTHR.png" alt="" style="margin-left:-50px; margin-top: -55px;" width="104px" height="101px">
+                            <p class="page-heading">Enter total numbers of people according to their age group</p>
+                        </div>
+                    </div>
+                </div>
+                {% include 'partials/_flash_messages.html' %}
+
+               <form action="{% url 'category' %}" method="post">
+                      {% csrf_token %}
+                   <div class="row justify-content-center p-3 mt-5">
+
+                       <div class="col col-12 col-md-12 col-lg-12 " style="border: 2px solid #e0e0e0;border-radius: 15px;background-color: #ffffff;">
+                            <div class="row align-items-center">
+                                <div class="col col-12 col-md-8 col-lg-8 d-flex align-items-center">
+                                    <img src="/static/images/newBorn.svg" alt=""/>
+                                    <div class="col col-12 col-md-12">
+                                        <p class="heading mt-3">6 mo to 1 yr</p>
+                                        <p class="sub-heading">Enter total no. of Infants</p>
+                                    </div>
+                                </div>
+
+                                <div class="col col-12 col-md-4 col-lg-4">
+                                    <input name="infant" type="text" onkeypress="return isNumberKey(event)" aria-label="" placeholder="enter here" class="numInput" autofocus required>
+                                </div>
+                            </div>
+                       </div>
+
+                       <div class="col col-12 col-md-12 col-lg-12 mt-2" style="border: 2px solid #e0e0e0;border-radius: 15px;background-color: #ffffff;">
+                            <div class="row align-items-center">
+                                <div class="col col-12 col-md-8 col-lg-8 d-flex align-items-center">
+                                    <img src="/static/images/Baby.svg" alt="" style="margin-left:-8px;"/>
+                                    <div class="col col-12 col-md-12" style="margin-left:-10px;">
+                                        <p class="heading mt-3">1 yr to 3 yrs</p>
+                                        <p class="sub-heading">Enter total no. of toddlers</p>
+                                    </div>
+                                </div>
+
+                                <div class="col col-12 col-md-4 col-lg-4">
+                                    <input name="toddler" type="text" onkeypress="return isNumberKey(event)" aria-label="" placeholder="enter here" class="numInput" autofocus required>
+                                </div>
+                            </div>
+                       </div>
+
+                       <div class="col col-12 col-md-12 col-lg-12 mt-2" style="border: 2px solid #e0e0e0;border-radius: 15px;background-color: #ffffff;">
+                            <div class="row align-items-center">
+                                <div class="col col-12 col-md-8 col-lg-8 d-flex align-items-center">
+                                    <img src="/static/images/Baby.svg" alt="" style="margin-left:-8px;"/>
+                                    <div class="col col-12 col-md-12" style="margin-left:-10px;">
+                                        <p class="heading mt-3">pregnant women</p>
+                                        <p class="sub-heading">Enter total no. of pregnant women</p>
+                                    </div>
+                                </div>
+
+                                <div class="col col-12 col-md-4 col-lg-4">
+                                    <input name="pregnant" type="text" onkeypress="return isNumberKey(event)" aria-label="" placeholder="enter here" class="numInput" autofocus required>
+                                </div>
+                            </div>
+                       </div>
+
+                       <div class="col col-12 col-md-12 col-lg-12 mt-2" style="border: 2px solid #e0e0e0;border-radius: 15px;background-color: #ffffff;">
+                            <div class="row align-items-center">
+                                <div class="col col-12 col-md-8 col-lg-8 d-flex align-items-center">
+                                    <img src="/static/images/lactating.svg" alt=""/>
+                                    <div class="col col-12 col-md-12">
+                                        <p class="heading mt-3">lactating women</p>
+                                        <p class="sub-heading">Enter total no. of lactating women</p>
+                                    </div>
+                                </div>
+
+                                <div class="col col-12 col-md-4 col-lg-4">
+                                    <input name="lactating" type="text" onkeypress="return isNumberKey(event)" aria-label="" placeholder="enter here" class="numInput" autofocus required>
+                                </div>
+                            </div>
+                       </div>
+
+                    <div class="col col-12 col-md-12 text-right mt-4">
+                        <button class="btn btnSubmit footer">SUBMIT</button>
+                    </div>
+
+                </div>
+                    </form>
+            </div>
+        </section>
+
+
+        <!-- Optional JavaScript --> 
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script>
+            function isNumberKey(evt)
+               {
+                  var charCode = (evt.which) ? evt.which : evt.keyCode;
+                  if (charCode != 46 && charCode > 31
+                    && (charCode < 48 || charCode > 57))
+                     return false;
+                  return true;
+               }
+        </script>
+        <script>
+                $(window).scroll(function(e) {
+                    $('.navbar')[$(window).scrollTop() >= 150 ? 'addClass' : 'removeClass']('navbar-hide');
+                });
+        </script>
+    </body>
+    {% endblock %}

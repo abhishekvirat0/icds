@@ -1,0 +1,11 @@
+Cython
+pulp
+djangorestframework
+django
+dj-database-url==0.5.0
+gunicorn==20.0.4
+pandas
+pytz==2020.1
+sqlparse==0.3.1
+whitenoise==5.2.0
+xhtml2pdf

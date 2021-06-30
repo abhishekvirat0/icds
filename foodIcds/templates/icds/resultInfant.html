@@ -1,0 +1,126 @@
+{% load filterFile %}
+                        <div class="d-flex align-items-center">
+                            <span class="cost-heading">CEREALS</span>
+                        </div>
+                        <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">
+                        <form>
+                            <div class="form-row">
+                                {% for cereal in Cereals %}
+                                    <div class="form-group col-md-3">
+                                        <label>{{cereal}}</label>
+                                        <div class="input-group mb-3">
+                                            <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label=""  value="{{ cereal_prop|get_at_index:forloop.counter0 }}" readonly>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">gm</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </form>
+
+                        <!-- Pulses Here  -->
+
+                        <div class="d-flex align-items-center mt-2">
+                            <span class="cost-heading">PULSES</span>
+                        </div>
+                        <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">
+
+                        <form>
+                            <div class="form-row">
+                                {% for pulse in Pulses %}
+                                <div class="form-group col-md-3">
+                                    <label>{{pulse}}</label>
+                                    <div class="input-group mb-3">
+                                        <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" value="{{ pulse_prop|get_at_index:forloop.counter0 }}" readonly>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">gm</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </form>
+
+                                <!-- Others Here  -->
+                        <div class="d-flex align-items-center mt-2">
+                            <span class="cost-heading">OTHERS</span>
+                        </div>
+                        <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">
+                        <div class="form-row">
+                            {% for other in Others %}
+                            <div class="form-group col-md-3" >
+                                <label>{{other}}</label>
+                                <div class="input-group mb-3">
+                                    <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" value="{{ other_prop|get_at_index:forloop.counter0 }}" readonly>
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">gm</span>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+
+                        <!-- Milk Powder Here  -->
+                        <div class="d-flex align-items-center mt-2">
+                            <span class="cost-heading">MILK POWDER</span>
+                        </div>
+                        <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">
+                        <div class="form-row">
+                            <div class="form-group col-md-3" >
+                                <div class="input-group mb-3">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">Milk Powder</span>
+                                    </div>
+                                    <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" value="15.0" readonly >
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">gm</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row" style="margin-left: 0px;">
+                            <div class="col-md-3point6" style="border: 2px solid #EAEAEA; border-radius: 15px; background-image: url('/static/images/bgResult.png'); background-size: cover;">
+                                <img src="/static/images/fat.png" alt="" width="25px" height="24px" class="mt-3"/>
+                                <p class="card-title">Protein</p>
+                                <p class="card-subHeading">{{final_q.Protein|floatformat:2}}</p>
+                            </div>
+                            <div class="col-md-3point6" style="border: 2px solid #EAEAEA; border-radius: 15px; background-image: url('/static/images/bgResult2.png'); background-size: cover;">
+                                <img src="/static/images/energy.png" alt="" width="25px" height="24px" class="mt-3"/>
+                                <p class="card-title">Fat</p>
+                                <p class="card-subHeading">{{final_q.Fat|floatformat:2}}</p>
+                            </div>
+                            <div class="col-md-3point6" style="border: 2px solid #EAEAEA; border-radius: 15px; background-image: url('/static/images/bgResult3.png'); background-size: cover;">
+                                <img src="/static/images/fat.png" alt="" width="25px" height="24px" class="mt-3"/>
+                                <p class="card-title">Energy</p>
+                                <p class="card-subHeading">{{final_q.Energy|floatformat:2}}</p>
+                            </div>
+                            <div class="col-md-3point6" style="border: 2px solid #EAEAEA; border-radius: 15px; background-image: url('/static/images/bgResult4.png'); background-size: cover;">
+                                <img src="/static/images/protein.png" alt="" width="25px" height="24px" class="mt-3"/>
+                                <p class="card-title">Iron</p>
+                                <p class="card-subHeading">{{final_q.Iron|floatformat:2}}</p>
+                            </div>
+                            <div class="col-md-3point6" style="border: 2px solid #EAEAEA; border-radius: 15px; background-image: url('/static/images/bgResult6.png'); background-size: cover;">
+                                <img src="/static/images/protein.png" alt="" width="25px" height="24px" class="mt-3"/>
+                                <p class="card-title">Calcium</p>
+                                <p class="card-subHeading">{{final_q.Calcium|floatformat:2}}</p>
+                            </div>
+                            <div class="col-md-3point6" style="border: 2px solid #EAEAEA; border-radius: 15px; background-image: url('/static/images/bgResult5.png'); background-size: cover;">
+                                <img src="/static/images/protein.png" alt="" width="25px" height="24px" class="mt-3"/>
+                                <p class="card-title">Zinc</p>
+                                <p class="card-subHeading">{{final_q.Zinc|floatformat:2}}</p>
+                            </div>
+                            <div class="col-md-3point6" style="border: 2px solid #EAEAEA; border-radius: 15px; background-image: url('/static/images/bgResult7.png'); background-size: cover;">
+                                <img src="/static/images/protein.png" alt="" width="25px" height="24px" class="mt-3"/>
+                                <p class="card-title">Folate</p>
+                                <p class="card-subHeading">{{final_q.Folate|floatformat:2}}</p>
+                            </div>
+                        </div>
+                        <p class="opCost mt-3">
+                            OPTIMIZED-COST : ₹{{final_optimized_cost}}
+                        </p>
+                        <p class="opCost mt-3">
+                            STATUS : {{opStatus}}
+                        </p>

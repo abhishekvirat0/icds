@@ -1,0 +1,1 @@
+web: gunicorn icds.wsgi --log-file -

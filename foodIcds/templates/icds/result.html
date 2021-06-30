@@ -1,0 +1,202 @@
+{% extends "icds/base.html" %}
+{% load filterFile %}
+{% load static %}
+    {% block head %}
+        <link rel="stylesheet" href="{% static 'css/result.css' %}">
+    {% endblock %}
+
+    {% block body %}
+    <body class="bgPic">
+
+        <nav class="navbar fixed-top navbar-light navbar-expand-lg">
+            <div class="container">
+                <div class="header d-flex align-items-center">
+                    <img width="63px" height="86px" src="/static/images/logo.svg" alt="logo" />
+                    <p class="ml-3 ">Integrated Child
+                        <br>Development Scheme</p>
+                </div>
+            </div>
+        </nav>
+        <section>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col col-12 col-md-12" style="margin-top: 190px;">
+                        <div class="d-flex">
+                            <img src="/static/images/decorationTHR.png" alt="" style="margin-left:-50px; margin-top: -55px;" width="104px" height="101px">
+                            <p class="page-heading">Result</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row justify-content-center p-5" style="border-radius: 15px; background-color: #fff; border: 2px solid #eaeaea; ">
+
+                    <div class="col col-12 col-md-12">
+                        <div class="d-flex align-items-center ">
+
+                            <div class="input-group check col col-10 col-md-8" style="margin-left: -15px;">
+                                    {% if lactating > 0 %}
+                                        <label tabindex="0" class="mr-2">
+                                            <input tabindex="-1" type="radio" name="category" value="lactating women" checked/>
+                                                <div class="icon-box">
+                                                  <span>lactating women</span>
+                                                </div>
+                                        </label>
+                                    {% endif %}
+                                    {% if pregnant > 0 %}
+                                        <label tabindex="0" class="mr-2">
+                                            <input tabindex="-1" type="radio" name="category" value="pregnant women" checked/>
+                                                <div class="icon-box">
+                                                  <span>pregnant women</span>
+                                                </div>
+                                        </label>
+                                    {% endif %}
+                                    {% if toddler > 0 %}
+                                        <label tabindex="0" class="mr-2">
+                                            <input tabindex="-1" type="radio" name="category" value="1 yr to 3 yrs" checked/>
+                                                <div class="icon-box">
+                                                  <span>1 yr to 3 yrs</span>
+                                                </div>
+                                        </label>
+                                    {% endif %}
+                                    {% if infant > 0 %}
+                                        <label tabindex="0" class="mr-2">
+                                            <input tabindex="-1" type="radio" name="category" value="6 mo to 1 yr" id="checkbox1" checked/>
+                                                <div class="icon-box">
+                                                  <span>6 mo to 1 yr</span>
+                                                </div>
+                                        </label>
+                                    {% endif %}
+
+                            </div>
+                            <button class="btn ml-auto btnExport" formtarget="_blank" onclick="location.href='{% url 'pdf' %}'">
+                                <i class="fa fa-download" aria-hidden="true">
+                                    <span style="font-family:Circular Std Bold;"> &nbsp;&nbsp;Export</span>
+                                </i>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Cereals Here  -->
+
+                    <div data-aos="fade-up" class="col col-12 col-md-12 mt-4" id="filteredProducts">
+
+<!--                        <div class="d-flex align-items-center">-->
+<!--                            <span class="cost-heading">CEREALS</span>-->
+<!--                        </div>-->
+<!--                        <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">-->
+<!--                        <form>-->
+<!--                            <div class="form-row">-->
+<!--                                {% for cereal in Cereals %}-->
+<!--                                    <div class="form-group col-md-3">-->
+<!--                                        <label>{{cereal}}</label>-->
+<!--                                        <div class="input-group mb-3">-->
+<!--                                            <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label=""  value="{{ cereal_prop|get_at_index:forloop.counter0 }}" readonly>-->
+<!--                                            <div class="input-group-append">-->
+<!--                                                <span class="input-group-text">gm</span>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                {% endfor %}-->
+<!--                            </div>-->
+<!--                        </form>-->
+
+<!--                        &lt;!&ndash; Pulses Here  &ndash;&gt;-->
+
+<!--                        <div class="d-flex align-items-center mt-2">-->
+<!--                            <span class="cost-heading">PULSES</span>-->
+<!--                        </div>-->
+<!--                        <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">-->
+
+<!--                        <form>-->
+<!--                            <div class="form-row">-->
+<!--                                {% for pulse in Pulses %}-->
+<!--                                <div class="form-group col-md-3">-->
+<!--                                    <label>{{pulse}}</label>-->
+<!--                                    <div class="input-group mb-3">-->
+<!--                                        <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" value="{{ pulse_prop|get_at_index:forloop.counter0 }}" readonly>-->
+<!--                                        <div class="input-group-append">-->
+<!--                                            <span class="input-group-text">gm</span>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                {% endfor %}-->
+<!--                            </div>-->
+<!--                        </form>-->
+
+<!-- -->
+                    </div>
+
+            </div>
+        </div>
+    </section>
+
+
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script>
+            function isNumberKey(evt)
+               {
+                  var charCode = (evt.which) ? evt.which : evt.keyCode;
+                  if (charCode != 46 && charCode > 31
+                    && (charCode < 48 || charCode > 57))
+                     return false;
+
+                  return true;
+               }
+        </script>
+         <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+        <script>
+            AOS.init({
+              duration: 1200,
+              once: 'true',
+            })
+        </script>
+            <script>
+                $(window).scroll(function(e) {
+                    $('.navbar')[$(window).scrollTop() >= 100 ? 'addClass' : 'removeClass']('navbar-hide');
+                });
+            </script>
+        <script>
+
+<!--            $("input[name='category']").change(function(e){-->
+            $(document).ready(function() {
+                var query;
+                query = $("input[name='category']:checked").val();
+                console.log(query)
+
+                $.ajax(
+                        {
+                            type:"GET",
+                            url: "/filter-data",
+                            data:{
+                                category_id: query
+                            },
+                            dataType:'json',
+                            success: function(res)
+                            {
+                                console.log(res);
+                                $("#filteredProducts").html(res.data);
+                            }
+                    })
+            });
+
+                            $("input[name='category']").change(function(e){
+                    query = $("input[name='category']:checked").val();
+                    $.ajax(
+                        {
+                            type:"GET",
+                            url: "/filter-data",
+                            data:{
+                                category_id: query
+                            },
+                            dataType:'json',
+                            success: function(res)
+                            {
+                                console.log(res);
+                                $("#filteredProducts").html(res.data);
+                            }
+                    })
+                });
+        </script>
+    </body>
+    {% endblock %}

@@ -1,0 +1,83 @@
+{% extends "icds/base.html" %}
+
+{% load static %}
+    {% block head %}
+        <link rel="stylesheet" href="{% static 'css/first.css' %}">
+    {% endblock %}
+
+    {% block body %}
+    <body class="bgPic">
+
+        <nav class="navbar fixed-top navbar-light navbar-expand-lg">
+            <div class="container">
+                <div class="header d-flex align-items-center">
+                    <img width="63px" height="86px" src="/static/images/logo.svg" alt="logo" />
+                    <p class="ml-2">Integrated Child
+                        <br>Development Scheme</p>
+                </div>
+                    <div class="float-right">
+                        <input type="checkbox" class="checkbox" id="chk" />
+                        <label class="label" for="chk">
+                            <i class="fas fa-sun"></i>
+                            <i class="fas fa-moon"></i>
+                            <div class="ball"></div>
+                        </label>
+                    </div>
+            </div>
+        </nav>          
+
+        <section>
+            <div class="container">
+                <div class="row">
+
+                    <div class="col col-12 col-md-12" style="margin-top: 190px;">
+                        <div class="d-flex">
+                            <img src="/static/images/decoration.png" alt="" style="margin-left:-50px; margin-top: -45px;" width="104px" height="101px">
+                            <p class="heading mt-2"> Choose Preference</p>
+                        </div>
+                        <p class="sub-heading" style="margin-top: -10px;"> Optimise for Take Home Ration as well as Food at Anganwadi </p>
+                    </div>
+
+                    <div class="col col-12 col-md-6 p-2" style="margin-top: 100px;">
+                        <a href="{% url 'category' %}?data=THR" style="text-decoration:none; color: black;">
+                        <div id="card1" class="card">
+                            <div class="card-body">
+                                <img style="margin-top: 25px;" src="/static/images/groceries.svg" alt="alt"/>
+                                <p class="card-sub-heading mt-4">Take Home Ration</p>
+                                <p class="individual" style="color: #EC4E20;">raw ration</p>
+                            </div>
+                        </div>
+                        </a>
+                    </div>
+
+                    <div class="col col-12 col-md-6 p-2" style="margin-top: 100px;">
+                        <a href="{% url 'category' %}?data=FAA" style="text-decoration:none; color: black;">
+                        <div id="card2"  class="card">
+                            <div class="card-body">
+                                <img style="margin-top: 25px;" src="/static/images/anganwadi.svg" alt="alt"/>
+                                <p class="card-sub-heading mt-4">Food At Anganbadi</p>
+                                <p class="individual" style="color: #FF9505;">cooked food</p>
+                            </div>
+                        </div>
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+        <script>
+             $(window).scroll(function(e) {
+                // add/remove class to navbar when scrolling to hide/show
+                    $('.navbar')[$(window).scrollTop() >= 150 ? 'addClass' : 'removeClass']('navbar-hide');
+             });
+        </script>
+    <script>
+        const chk = document.getElementById('chk');
+        chk.addEventListener('change', () => {
+            document.body.classList.toggle('dark');
+        });
+
+    </script>
+    </body>
+    {% endblock %}

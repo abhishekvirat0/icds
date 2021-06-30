@@ -1,0 +1,208 @@
+{% extends "icds/base.html" %}
+{% load filterFile %}
+{% load static %}
+    {% block head %}
+        <link rel="stylesheet" href="{% static 'css/foodCost.css' %}">
+    {% endblock %}
+
+    {% block body %}
+    <body class="bgPic">
+
+        <nav class="navbar fixed-top navbar-light navbar-expand-lg">
+            <div class="container">
+                <div class="header d-flex align-items-center">
+                    <img width="63px" height="86px" src="/static/images/logo.svg" alt="logo" />
+                    <p class="ml-3 ">Integrated Child
+                        <br>Development Scheme</p>
+                </div>
+            </div>
+        </nav>
+        <section>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col col-12 col-md-12" style="margin-top: 190px;">
+                        <div class="d-flex">
+                            <img src="/static/images/decorationTHR.png" alt="" style="margin-left:-50px; margin-top: -55px;" width="104px" height="101px">
+                            <p class="page-heading">Verify Food Cost</p>
+
+                            <div class="ml-auto">
+                                {% if infant > 0 %}
+                                    <img src="/static/images/cat1.png" width="111px" height="36px"/>
+                                {% endif %}
+
+                                {% if toddler > 0 %}
+                                    <img src="/static/images/cat2.png" width="93px" height="36px" />
+                                {% endif %}
+
+                                {% if pregnant > 0 %}
+                                    <img src="/static/images/cat3.png" width="143px" height="36px" />
+                                {% endif %}
+
+                                {% if lactating > 0 %}
+                                    <img src="/static/images/cat4.png" width="143px" height="36px"/>
+                                {% endif %}
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row justify-content-center p-5" style="border-radius: 15px; background-color: #fff; border: 2px solid #eaeaea; ">
+
+                    <form style="display: contents;" action="{% url 'FoodCost' %}" method="post" id="frmTest">
+                        {% csrf_token %}
+
+                    <div data-aos="fade-up" class="col col-12 col-md-12 mt-4" id="filteredProducts">
+
+                        <!-- Cereals Here  -->
+                        <div class="d-flex align-items-center">
+                            <span class="cost-heading">CEREALS</span>
+                        </div>
+                        <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">
+
+                            <div class="form-row">
+
+                                {% for cereal in resultCereals %}
+                                    <div class="form-group col-md-3">
+                                        <div style="position: relative;">
+                                            <label>{{cereal}}</label>
+                                            <div class="input-group" style="min-height: 60px;overflow: hidden;">
+                                                <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" name="{{cereal}}" value="{{ cereal_cost|get_at_index:forloop.counter0 }}">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">per kg</span>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex float-right" style="padding: 5px;">
+                                                {% if cereal in infantFood %}
+                                                    <hr style="border: 3px solid #E44B4B;width:12px; border-radius: 15px; margin:1px; position:absolute; top: 80px; right: 115px; float:right;"/>
+                                                {% endif %}
+                                                {% if cereal in toddlersFood %}
+                                                    <hr style="border: 3px solid #E4D54B;width:12px; border-radius: 15px; margin:1px; position:absolute; top: 80px; right: 135px;"/>
+                                                {% endif %}
+                                                {% if cereal in pregnantFood %}
+                                                    <hr style="border: 3px solid #4BE4AD;width:12px; border-radius: 15px; margin:1px;position:absolute; top: 80px; right: 155px;"/>
+                                                {% endif %}
+                                                {% if cereal in lactatingFood %}
+                                                    <hr style="border: 3px solid #5AD8FD;width:12px; border-radius: 15px; margin:1px;position:absolute; top: 80px; right: 175px;"/>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+
+                            </div>
+
+
+                    <!-- Pulses Here  -->
+
+                    <div class="d-flex align-items-center mt-2">
+                        <span class="cost-heading">PULSES</span>
+                    </div>
+                        <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">
+
+                        <div class="form-row">
+                            {% for pulse in resultPulses %}
+                            <div class="form-group col-md-3">
+                                <div style="position: relative;">
+                                    <label>{{pulse}}</label>
+                                    <div class="input-group mb-3" style="min-height: 60px;overflow: hidden;">
+                                        <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" name="{{pulse}}" value="{{ pulse_cost|get_at_index:forloop.counter0 }}">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">per kg</span>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex float-right" style="padding: 5px;">
+                                        {% if pulse in infantFood %}
+                                            <hr style="border: 3px solid #E44B4B;width:12px; border-radius: 15px; margin:1px; position:absolute; top: 80px; right: 115px; float:right;"/>
+                                        {% endif %}
+                                        {% if pulse in toddlersFood %}
+                                            <hr style="border: 3px solid #E4D54B;width:12px; border-radius: 15px; margin:1px; position:absolute; top: 80px; right: 135px;"/>
+                                        {% endif %}
+                                        {% if pulse in pregnantFood %}
+                                            <hr style="border: 3px solid #4BE4AD;width:12px; border-radius: 15px; margin:1px;position:absolute; top: 80px; right: 155px;"/>
+                                        {% endif %}
+                                        {% if pulse in lactatingFood %}
+                                            <hr style="border: 3px solid #5AD8FD;width:12px; border-radius: 15px; margin:1px;position:absolute; top: 80px; right: 175px;"/>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+
+                            <!-- Others Here  -->
+                    <div class="d-flex align-items-center mt-2">
+                        <span class="cost-heading">OTHERS</span>
+                    </div>
+                    <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">
+                    <div class="form-row">
+                        {% for other in resultOthers %}
+                            <div class="form-group col-md-3">
+                                <div style="position: relative;">
+                                    <label>{{other}}</label>
+                                    <div class="input-group mb-3" style="min-height: 60px;overflow: hidden;">
+                                        <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" name="{{other}}" value="{{ other_cost|get_at_index:forloop.counter0 }}">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">per kg</span>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex float-right" style="padding: 5px;">
+                                        {% if other in infantFood %}
+                                            <hr style="border: 3px solid #E44B4B;width:12px; border-radius: 15px; margin:1px; position:absolute; top: 80px; right: 115px; float:right;"/>
+                                        {% endif %}
+                                        {% if other in toddlersFood %}
+                                            <hr style="border: 3px solid #E4D54B;width:12px; border-radius: 15px; margin:1px; position:absolute; top: 80px; right: 135px;"/>
+                                        {% endif %}
+                                        {% if other in pregnantFood %}
+                                            <hr style="border: 3px solid #4BE4AD;width:12px; border-radius: 15px; margin:1px;position:absolute; top: 80px; right: 155px;"/>
+                                        {% endif %}
+                                        {% if other in lactatingFood %}
+                                            <hr style="border: 3px solid #5AD8FD;width:12px; border-radius: 15px; margin:1px;position:absolute; top: 80px; right: 175px;"/>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    </div>
+
+
+                   <div class="col col-12 col-md-12 text-center">
+                       <button class="btn btnSubmit footer">SUBMIT</button>
+                   </div>
+
+           </form>
+        </div>
+    </section>
+
+
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script>
+            function isNumberKey(evt)
+               {
+                  var charCode = (evt.which) ? evt.which : evt.keyCode;
+                  if (charCode != 46 && charCode > 31
+                    && (charCode < 48 || charCode > 57))
+                     return false;
+
+                  return true;
+               }
+        </script>
+         <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+        <script>
+            AOS.init({
+              duration: 1200,
+              once: 'true',
+            })
+        </script>
+        <script>
+             $(window).scroll(function(e) {
+                  $('.navbar')[$(window).scrollTop() >= 100 ? 'addClass' : 'removeClass']('navbar-hide');
+             });
+        </script>
+
+    </body>
+    {% endblock %}

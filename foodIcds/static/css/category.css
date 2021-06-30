@@ -1,0 +1,160 @@
+.header p{
+    font-family: Circular Std Bold;
+    color: rgb(0, 0, 0);
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 30px;
+    letter-spacing: -0.02em;
+    text-transform: capitalize;
+}
+
+.navbar-hide {
+  pointer-events: none;
+  opacity: 0;
+}
+
+.bgPic{
+    background-color: #FAFAFA;
+    background-image: url('/static/images/cover-mandala-edit.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: right top;
+    height: 100vh;
+}
+
+@media (max-width: 600px) {
+    .bgPic{
+        background-image: url('/static/images/cover-mandala-mobile.png');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: right top;
+        height: 100vh;
+    }
+  }
+
+
+.page-heading{
+    font-family: Circular Std Bold;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 30px;
+    line-height: 38px;
+    letter-spacing: -0.02em;
+    margin-left: -56px;
+    max-width: 60%;
+}
+
+@media (max-width: 600px) {
+    .page-heading {
+        font-size: 24px;
+        max-width: 100%;
+    }
+  }
+
+
+.sub-heading{
+    font-family: Circular Std Book;
+    font-style: normal;
+    font-weight: 450;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: -0.02em;
+    color: #909090;
+    margin-top:-20px;
+}
+
+.numInput{
+    border: none;
+    font-family: Circular Std Bold;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 30px;
+    letter-spacing: -0.02em;
+    outline: none;
+    text-align: right;
+    width: 100%;
+    background: none !important;
+}
+
+@media (max-width: 600px) {
+    .numInput {
+        text-align: left;
+        margin-left: 45px;
+        width: 70%;
+    }
+  }
+
+.numInput:focus{
+     outline: none;
+}
+
+
+input::placeholder{
+    color: color: rgba(0, 0, 0, 1.0);
+    }
+
+input:focus::placeholder {
+  color: blue;
+}
+
+.heading{
+    font-family: Circular Std Bold;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 30px;
+    display: flex;
+    align-items: center;
+    letter-spacing: -0.02em;
+}
+
+.btnSubmit{
+    font-family: Circular Std Bold;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 5px 24px;
+    background-color: #F0F0F0;
+    border-radius: 12px;
+    color: #EC4E20;
+}
+
+.btnSubmit:focus{
+    background: #EC4E20;
+    border-radius: 12px;
+    color: #000000;
+}
+
+.container{
+    width:350px
+}
+
+@media (min-width: 600px) {
+    .container {
+      width: 1170px;
+    }
+  }
+
+@font-face {
+    font-family: 'Circular Std Black';
+    src: 
+        url('../fonts/Circular\ Std\ Book.ttf'),
+        url('../fonts/Circular\ Std\ Medium.ttf'),
+        url('../fonts/CircularSpUIv3T-Bold.ttf'),
+        url('../fonts/Circular\ Std\ Black.ttf');
+        }
+
+::-webkit-scrollbar {
+    width: 2px;
+  }
+
+::-webkit-scrollbar-thumb {
+    background: #090A3A;
+    border-radius: 10px;
+}
+
+input:focus::placeholder {
+  color: black;
+}

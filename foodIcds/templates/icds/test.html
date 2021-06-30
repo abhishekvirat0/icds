@@ -1,0 +1,403 @@
+{% extends "icds/base.html" %}
+
+{% load static %}
+    {% block head %}
+        <link rel="stylesheet" href="{% static 'css/test.css' %}">
+    {% endblock %}
+
+    {% block body %}
+    <body class="bgPic">
+
+        <nav class="navbar fixed-top navbar-light navbar-expand-lg">
+            <div class="container">
+                <div class="header d-flex align-items-center">
+                    <img width="63px" height="86px" src="/static/images/logo.svg" alt="logo" />
+                    <p class="ml-3 ">Integrated Child
+                        <br>Development Scheme</p>
+                </div>
+            </div>
+        </nav>
+        <section>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col col-12 col-md-12" style="margin-top: 190px;">
+                        <div class="d-flex">
+                            <img src="/static/images/decorationTHR.png" alt="" style="margin-left:-50px; margin-top: -55px;" width="104px" height="101px">
+                            <p class="page-heading">Result</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col col-12 col-md-12 check mt-3 mb-4 d-flex" style="margin-left: -15px;">
+                        <div class="card col-6 col-md-2  mr-2 " style="border: 2px solid #EAEAEA; border-radius: 15px; background-image: url('/static/images/bgResult.png'); background-size: cover;">
+                            <img src="/static/images/protein.png" alt="" width="25px" height="24px" class="mt-3"/>
+                            <p class="card-title">protein</p>
+                            <p class="card-subHeading">13.10</p>
+                        </div>
+
+                        <div class="card col-6 col-md-2" style="border: 2px solid #EAEAEA; border-radius: 15px; background-image: url('/static/images/bgResult2.png'); background-size: cover;">
+                            <img src="/static/images/fat.png" alt="" width="25px" height="24px" class="mt-3"/>
+                            <p class="card-title">protein</p>
+                            <p class="card-subHeading">13.10</p>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="row justify-content-center p-5" style="border-radius: 15px; background-color: #fff; border: 2px solid #eaeaea; ">
+
+                    <div class="col col-12 col-md-12 ">
+                        <div class="d-flex align-items-center ">
+
+                            <div class="input-group col col-md-3" style="margin-left: -15px;">
+                                <select name="result_time" class="custom-select type" id="result_time" >
+                                    <option class="6 mo to 1 yr" value="6 mo to 1 yr" selected="selected">6 mo to 1 yr</option>
+                                    <option class="1 yr to 6 yrs" value="1 yr to 6 yrs">1 yr to 6 yrs</option>
+                                    <option class="pregnant women" value="pregnant women">pregnant women</option>
+                                    <option class="lactating women" value="lactating women">lactating women</option>
+                                </select>
+                            </div>
+
+                            <button class="btn ml-auto btnExport" formtarget="_blank" ><i class="fa fa-download" aria-hidden="true"><span style="font-family:Circular Std Bold;"> &nbsp;&nbsp;Export</span></i></button>
+                        </div>
+                    </div>
+                    <!-- Cereals Here  -->
+
+                    <div data-aos="fade-up" class="col col-12 col-md-12 mt-4">
+
+                        <div class="d-flex align-items-center">
+                            <span class="cost-heading">CEREALS</span>
+                        </div>
+                        <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">
+                        <form>
+                            <div class="form-row">
+                                <div class="form-group col-md-3">
+                                    <label>Jowar</label>
+                                    <div class="input-group mb-3">
+                                        <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" >
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">per unit</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-3">
+                                    <label>Ragi</label>
+                                    <div class="input-group mb-3">
+                                        <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" >
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">per unit</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group col-md-3">
+                                    <label >Wheat</label>
+                                    <div class="input-group mb-3">
+                                        <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" >
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">per unit</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-3">
+                                    <label>Wheat Flour Atta</label>
+                                    <div class="input-group mb-3">
+                                        <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" >
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">per unit</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group col-md-3">
+                                    <label>Wheat Broken</label>
+                                    <div class="input-group mb-3">
+                                        <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" >
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">per unit</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group col-md-3">
+                                    <label>Maize</label>
+                                    <div class="input-group mb-3">
+                                        <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" >
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">per unit</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-3">
+                                    <label>Rava</label>
+                                    <div class="input-group mb-3">
+                                        <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" >
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">per unit</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group col-md-3">
+                                    <label>Rice</label>
+                                    <div class="input-group mb-3">
+                                        <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" >
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">per unit</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                        </div>
+                    </form>
+
+                    <!-- Pulses Here  -->
+
+                    <div class="d-flex align-items-center mt-2">
+                        <span class="cost-heading">PULSES</span>
+                    </div>
+                    <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">
+
+                    <form>
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                                <label>Rajma Red(Kidney beans)</label>
+                                <div class="input-group mb-3">
+                                    <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" >
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">per unit</span>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group col-md-3">
+                                <label>Soya bean (Brown)</label>
+                                <div class="input-group mb-3">
+                                    <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" >
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">per unit</span>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="form-group col-md-3">
+                                <label>Soya bean (White)</label>
+                                <div class="input-group mb-3">
+                                    <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" >
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">per unit</span>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group col-md-3">
+                                <label>Bengal gram (Channa dal)</label>
+                                <div class="input-group mb-3">
+                                    <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" >
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">per unit</span>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group col-md-3">
+                                <label>Black Gram (Urad Dal)</label>
+                                <div class="input-group mb-3">
+                                    <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" >
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">per unit</span>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="form-group col-md-3">
+                                <label>Yellow Lentil (Mung dal)</label>
+                                <div class="input-group mb-3">
+                                    <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" >
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">per unit</span>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group col-md-3">
+                                <label>Peas</label>
+                                <div class="input-group mb-3">
+                                    <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" >
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">per unit</span>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="form-group col-md-3">
+                                <label>Red Gram (Arhar dal)(Toor dal)</label>
+                                <div class="input-group mb-3">
+                                    <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" >
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">per unit</span>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group col-md-3">
+                                <label>Green Gram (Moong dal)</label>
+                                <div class="input-group mb-3">
+                                    <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" >
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">per unit</span>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="form-group col-md-3">
+                                <label>Red Lentil (Masoor dal)</label>
+                                <div class="input-group mb-3">
+                                    <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" >
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">per unit</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+
+                        <!-- Others Here  -->
+                <div class="d-flex align-items-center mt-2">
+                    <span class="cost-heading">OTHERS</span>
+                </div>
+                <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">
+                <div class="form-row">
+
+                    <div class="form-group col-md-3" >
+                        <label>Jaggery</label>
+                        <div class="input-group mb-3">
+                            <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" >
+                            <div class="input-group-append">
+                                <span class="input-group-text">per unit</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label>Sugar</label>
+                        <div class="input-group mb-3">
+                            <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" >
+                            <div class="input-group-append">
+                                <span class="input-group-text">per unit</span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group col-md-3">
+                        <label>Ghee</label>
+                        <div class="input-group mb-3">
+                            <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" >
+                            <div class="input-group-append">
+                                <span class="input-group-text">per unit</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label>Oil</label>
+                        <div class="input-group mb-3">
+                            <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" >
+                            <div class="input-group-append">
+                                <span class="input-group-text">per unit</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label>Egg</label>
+                        <div class="input-group mb-3">
+                            <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" >
+                            <div class="input-group-append">
+                                <span class="input-group-text">per unit</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label>Banana</label>
+                        <div class="input-group mb-3">
+                            <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" >
+                            <div class="input-group-append">
+                                <span class="input-group-text">per unit</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label >Ground nut</label>
+                        <div class="input-group mb-3">
+                            <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" >
+                            <div class="input-group-append">
+                                <span class="input-group-text">per unit</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            </div>
+        </div>
+    </section>
+
+
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script>
+            function isNumberKey(evt)
+               {
+                  var charCode = (evt.which) ? evt.which : evt.keyCode;
+                  if (charCode != 46 && charCode > 31
+                    && (charCode < 48 || charCode > 57))
+                     return false;
+
+                  return true;
+               }
+        </script>
+         <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+        <script>
+            AOS.init({
+              duration: 1200,
+              once: 'true',
+            })
+        </script>
+            <script>
+                $(window).scroll(function(e) {
+                    $('.navbar')[$(window).scrollTop() >= 100 ? 'addClass' : 'removeClass']('navbar-hide');
+                });
+            </script>
+    </body>
+    {% endblock %}
