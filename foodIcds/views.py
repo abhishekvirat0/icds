@@ -208,7 +208,7 @@ def LPPWOVAR_LESSKCAL(Age_group, Food, input_cost):
             a[AA.columns == fpulse[i]] = 1
         model += lpSum(a * allocation) >= 20
 
-    model += lpSum(allocation) <= 300 + 300 * 0.20
+    model += lpSum(allocation) <= 300 / 3 + 300 * 0.20
     # model += lpSum(allocation) >= 300 - 300*0.20
 
     # Eggs*********************
@@ -431,8 +431,11 @@ def LPPWOVAR(Age_group, Food, input_cost):
         for i in range(len(fpulse)):
             a[AA.columns == fpulse[i]] = 1
         model += lpSum(a * allocation) >= 30
+    if (Age_group == "pregnant") or (Age_group == "lactation"):
+        model += lpSum(allocation) <= 600 / 3 + 600 * 0.20
 
-    model += lpSum(allocation) <= 250
+    if (Age_group == "6-12 months") or (Age_group == "child(1-3)yrs"):
+        model += lpSum(allocation) <= 250
     # model += lpSum(allocation) >= 500 / 3.5
 
     # Eggs*********************
@@ -923,8 +926,10 @@ def filter_data(request):
                                      'pulse_prop': pulse_prop, 'other_prop': other_prop, 'final_q': final_q,
                                      'final_optimized_cost': final_optimized_cost, 'opStatus': opStatus,
                                      'cereal_prop_lessKcal': cereal_prop_lessKcal,
-                                     'pulse_prop_lessKcal': pulse_prop_lessKcal, 'other_prop_lessKcal': other_prop_lessKcal, 'final_q_less': final_q_less,
-                                     'final_optimized_cost_lessKcal': final_optimized_cost_lessKcal, 'opStatus_lessKcal': opStatus_lessKcal
+                                     'pulse_prop_lessKcal': pulse_prop_lessKcal,
+                                     'other_prop_lessKcal': other_prop_lessKcal, 'final_q_less': final_q_less,
+                                     'final_optimized_cost_lessKcal': final_optimized_cost_lessKcal,
+                                     'opStatus_lessKcal': opStatus_lessKcal
                                  })
             return JsonResponse({'data': i})
 
