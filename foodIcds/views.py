@@ -22,7 +22,9 @@ EAR = pd.DataFrame()
 EAR_11 = pd.DataFrame()
 obj = 0
 final_optimized_cost = 0
+final_optimized_cost_lessKcal = 0
 opStatus = ''
+opStatus_lessKcal = ''
 
 
 def NUTCAL(quantity_food, Age_group):
@@ -77,7 +79,7 @@ def NUTCAL(quantity_food, Age_group):
 
 
 def LPPWOVAR_LESSKCAL(Age_group, Food, input_cost):
-    global input_EAR, EAR, EAR_11
+    global input_EAR, EAR, EAR_11, final_optimized_cost_lessKcal
     model = LpProblem("Optimal_diet_plan", LpMinimize)
     input_cost = input_cost.sort_values(['Food_Name'])
     print(input_cost)
@@ -232,7 +234,7 @@ def LPPWOVAR_LESSKCAL(Age_group, Food, input_cost):
 
     sol = model.solve()
     obj = value(model.objective)
-    print(np.round(obj, 2))
+    final_optimized_cost_lessKcal = np.round(obj, 2)
 
     out_food = pd.DataFrame(Food.sort_values())
     k = pd.DataFrame(np.zeros(len(model.variables())))
@@ -257,20 +259,20 @@ def LPPWOVAR_LESSKCAL(Age_group, Food, input_cost):
     out2 = pd.concat([out_food, food_out], axis=1, ignore_index=False)
     out2 = pd.DataFrame(out2)
     out2.columns = ["Food_Name", "Amount", "Food_output"]
-    final_out = out2[["Food_Name", 'Amount']]
-    datainput.index = final_out.index
-    final_out = pd.concat([final_out, datainput["Food_Group"]], axis=1)
-    final_out["Amount"] = np.ceil(final_out["Amount"])
-    global opStatus
-    opStatus = LpStatus[model.status]
-    print(opStatus)
+    final_out_lessKcal = out2[["Food_Name", 'Amount']]
+    datainput.index = final_out_lessKcal.index
+    final_out_lessKcal = pd.concat([final_out_lessKcal, datainput["Food_Group"]], axis=1)
+    final_out_lessKcal["Amount"] = np.ceil(final_out_lessKcal["Amount"])
+    global opStatus_lessKcal
+    opStatus_lessKcal = LpStatus[model.status]
+    print(opStatus_lessKcal)
     input_cost_v1 = input_cost.sort_values(["Food_Name"])
     costperitem = np.array(input_cost_v1["input_cost"])
-    quan = np.array(final_out["Amount"])
+    quan = np.array(final_out_lessKcal["Amount"])
     c_1 = costperitem * quan
-    final_out["cost"] = c_1
-    print(final_out)
-    return final_out
+    final_out_lessKcal["cost"] = c_1
+    print(final_out_lessKcal)
+    return final_out_lessKcal
 
 
 def LPPWOVAR(Age_group, Food, input_cost):
@@ -833,6 +835,9 @@ def filter_data(request):
         cereal_prop = []
         pulse_prop = []
         other_prop = []
+        cereal_prop_lessKcal = []
+        pulse_prop_lessKcal = []
+        other_prop_lessKcal = []
         if request.session['infant'] > 0:
             cost_list = request.session['cost_list']
             for k, v in cost_list.items():
@@ -882,11 +887,44 @@ def filter_data(request):
             final_q = nutrition_calc.set_index('Nutritions')['Amount'].to_dict()
             print(final_q)
 
+            # less calories intake calculation
+            final_out_infant_lessKcal = LPPWOVAR_LESSKCAL(Age_group, Food, infantFoodCost)
+            final_out_infant_lessKcal['Amount'] = np.ceil(final_out_infant_lessKcal['Amount'])
+            final_prop_infant_lessKcal = final_out_infant_lessKcal.set_index('Food_Name')['Amount'].to_dict()
+            print(final_prop_infant_lessKcal)
+
+            for cereal in Cereals:
+                if cereal in final_prop_infant_lessKcal:
+                    print(cereal, final_prop_infant_lessKcal[cereal])
+                    cereal_prop_lessKcal.append(final_prop_infant_lessKcal[cereal])
+
+            request.session['cereal_prop_lessKcal'] = cereal_prop_lessKcal
+
+            for pulse in Pulses:
+                if pulse in final_prop_infant_lessKcal:
+                    print(pulse, final_prop_infant_lessKcal[pulse])
+                    pulse_prop_lessKcal.append(final_prop_infant_lessKcal[pulse])
+
+            request.session['pulse_prop_lessKcal'] = pulse_prop_lessKcal
+
+            for other in Others:
+                if other in final_prop_infant_lessKcal:
+                    print(other, final_prop_infant_lessKcal[other])
+                    other_prop_lessKcal.append(final_prop_infant_lessKcal[other])
+
+            request.session['other_prop_lessKcal'] = other_prop_lessKcal
+
+            nutrition_calc_lessKcal = NUTCAL(final_out_infant_lessKcal, Age_group)
+            final_q_less = nutrition_calc_lessKcal.set_index('Nutritions')['Amount'].to_dict()
+
             i = render_to_string('icds/resultInfant.html',
                                  {
                                      'Cereals': Cereals, 'Pulses': Pulses, 'Others': Others, 'cereal_prop': cereal_prop,
                                      'pulse_prop': pulse_prop, 'other_prop': other_prop, 'final_q': final_q,
-                                     'final_optimized_cost': final_optimized_cost, 'opStatus': opStatus
+                                     'final_optimized_cost': final_optimized_cost, 'opStatus': opStatus,
+                                     'cereal_prop_lessKcal': cereal_prop_lessKcal,
+                                     'pulse_prop_lessKcal': pulse_prop_lessKcal, 'other_prop_lessKcal': other_prop_lessKcal, 'final_q_less': final_q_less,
+                                     'final_optimized_cost_lessKcal': final_optimized_cost_lessKcal, 'opStatus_lessKcal': opStatus_lessKcal
                                  })
             return JsonResponse({'data': i})
 
