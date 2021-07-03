@@ -419,18 +419,17 @@ def LPPWOVAR(Age_group, Food, input_cost):
     cereals = [1 / len(fcereals)] * len(fcereals)
     pulse = [1 / len(fpulse)] * len(fpulse)
 
-    if (Age_group == "child(1-3)yrs") or (Age_group == "6-12 months"):
+    # fix minimum limit
+    a = np.zeros((len(AA.columns)))
+    for i in range(len(fcereals)):
+        a[AA.columns == fcereals[i]] = 1
+    model += lpSum(a * allocation) >= 30
 
-        # fix minimum limit
-        a = np.zeros((len(AA.columns)))
-        for i in range(len(fcereals)):
-            a[AA.columns == fcereals[i]] = 1
-        model += lpSum(a * allocation) >= 30
+    a = np.zeros((len(AA.columns)))
+    for i in range(len(fpulse)):
+        a[AA.columns == fpulse[i]] = 1
+    model += lpSum(a * allocation) >= 30
 
-        a = np.zeros((len(AA.columns)))
-        for i in range(len(fpulse)):
-            a[AA.columns == fpulse[i]] = 1
-        model += lpSum(a * allocation) >= 30
     if (Age_group == "pregnant") or (Age_group == "lactation"):
         model += lpSum(allocation) <= 600 / 3 + 600 * 0.20
 
