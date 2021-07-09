@@ -121,6 +121,20 @@
   cursor: pointer;
 }
 
+.check label input[type="checkbox"] ~ .icon-box .fa-plus {
+   display: inline-block;
+}
+.check label input[type="checkbox"] ~ .icon-box .fa-check {
+   display: none;
+}
+.check label input[type="checkbox"]:checked ~ .icon-box .fa-plus {
+   display: none;
+}
+
+.check label input[type="checkbox"]:checked ~ .icon-box .fa-check {
+   display: inline-block;
+}
+
 .check label .icon-box span {
   margin: 5px;
   font-size: 18px;
@@ -157,10 +171,10 @@
 @font-face {
     font-family: 'Circular Std Black';
     src:
-        url('../fonts/Circular\ Std\ Book.ttf'),
-        url('../fonts/Circular\ Std\ Medium.ttf'),
-        url('../fonts/CircularSpUIv3T-Bold.ttf'),
-        url('../fonts/Circular\ Std\ Black.ttf');
+        font-url('../fonts/Circular\ Std\ Book.ttf'),
+        font-url('../fonts/Circular\ Std\ Medium.ttf'),
+        font-url('../fonts/CircularSpUIv3T-Bold.ttf'),
+        font-url('../fonts/Circular\ Std\ Black.ttf');
         }
 
 ::-webkit-scrollbar {
