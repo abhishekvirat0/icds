@@ -175,3 +175,13 @@ input-group:focus{
 
 input:focus::placeholder {
   color: black;
+}
+
+.note{
+    font-family: Circular Std Book;
+    font-style: normal;
+    font-weight: 450;
+    font-size: 14px;
+    line-height: 18px;
+    letter-spacing: -0.02em;
+}

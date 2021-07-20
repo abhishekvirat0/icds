@@ -166,6 +166,43 @@
                             </div>
                         {% endfor %}
                     </div>
+
+                    <!-- MILK POWDER Here  -->
+                    <div class="d-flex align-items-center mt-2">
+                        <span class="cost-heading">MILK POWDER </span>
+                        <span class="note ml-2">(Note: cost is considered if it from ICDS)</span>
+                    </div>
+                    <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">
+                    <div class="form-row">
+                        {% for milk in resultMilkPowder %}
+                            <div class="form-group col-md-3">
+                                <div style="position: relative;">
+                                    <label>{{milk}}</label>
+                                    <div class="input-group mb-3" style="min-height: 60px;overflow: hidden;">
+                                        <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" name="{{milk}}" value="{{ milk_cost|get_at_index:forloop.counter0 }}">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">per kg</span>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex float-right" style="padding: 5px;">
+                                        {% if milk in infantFood %}
+                                            <hr style="border: 3px solid #E44B4B;width:12px; border-radius: 15px; margin:1px; position:absolute; top: 80px; right: 115px; float:right;"/>
+                                        {% endif %}
+                                        {% if milk in toddlersFood %}
+                                            <hr style="border: 3px solid #E4D54B;width:12px; border-radius: 15px; margin:1px; position:absolute; top: 80px; right: 135px;"/>
+                                        {% endif %}
+                                        {% if milk in pregnantFood %}
+                                            <hr style="border: 3px solid #4BE4AD;width:12px; border-radius: 15px; margin:1px;position:absolute; top: 80px; right: 155px;"/>
+                                        {% endif %}
+                                        {% if milk in lactatingFood %}
+                                            <hr style="border: 3px solid #5AD8FD;width:12px; border-radius: 15px; margin:1px;position:absolute; top: 80px; right: 175px;"/>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+
                     </div>
 
 

@@ -189,3 +189,81 @@
 input:focus::placeholder {
   color: black;
 }
+
+.toogle {
+	 display: block;
+	 width: 49px;
+	 height: 30px;
+	 background: #fff;
+	 border: 0.851875px solid #d1def7;
+	 border-radius: 15px;
+	 display: flex;
+	 align-items: center;
+	 padding: 0 5px;
+	 cursor: pointer;
+}
+ .box {
+	 width: 19.5px;
+	 height: 19.5px;
+	 background: #b5c1d8;
+	 display: block;
+	 border-radius: 50%;
+	 transition: 0.3s all;
+	 margin-left: 0;
+	 background-position: left;
+}
+ .toggle input {
+	 position: absolute;
+	 display: none;
+}
+ input:checked + .box {
+	 margin-left: 50%;
+	 background: #5054dd;
+	 background-position: right;
+}
+ :active .box {
+	 width: 24px;
+}
+
+.input-group-text{
+    font-family: Circular Std Book;
+    font-style: normal;
+    font-weight: 450;
+    line-height: 18px;
+    letter-spacing: -0.36px;
+    border: none;
+    background-color: #eaeaea;
+}
+
+
+.input-group{
+    font-family: Circular Std Book;
+    font-style: normal;
+    font-weight: 450;
+    font-size: 14px;
+    line-height: 18px;
+    letter-spacing: -0.02em;
+    color: #44443F, 100%;
+}
+
+input-group:focus{
+    border-color: blue;
+}
+
+.input-group input{
+    border: none;
+    background-color: #eaeaea;
+    text-align: right;
+    max-width: 30%;
+    font-family: Circular Std Bold;
+    font-size: 18px;
+    line-height: 36px;
+    letter-spacing: -0.02em;
+}
+
+.input-group input:focus{
+    background-color: #eaeaea;
+    outline-style: none;
+    box-shadow: none;
+    border-color: transparent;
+}

@@ -27,7 +27,7 @@ opStatus = ''
 opStatus_lessKcal = ''
 
 
-def NUTCAL(quantity_food, Age_group):
+def NUTCAL(quantity_food):
     Food = quantity_food["Food_Name"]
     Food = Food.sort_values()
 
@@ -64,22 +64,18 @@ def NUTCAL(quantity_food, Age_group):
     ou = pd.concat([nut_out, nutritions], axis=1, ignore_index=False)
     ou.columns = ["Amount", "Nutritions"]
 
-    milk = pd.read_csv("Milk_powder.csv", encoding='unicode_escape')
-
-    if (Age_group == "child(1-3)yrs") or (Age_group == "6-12 months"):
-        ou1 = ou["Amount"] + milk["Milk_powder"] * 0.15
-
-    if (Age_group == "pregnant") or (Age_group == "lactation"):
-        ou1 = ou["Amount"] + milk["Milk_powder"] * 0.20
-
-    ou["Amount"] = ou1
-    # ou=np.round(ou)
+    ou = np.round(ou, 1)
     print('ou', ou)
     return ou
 
 
-def LPPWOVAR_LESSKCAL(Age_group, Food, input_cost):
+def LPPWOVAR_LESSKCAL(Age_group, Food, input_cost, scheme, quantity):
     global input_EAR, EAR, EAR_11, final_optimized_cost_lessKcal
+    print(scheme)
+    if scheme is None:
+        input_cost = input_cost[input_cost["Food_Name"] != "Milk powder"]
+    print('input-cost-check', input_cost)
+
     model = LpProblem("Optimal_diet_plan", LpMinimize)
     input_cost = input_cost.sort_values(['Food_Name'])
     print(input_cost)
@@ -98,11 +94,15 @@ def LPPWOVAR_LESSKCAL(Age_group, Food, input_cost):
 
     # input nutrient data and EARfull-----
     data = pd.read_csv("Nutrition_sheet_ICDS.csv", encoding='unicode_escape')
+    if scheme is None:
+        data = data[data["Food_Name"] != "Milk powder"]
+        Food = input_cost['Food_Name']
     # selecting particular food items based on input function
     data = pd.DataFrame(data.loc[data['Food_Name'].isin(Food)])
     Foodgroup = data["Food_Group"]
     data = data.sort_values(['Food_Name'])
     print(data)
+    print(Food)
 
     # input EARRDA2020 DATASET----
 
@@ -116,14 +116,15 @@ def LPPWOVAR_LESSKCAL(Age_group, Food, input_cost):
     input_EAR = input_EAR.rename(columns={0: "EAR", 1: "Lab"})
     EAR = input_EAR
 
-    # milk = pd.read_csv("Milk_powder.csv", encoding='unicode_escape')
-    #
-    # if Age_group == "6-12 months":
-    #     EAR_11 = EAR["EAR"] - milk["Milk_powder"] * 0.15
+    if scheme is None:
+        milk = pd.read_csv("Milk_powder.csv", encoding='unicode_escape')
 
-    # EAR_11[EAR_11 < 0] = 0
+        if Age_group == "6-12 months":
+            EAR_11 = EAR["EAR"] - milk["Milk_powder"] * (int(quantity) / 100)
 
-    # EAR["EAR"] = EAR_11
+        EAR_11[EAR_11 < 0] = 0
+
+        EAR["EAR"] = EAR_11
 
     F = data
     colnam = ["Food_Group", "Food_Name", "Quantity", "Energy", "Protein", "Fat", "Iron", "Calcium", "Zinc", "Folate",
@@ -229,6 +230,8 @@ def LPPWOVAR_LESSKCAL(Age_group, Food, input_cost):
         a[AA.columns == "Ghee"] = 1
         model += lpSum(a * allocation) >= 5
 
+    model += lpSum(allocation * cost_matrix) <= 8
+
     datainput = data[["Food_Name", "Food_Group"]]
     datainput = datainput.sort_values(["Food_Name"])
 
@@ -271,12 +274,17 @@ def LPPWOVAR_LESSKCAL(Age_group, Food, input_cost):
     quan = np.array(final_out_lessKcal["Amount"])
     c_1 = costperitem * quan
     final_out_lessKcal["cost"] = c_1
+    if scheme is None:
+        final_out_lessKcal.loc[len(final_out_lessKcal.index)] = ['Milk powder', int(quantity), 'Milk powder', 0]
     print(final_out_lessKcal)
     return final_out_lessKcal
 
 
-def LPPWOVAR(Age_group, Food, input_cost):
+def LPPWOVAR(Age_group, Food, input_cost, scheme, quantity):
     global input_EAR, EAR, EAR_11, final_optimized_cost
+    if scheme is None:
+        input_cost = input_cost[input_cost["Food_Name"] != "Milk powder"]
+
     model = LpProblem("Optimal_diet_plan", LpMinimize)
     input_cost = input_cost.sort_values(['Food_Name'])
     print(input_cost)
@@ -295,6 +303,9 @@ def LPPWOVAR(Age_group, Food, input_cost):
 
     # input nutrient data and EARfull-----
     data = pd.read_csv("Nutrition_sheet_ICDS.csv", encoding='unicode_escape')
+    if scheme is None:
+        data = data[data["Food_Name"] != "Milk powder"]
+        Food = input_cost['Food_Name']
     # selecting particular food items based on input function
     data = pd.DataFrame(data.loc[data['Food_Name'].isin(Food)])
     Foodgroup = data["Food_Group"]
@@ -317,19 +328,15 @@ def LPPWOVAR(Age_group, Food, input_cost):
     input_EAR = pd.concat([input_EAR, Lab], axis=1, ignore_index=True)
     input_EAR = input_EAR.rename(columns={0: "EAR", 1: "Lab"})
     EAR = input_EAR
-
-    milk = pd.read_csv("Milk_powder.csv", encoding='unicode_escape')
-
-    if (Age_group == "child(1-3)yrs") or (Age_group == "6-12 months"):
-        EAR_11 = EAR["EAR"] - milk["Milk_powder"] * 0.15
-
-    if (Age_group == "pregnant") or (Age_group == "lactation"):
-        EAR_11 = EAR["EAR"] - milk["Milk_powder"] * 0.20
-
-    EAR_11[EAR_11 < 0] = 0
-
-    EAR["EAR"] = EAR_11
-
+    print('Ear prev', EAR)
+    if scheme is None:
+        milk = pd.read_csv("Milk_powder.csv", encoding='unicode_escape')
+        print('quan', type(quantity))
+        EAR_11 = EAR["EAR"] - milk["Milk_powder"] * (quantity / 100)
+        print('ear11', EAR_11)
+        EAR_11[EAR_11 < 0] = 0
+        EAR["EAR"] = EAR_11
+    print('Ear is', EAR)
     F = data
     colnam = ["Food_Group", "Food_Name", "Quantity", "Energy", "Protein", "Fat", "Iron", "Calcium", "Zinc", "Folate",
               "Cost"]
@@ -445,17 +452,17 @@ def LPPWOVAR(Age_group, Food, input_cost):
             a[AA.columns == "Egg"] = 1
             model += lpSum(a * allocation) == 45
 
-    # if (Age_group == "pregnant") or (Age_group == "lactation"):
-    #     if "Fruits" in tuple(Foodgroup):
-    #         a = np.zeros((len(AA.columns)))
-    #         a[AA.columns == "Banana"] = 1
-    #         model += lpSum(a * allocation) >= 10
-
     if "Oil" in tuple(Foodgroup):
         a = np.zeros((len(AA.columns)))
         a[AA.columns == "Oil"] = 1
         a[AA.columns == "Ghee"] = 1
         model += lpSum(a * allocation) >= 5
+
+    if (Age_group == "child(1-3)yrs") or (Age_group == "6-12 months"):
+        model += lpSum(allocation * cost_matrix) <= 8
+
+    if (Age_group == "pregnant") or (Age_group == "lactation"):
+        model += lpSum(allocation * cost_matrix) <= 9.5
 
     datainput = data[["Food_Name", "Food_Group"]]
     datainput = datainput.sort_values(["Food_Name"])
@@ -500,6 +507,8 @@ def LPPWOVAR(Age_group, Food, input_cost):
     quan = np.array(final_out["Amount"])
     c_1 = costperitem * quan
     final_out["cost"] = c_1
+    if scheme is None:
+        final_out.loc[len(final_out.index)] = ['Milk powder', quantity, 'Milk powder', 0]
     print(final_out)
     return final_out
 
@@ -591,15 +600,31 @@ class FoodSelection(View):
             Cereals = request.POST.getlist('Cereals', None)
             Pulses = request.POST.getlist('Pulses', None)
             Others = request.POST.getlist('Others', None)
+            milkpowder = request.POST.getlist('milkpowder', None)
+            print('MILK-POWDER', milkpowder)
+            scheme = request.POST.get('scheme', None)
+            milkPowderQuantity = request.POST.get('milkPowderQuantity', None)
+
             toddlersCereals = request.POST.getlist('toddlersCereals', None)
             toddlersPulses = request.POST.getlist('toddlersPulses', None)
             toddlersOthers = request.POST.getlist('toddlersOthers', None)
+            toddlersmilkpowder = request.POST.getlist('toddlersmilkpowder', None)
+            toddlersscheme = request.POST.get('toddlersscheme', None)
+            toddlersmilkPowderQuantity = request.POST.get('toddlersmilkPowderQuantity', None)
+
             pregnantCereals = request.POST.getlist('pregnantCereals', None)
             pregnantPulses = request.POST.getlist('pregnantPulses', None)
             pregnantOthers = request.POST.getlist('pregnantOthers', None)
+            pregnantmilkpowder = request.POST.getlist('pregnantmilkpowder', None)
+            pregnantscheme = request.POST.get('pregnantscheme', None)
+            pregnantmilkPowderQuantity = request.POST.get('pregnantmilkPowderQuantity', None)
+
             lactatingCereals = request.POST.getlist('lactatingCereals', None)
             lactatingPulses = request.POST.getlist('lactatingPulses', None)
             lactatingOthers = request.POST.getlist('lactatingOthers', None)
+            lactatingmilkpowder = request.POST.getlist('lactatingmilkpowder', None)
+            lactatingscheme = request.POST.get('lactatingscheme', None)
+            lactatingmilkPowderQuantity = request.POST.get('lactatingmilkPowderQuantity', None)
 
             request.session['Cereals'] = Cereals
             request.session['Pulses'] = Pulses
@@ -613,6 +638,21 @@ class FoodSelection(View):
             request.session['lactatingCereals'] = lactatingCereals
             request.session['lactatingPulses'] = lactatingPulses
             request.session['lactatingOthers'] = lactatingOthers
+            request.session['milkpowder'] = milkpowder
+            request.session['scheme'] = scheme
+            request.session['milkPowderQuantity'] = milkPowderQuantity
+
+            request.session['toddlersmilkpowder'] = toddlersmilkpowder
+            request.session['toddlersscheme'] = toddlersscheme
+            request.session['toddlersmilkPowderQuantity'] = toddlersmilkPowderQuantity
+
+            request.session['pregnantmilkpowder'] = pregnantmilkpowder
+            request.session['pregnantscheme'] = pregnantscheme
+            request.session['pregnantmilkPowderQuantity'] = pregnantmilkPowderQuantity
+
+            request.session['lactatingmilkpowder'] = lactatingmilkpowder
+            request.session['lactatingscheme'] = lactatingscheme
+            request.session['lactatingmilkPowderQuantity'] = lactatingmilkPowderQuantity
 
             return redirect('FoodCost')
         return render(request, 'icds/index.html')
@@ -636,31 +676,34 @@ class FoodCost(View):
             Cereals = request.session['Cereals']
             Pulses = request.session['Pulses']
             Others = request.session['Others']
-            infantFood = itertools.chain(Cereals, Pulses, Others)
+            milkpowder = request.session['milkpowder']
+            infantFood = itertools.chain(Cereals, Pulses, Others, milkpowder)
             infantFood = list(infantFood)
             request.session['infantFood'] = infantFood
 
             toddlersCereals = request.session['toddlersCereals']
             toddlersPulses = request.session['toddlersPulses']
             toddlersOthers = request.session['toddlersOthers']
-            toddlersFood = itertools.chain(toddlersCereals, toddlersPulses, toddlersOthers)
+            toddlersmilkpowder = request.session['toddlersmilkpowder']
+            toddlersFood = itertools.chain(toddlersCereals, toddlersPulses, toddlersOthers, toddlersmilkpowder)
             toddlersFood = list(toddlersFood)
             request.session['toddlersFood'] = toddlersFood
 
             pregnantCereals = request.session['pregnantCereals']
             pregnantPulses = request.session['pregnantPulses']
             pregnantOthers = request.session['pregnantOthers']
-            pregnantFood = itertools.chain(pregnantCereals, pregnantPulses, pregnantOthers)
+            pregnantmilkpowder = request.session['pregnantmilkpowder']
+            pregnantFood = itertools.chain(pregnantCereals, pregnantPulses, pregnantOthers, pregnantmilkpowder)
             pregnantFood = list(pregnantFood)
             request.session['pregnantFood'] = pregnantFood
 
             lactatingCereals = request.session['lactatingCereals']
             lactatingPulses = request.session['lactatingPulses']
             lactatingOthers = request.session['lactatingOthers']
-            lactatingFood = itertools.chain(lactatingCereals, lactatingPulses, lactatingOthers)
+            lactatingmilkpowder = request.session['lactatingmilkpowder']
+            lactatingFood = itertools.chain(lactatingCereals, lactatingPulses, lactatingOthers, lactatingmilkpowder)
             lactatingFood = list(lactatingFood)
             request.session['lactatingFood'] = lactatingFood
-
             data = pd.read_csv('Nutrition_sheet_ICDS.csv', encoding='unicode_escape')
             data = data[['Food_Name', 'Cost']]
             data['Cost'] = data['Cost'] * 10
@@ -676,10 +719,14 @@ class FoodCost(View):
             print(resultPulses)
             resultOthers = sorted(np.unique(Others + toddlersOthers + pregnantOthers + lactatingOthers))
             print(resultOthers)
+            resultMilkPowder = sorted(
+                np.unique(milkpowder + toddlersmilkpowder + pregnantmilkpowder + lactatingmilkpowder))
+            print(resultMilkPowder)
 
             cereal_cost = []
             pulse_cost = []
             other_cost = []
+            milk_cost = []
 
             for cereal in resultCereals:
                 if cereal in food_cost:
@@ -696,13 +743,19 @@ class FoodCost(View):
                     print(other, food_cost[other])
                     other_cost.append(food_cost[other])
 
+            for milk in resultMilkPowder:
+                if milk in food_cost:
+                    print(milk, food_cost[milk])
+                    milk_cost.append(food_cost[milk])
+
             return render(request, 'icds/foodCostAll.html',
                           {'infant': infant, 'toddler': toddler, 'pregnant': pregnant, 'lactating': lactating,
                            'infantFood': infantFood, 'toddlersFood': toddlersFood, 'pregnantFood': pregnantFood,
                            'lactatingFood': lactatingFood,
                            'resultCereals': resultCereals, 'resultPulses': resultPulses, 'resultOthers': resultOthers,
-                           'cereal_cost': cereal_cost,
-                           'pulse_cost': pulse_cost, 'other_cost': other_cost})
+                           'resultMilkPowder': resultMilkPowder,
+                           'cereal_cost': cereal_cost, 'pulse_cost': pulse_cost, 'other_cost': other_cost,
+                           'milk_cost': milk_cost})
 
         return render(request, 'icds/index.html')
 
@@ -734,6 +787,7 @@ class FoodCost(View):
         Egg = request.POST.get('Egg', None)
         Banana = request.POST.get('Banana', None)
         Groundnut = request.POST.get('Ground nut', None)
+        MilkPowder = request.POST.get('Milk powder', None)
 
         cost_list = dict(
             {'Jowar': Jowar, 'Ragi': Ragi, 'Wheat': Wheat, 'Wheat flour Atta': WheatflourAtta,
@@ -744,15 +798,12 @@ class FoodCost(View):
              'Red Gram (Arhar dal)(Toor dal)': RedGram, 'Green Gram (Moong dal)': GreenGram,
              'Red Lentil (Masoor dal)': RedLentil,
              'Jaggery': Jaggery, 'Sugar': Sugar, 'Ghee': Ghee, 'Oil': Oil, 'Egg': Egg, 'Banana': Banana,
-             'Ground nut': Groundnut
+             'Ground nut': Groundnut, 'Milk powder': MilkPowder
              })
         cost_list = dict(filter(lambda item: item[1] is not None, cost_list.items()))
 
         request.session['cost_list'] = cost_list
         print(cost_list)
-
-        # print(infantFoodCost)
-        # return JsonResponse({'hello': 'world'})
         return redirect('result')
 
 
@@ -769,6 +820,10 @@ class Result(View):
         Cereals = request.session['Cereals']
         Pulses = request.session['Pulses']
         Others = request.session['Others']
+        scheme = request.session['scheme']
+        milkPowderQuantity = request.session['milkPowderQuantity']
+        if milkPowderQuantity is not None:
+            milkPowderQuantity = int(milkPowderQuantity)
         cereal_prop = []
         pulse_prop = []
         other_prop = []
@@ -790,7 +845,7 @@ class Result(View):
             Age_group = "6-12 months"
             Food = infantFoodCost['Food_Name']
 
-            final_out_infant = LPPWOVAR(Age_group, Food, infantFoodCost)
+            final_out_infant = LPPWOVAR(Age_group, Food, infantFoodCost, scheme, milkPowderQuantity)
 
             final_out_infant['Amount'] = np.ceil(final_out_infant['Amount'])
             final_prop_infant = final_out_infant.set_index('Food_Name')['Amount'].to_dict()
@@ -812,11 +867,9 @@ class Result(View):
                     other_prop.append(final_prop_infant[other])
 
             print(final_optimized_cost)
-            nutrition_calc = NUTCAL(final_out_infant, Age_group)
+            nutrition_calc = NUTCAL(final_out_infant)
             final_q = nutrition_calc.set_index('Nutritions')['Amount'].to_dict()
             print(final_q)
-            # final_out_infant_lessKcal = LPPWOVAR_LESSKCAL(Age_group, Food, infantFoodCost)
-            # nutrition_calc_lessKcal = NUTCAL(final_out_infant_lessKcal, Age_group)
 
         return render(request, 'icds/result.html',
                       {'infant': infant, 'toddler': toddler, 'pregnant': pregnant, 'lactating': lactating,
@@ -834,12 +887,20 @@ def filter_data(request):
         Cereals = request.session['Cereals']
         Pulses = request.session['Pulses']
         Others = request.session['Others']
+        milkpowder = request.session['milkpowder']
+        scheme = request.session['scheme']
+        milkPowderQuantity = request.session['milkPowderQuantity']
+        if milkPowderQuantity is not None:
+            milkPowderQuantity = int(milkPowderQuantity)
         cereal_prop = []
         pulse_prop = []
         other_prop = []
+        milk_prop = []
         cereal_prop_lessKcal = []
         pulse_prop_lessKcal = []
         other_prop_lessKcal = []
+        milk_prop_lessKcal = []
+
         if request.session['infant'] > 0:
             cost_list = request.session['cost_list']
             for k, v in cost_list.items():
@@ -857,7 +918,7 @@ def filter_data(request):
             Age_group = "6-12 months"
             Food = infantFoodCost['Food_Name']
 
-            final_out_infant = LPPWOVAR(Age_group, Food, infantFoodCost)
+            final_out_infant = LPPWOVAR(Age_group, Food, infantFoodCost, scheme, milkPowderQuantity)
 
             final_out_infant['Amount'] = np.ceil(final_out_infant['Amount'])
             final_prop_infant = final_out_infant.set_index('Food_Name')['Amount'].to_dict()
@@ -884,13 +945,21 @@ def filter_data(request):
 
             request.session['other_prop'] = other_prop
 
+            for milk in milkpowder:
+                if milk in final_prop_infant:
+                    print(milk, final_prop_infant[milk])
+                    milk_prop.append(final_prop_infant[milk])
+
+            request.session['milk_prop'] = milk_prop
+
             print(final_optimized_cost)
-            nutrition_calc = NUTCAL(final_out_infant, Age_group)
+            nutrition_calc = NUTCAL(final_out_infant)
             final_q = nutrition_calc.set_index('Nutritions')['Amount'].to_dict()
             print(final_q)
 
             # less calories intake calculation
-            final_out_infant_lessKcal = LPPWOVAR_LESSKCAL(Age_group, Food, infantFoodCost)
+
+            final_out_infant_lessKcal = LPPWOVAR_LESSKCAL(Age_group, Food, infantFoodCost, scheme, milkPowderQuantity)
             final_out_infant_lessKcal['Amount'] = np.ceil(final_out_infant_lessKcal['Amount'])
             final_prop_infant_lessKcal = final_out_infant_lessKcal.set_index('Food_Name')['Amount'].to_dict()
             print(final_prop_infant_lessKcal)
@@ -916,19 +985,30 @@ def filter_data(request):
 
             request.session['other_prop_lessKcal'] = other_prop_lessKcal
 
-            nutrition_calc_lessKcal = NUTCAL(final_out_infant_lessKcal, Age_group)
+            for milk in milkpowder:
+                if milk in final_prop_infant_lessKcal:
+                    print(milk, final_prop_infant_lessKcal[milk])
+                    milk_prop_lessKcal.append(final_prop_infant_lessKcal[milk])
+
+            request.session['milk_prop_lessKcal'] = milk_prop_lessKcal
+
+            nutrition_calc_lessKcal = NUTCAL(final_out_infant_lessKcal)
             final_q_less = nutrition_calc_lessKcal.set_index('Nutritions')['Amount'].to_dict()
 
             i = render_to_string('icds/resultInfant.html',
                                  {
-                                     'Cereals': Cereals, 'Pulses': Pulses, 'Others': Others, 'cereal_prop': cereal_prop,
-                                     'pulse_prop': pulse_prop, 'other_prop': other_prop, 'final_q': final_q,
-                                     'final_optimized_cost': final_optimized_cost, 'opStatus': opStatus,
+                                     'Cereals': Cereals, 'Pulses': Pulses, 'Others': Others,'milkpowder': milkpowder,
+                                     'cereal_prop': cereal_prop, 'pulse_prop': pulse_prop, 'other_prop': other_prop,
+                                     'milk_prop': milk_prop,
+                                     'final_q': final_q, 'final_optimized_cost': final_optimized_cost,
+                                     'opStatus': opStatus,
                                      'cereal_prop_lessKcal': cereal_prop_lessKcal,
                                      'pulse_prop_lessKcal': pulse_prop_lessKcal,
-                                     'other_prop_lessKcal': other_prop_lessKcal, 'final_q_less': final_q_less,
+                                     'other_prop_lessKcal': other_prop_lessKcal,
+                                     'milk_prop_lessKcal': milk_prop_lessKcal,
+                                     'final_q_less': final_q_less,
                                      'final_optimized_cost_lessKcal': final_optimized_cost_lessKcal,
-                                     'opStatus_lessKcal': opStatus_lessKcal
+                                     'opStatus_lessKcal': opStatus_lessKcal, 'scheme': scheme
                                  })
             return JsonResponse({'data': i})
 
@@ -936,9 +1016,15 @@ def filter_data(request):
         toddlersCereals = request.session['toddlersCereals']
         toddlersPulses = request.session['toddlersPulses']
         toddlersOthers = request.session['toddlersOthers']
+        toddlersmilkpowder = request.session['toddlersmilkpowder']
+        toddlersscheme = request.session['toddlersscheme']
+        toddlersmilkPowderQuantity = request.session['toddlersmilkPowderQuantity']
+        if toddlersmilkPowderQuantity is not None:
+            milkPowderQuantity = int(toddlersmilkPowderQuantity)
         cereal_prop_toddler = []
         pulse_prop_toddler = []
         other_prop_toddler = []
+        milk_prop_toddler = []
         if request.session['toddler'] > 0:
             print('toddler here ---')
             cost_list = request.session['cost_list']
@@ -957,7 +1043,7 @@ def filter_data(request):
             Age_group = "child(1-3)yrs"
             Food = toddlersFoodCost['Food_Name']
 
-            final_out_toddler = LPPWOVAR(Age_group, Food, toddlersFoodCost)
+            final_out_toddler = LPPWOVAR(Age_group, Food, toddlersFoodCost, toddlersscheme, toddlersmilkPowderQuantity)
 
             final_out_toddler['Amount'] = np.ceil(final_out_toddler['Amount'])
             final_prop_toddler = final_out_toddler.set_index('Food_Name')['Amount'].to_dict()
@@ -984,8 +1070,15 @@ def filter_data(request):
 
             request.session['other_prop_toddler'] = other_prop_toddler
 
+            for milk in toddlersmilkpowder:
+                if milk in final_prop_toddler:
+                    print(milk, final_prop_toddler[milk])
+                    milk_prop_toddler.append(final_prop_toddler[milk])
+
+            request.session['milk_prop_toddler'] = milk_prop_toddler
+
             print(final_optimized_cost)
-            nutrition_calc = NUTCAL(final_out_toddler, Age_group)
+            nutrition_calc = NUTCAL(final_out_toddler)
             final_q = nutrition_calc.set_index('Nutritions')['Amount'].to_dict()
             print(final_q)
             t = render_to_string('icds/resultToddler.html',
@@ -993,7 +1086,9 @@ def filter_data(request):
                                      'toddlersCereals': toddlersCereals, 'toddlersPulses': toddlersPulses,
                                      'toddlersOthers': toddlersOthers, 'cereal_prop_toddler': cereal_prop_toddler,
                                      'pulse_prop_toddler': pulse_prop_toddler, 'other_prop_toddler': other_prop_toddler,
+                                     'milk_prop_toddler': milk_prop_toddler,
                                      'final_q': final_q, 'final_optimized_cost': final_optimized_cost,
+                                     'toddlersscheme': toddlersscheme,
                                      'opStatus': opStatus
                                  })
             return JsonResponse({'data': t})
@@ -1002,12 +1097,17 @@ def filter_data(request):
         pregnantCereals = request.session['pregnantCereals']
         pregnantPulses = request.session['pregnantPulses']
         pregnantOthers = request.session['pregnantOthers']
-
+        pregnantmilkpowder = request.session['pregnantmilkpowder']
+        pregnantscheme = request.session['pregnantscheme']
+        pregnantmilkPowderQuantity = request.session['pregnantmilkPowderQuantity']
+        if pregnantmilkPowderQuantity is not None:
+            pregnantmilkPowderQuantity = int(pregnantmilkPowderQuantity)
         cereal_prop_pregnant = []
         pulse_prop_pregnant = []
         other_prop_pregnant = []
+        milk_prop_pregnant = []
+
         if request.session['pregnant'] > 0:
-            print('toddler here ---')
             cost_list = request.session['cost_list']
             for k, v in cost_list.items():
                 cost_list[k] = float(v)
@@ -1024,7 +1124,7 @@ def filter_data(request):
             Age_group = "pregnant"
             Food = pregnantFoodCost['Food_Name']
 
-            final_out_pregnant = LPPWOVAR(Age_group, Food, pregnantFoodCost)
+            final_out_pregnant = LPPWOVAR(Age_group, Food, pregnantFoodCost, pregnantscheme, pregnantmilkPowderQuantity)
 
             final_out_pregnant['Amount'] = np.ceil(final_out_pregnant['Amount'])
             final_prop_pregnant = final_out_pregnant.set_index('Food_Name')['Amount'].to_dict()
@@ -1044,8 +1144,14 @@ def filter_data(request):
                 if other in final_prop_pregnant:
                     print(other, final_prop_pregnant[other])
                     other_prop_pregnant.append(final_prop_pregnant[other])
+
+            for milk in pregnantmilkpowder:
+                if milk in final_prop_pregnant:
+                    print(milk, final_prop_pregnant[milk])
+                    milk_prop_pregnant.append(final_prop_pregnant[milk])
+
             print(final_optimized_cost)
-            nutrition_calc = NUTCAL(final_out_pregnant, Age_group)
+            nutrition_calc = NUTCAL(final_out_pregnant)
             final_q = nutrition_calc.set_index('Nutritions')['Amount'].to_dict()
             print(final_q)
             p = render_to_string('icds/resultPregnant.html',
@@ -1054,7 +1160,9 @@ def filter_data(request):
                                      'pregnantOthers': pregnantOthers, 'cereal_prop_pregnant': cereal_prop_pregnant,
                                      'pulse_prop_pregnant': pulse_prop_pregnant,
                                      'other_prop_pregnant': other_prop_pregnant,
+                                     'milk_prop_pregnant': milk_prop_pregnant,
                                      'final_q': final_q, 'final_optimized_cost': final_optimized_cost,
+                                     'pregnantscheme': pregnantscheme,
                                      'opStatus': opStatus
                                  })
             return JsonResponse({'data': p})
@@ -1063,11 +1171,17 @@ def filter_data(request):
         lactatingCereals = request.session['lactatingCereals']
         lactatingPulses = request.session['lactatingPulses']
         lactatingOthers = request.session['lactatingOthers']
+        lactatingmilkpowder = request.session['lactatingmilkpowder']
+        lactatingscheme = request.session['lactatingscheme']
+        lactatingmilkPowderQuantity = request.session['lactatingmilkPowderQuantity']
+        if lactatingmilkPowderQuantity is not None:
+            lactatingmilkPowderQuantity = int(lactatingmilkPowderQuantity)
         cereal_prop_lactating = []
         pulse_prop_lactating = []
         other_prop_lactating = []
+        milk_prop_lactating = []
         if request.session['lactating'] > 0:
-            print('toddler here ---')
+
             cost_list = request.session['cost_list']
             for k, v in cost_list.items():
                 cost_list[k] = float(v)
@@ -1084,7 +1198,8 @@ def filter_data(request):
             Age_group = "lactation"
             Food = lactatingFoodCost['Food_Name']
 
-            final_out_lactating = LPPWOVAR(Age_group, Food, lactatingFoodCost)
+            final_out_lactating = LPPWOVAR(Age_group, Food, lactatingFoodCost, lactatingscheme,
+                                           lactatingmilkPowderQuantity)
 
             final_out_lactating['Amount'] = np.ceil(final_out_lactating['Amount'])
             final_prop_lactating = final_out_lactating.set_index('Food_Name')['Amount'].to_dict()
@@ -1105,8 +1220,13 @@ def filter_data(request):
                     print(other, final_prop_lactating[other])
                     other_prop_lactating.append(final_prop_lactating[other])
 
+            for milk in lactatingmilkpowder:
+                if milk in final_prop_lactating:
+                    print(milk, final_prop_lactating[milk])
+                    milk_prop_lactating.append(final_prop_lactating[milk])
+
             print(final_optimized_cost)
-            nutrition_calc = NUTCAL(final_out_lactating, Age_group)
+            nutrition_calc = NUTCAL(final_out_lactating)
             final_q = nutrition_calc.set_index('Nutritions')['Amount'].to_dict()
 
             print(final_q, opStatus)
@@ -1118,7 +1238,9 @@ def filter_data(request):
                                       'cereal_prop_lactating': cereal_prop_lactating,
                                       'pulse_prop_lactating': pulse_prop_lactating,
                                       'other_prop_lactating': other_prop_lactating,
+                                      'milk_prop_lactating': milk_prop_lactating,
                                       'final_q': final_q, 'final_optimized_cost': final_optimized_cost,
+                                      'lactatingscheme': lactatingscheme,
                                       'opStatus': opStatus
                                   })
             return JsonResponse({'data': lw})
@@ -1130,29 +1252,57 @@ class GetPdf(View):
         if ('query' not in request.session) and ('infant' not in request.session):
             return redirect('home')
         infant = request.session['infant']
-        Cereals = request.session['Cereals']
-        Pulses = request.session['Pulses']
-        Others = request.session['Others']
-        cereal_prop = request.session['cereal_prop']
-        pulse_prop = request.session['pulse_prop']
-        other_prop = request.session['other_prop']
+        toddler = request.session['toddler']
+        pregnant = request.session['pregnant']
+        lactating = request.session['lactating']
 
+        cost_list = request.session['cost_list']
+        for k, v in cost_list.items():
+            cost_list[k] = float(v)
+
+        cost_list = pd.DataFrame(cost_list.items(), columns=['Food_Name', 'input_cost'])
+        print(cost_list)
+
+        if pregnant > 0:
+            pregnantscheme = request.session['pregnantscheme']
+            pregnantmilkPowderQuantity = request.session['pregnantmilkPowderQuantity']
+            if pregnantmilkPowderQuantity is not None:
+                pregnantmilkPowderQuantity = int(pregnantmilkPowderQuantity)
+            pregnantFood = request.session['pregnantFood']
+            print(pregnantFood)
+            pregnantFoodCost = cost_list[cost_list['Food_Name'].isin(pregnantFood)]
+            print(pregnantFoodCost)
+
+            pregnantFoodCost['input_cost'] = pregnantFoodCost['input_cost'] / 1000
+            Age_group = "pregnant"
+            Food = pregnantFoodCost['Food_Name']
+
+            final_out_pregnant = LPPWOVAR(Age_group, Food, pregnantFoodCost, pregnantscheme, pregnantmilkPowderQuantity)
+
+            print(final_out_pregnant)
+
+        if lactating > 0:
+            lactatingscheme = request.session['lactatingscheme']
+            lactatingmilkPowderQuantity = request.session['lactatingmilkPowderQuantity']
+            if lactatingmilkPowderQuantity is not None:
+                lactatingmilkPowderQuantity = int(lactatingmilkPowderQuantity)
+            lactatingFood = request.session['lactatingFood']
+            print(lactatingFood)
+            lactatingFoodCost = cost_list[cost_list['Food_Name'].isin(lactatingFood)]
+            print(lactatingFoodCost)
+
+            lactatingFoodCost['input_cost'] = lactatingFoodCost['input_cost'] / 1000
+            Age_group = "lactation"
+            Food = lactatingFoodCost['Food_Name']
+
+            final_out_lactating = LPPWOVAR(Age_group, Food, lactatingFoodCost, lactatingscheme,
+                                           lactatingmilkPowderQuantity)
+
+            # Write the DataFrame to JSON (as easy as can be)
+            data = final_out_lactating.to_json(orient='records')
+            print(data)
         params = {
             'today': datetime.now(),
-            'infant': infant,
-            'Cereals': Cereals,
-            'Pulses': Pulses,
-            'Others': Others,
-            'cereal_prop': cereal_prop,
-            'pulse_prop': pulse_prop,
-            'other_prop': other_prop,
-            # 'toddler': toddler,
-            # 'toddlersCereals': toddlersCereals,
-            # 'toddlersPulses': toddlersPulses,
-            # 'toddlersOthers': toddlersOthers,
-            # 'cereal_prop_toddler': cereal_prop_toddler,
-            # 'pulse_prop_toddler': pulse_prop_toddler,
-            # 'other_prop_toddler': other_prop_toddler,
-
+            'data': data
         }
-        return Render.render('icds/pdf.html', params)
+        return Render.render('icds/pdf.html')

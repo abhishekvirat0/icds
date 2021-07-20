@@ -64,82 +64,21 @@
         <div class="card-header">
             <h3>Nutrition Optimization Report - {{ today | date:"d/m/Y" }}</h3>
         </div>
-
-        {% if infant > 0 %}
-        <table class="table">
-            <thead>
-            <tr>
-                <th>Food Items</th>
-                <th>Food Quantity (6 mo to 1 yr)</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for cereal in Cereals %}
+        {% if data %}
+        <table>
+            {% for k in data %}
+            {{ k }}
+                {% for item_1, item_2, item_3,item_4 in k.items %}
                 <tr>
-                    <td style="font-family: Circular Std Bold;">{{ cereal }}</td>
-                    <td>{{ cereal_prop|get_at_index:forloop.counter0 }} gm</td>
+                    <td>{{ item_1 }}</td>
+                    <td>{{ item_2 }}</td>
+                    <td>{{ item_3 }}</td>
+                    <td>{{ item_4 }}</td>
                 </tr>
+                {% endfor %}
             {% endfor %}
-            </tbody>
-            <tbody>
-            {% for pulse in Pulses %}
-                <tr>
-                    <td style="font-family: Circular Std Bold;">{{ pulse }}</td>
-                    <td>{{ pulse_prop|get_at_index:forloop.counter0 }} gm</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-            <tbody>
-            {% for other in Others %}
-                <tr>
-                    <td style="font-family: Circular Std Bold;">{{ other }} </td>
-                    <td>{{ other_prop|get_at_index:forloop.counter0 }} ml</td>
-                </tr>
-            {% endfor %}
-            </tbody>
         </table>
         {% endif %}
-
-        {% if toddler > 0 %}
-        <br><br><br><br><br>
-        <div class="card-header">
-            <h3>Nutrition Optimization Report - {{ today | date:"d/m/Y" }}</h3>
-        </div>
-
-        <table class="table">
-            <thead>
-            <tr>
-                <th>Food Items</th>
-                <th>Food Quantity (1 yr to 3 yrs)</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for cereal in toddlersCereals %}
-                <tr>
-                    <td style="font-family: Circular Std Bold;">{{ cereal }}</td>
-                    <td>{{ cereal_prop_toddler|get_at_index:forloop.counter0 }} gm</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-            <tbody>
-            {% for pulse in toddlersPulses %}
-                <tr>
-                    <td style="font-family: Circular Std Bold;">{{ pulse }}</td>
-                    <td>{{ pulse_prop_toddler|get_at_index:forloop.counter0 }} gm</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-            <tbody>
-            {% for other in toddlersOthers %}
-                <tr>
-                    <td style="font-family: Circular Std Bold;">{{ other }} </td>
-                    <td>{{ other_prop_toddler|get_at_index:forloop.counter0 }} ml</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-        {% endif %}
-
     </div>
 </div>
 

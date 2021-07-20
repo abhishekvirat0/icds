@@ -148,6 +148,26 @@
                             </div>
                         {% endfor %}
                     </div>
+
+                    <!-- milk powder Here  -->
+                    <div class="d-flex align-items-center mt-2">
+                        <span class="cost-heading">MILK POWDER</span>
+                    </div>
+                    <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">
+                    <div class="form-row">
+                        {% for milk in o %}
+                            <div class="form-group col-md-3" >
+                                <label>{{other}}</label>
+                                <div class="input-group mb-3">
+                                    <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" name="{{other}}" value="{{ o_cost|get_at_index:forloop.counter0 }}">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">per unit</span>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+
                     </div>
 
 
