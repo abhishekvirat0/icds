@@ -27,6 +27,54 @@ opStatus = ''
 opStatus_lessKcal = ''
 
 
+def Percentagecalculation(nutrition, Age_group):
+    nutrition = nutrition.sort_index(ascending=False, axis=1)
+    EARfull = pd.read_csv("EARFULL.csv", encoding='unicode_escape')
+    if Age_group == "child(1-3)yrs":
+        input_EAR = EARfull["Gap1_3yrs"]
+    if Age_group == "pregnant":
+        input_EAR = EARfull["Gap_preg"]
+    if Age_group == "lactation":
+        input_EAR = EARfull["Gap_lact"]
+    if Age_group == "6-12 months":
+        input_EAR = EARfull["Gap_6-12-c1"]
+
+    RDAfull = pd.read_csv("RDAFULL.csv", encoding='unicode_escape')
+    if Age_group == "child(1-3)yrs":
+        input_RDA = RDAfull["Gap1_3yrs"]
+    if Age_group == "pregnant":
+        input_RDA = RDAfull["Gap_preg"]
+    if Age_group == "lactation":
+        input_RDA = RDAfull["Gap_lact"]
+    if Age_group == "6-12 months":
+        input_RDA = RDAfull["Gap_6-12-c1"]
+
+    other_nut = nutrition.drop([3, 4, 5, 6])
+    other_units = ["Energy (Kcal)", "Protein (g)", "Fat (g)"]
+    other_nut["Nutritions"] = other_units
+    units = EARfull["Nutritions"]
+
+    Lab = EARfull["Lab"]
+    input_EAR = pd.concat([Lab, input_EAR], axis=1, ignore_index=True)
+    input_EAR = input_EAR.rename(columns={0: "Lab", 1: "EAR"})
+    input_RDA = pd.concat([Lab, input_RDA], axis=1, ignore_index=True)
+    input_RDA = input_RDA.rename(columns={0: "Lab", 1: "RDA"})
+
+    percentage_calculation = nutrition.loc[nutrition['Nutritions'].isin(input_EAR["Lab"])]
+    percentage_calculation.index = input_RDA.index
+    percentage_calculation["EAR_PERCENT"] = percentage_calculation["Amount"] / input_EAR["EAR"] * 100
+    percentage_calculation["RDA_PERCENT"] = percentage_calculation["Amount"] / input_RDA["RDA"] * 100
+    percentage_calculation["RDA_PERCENT"] = np.ceil(percentage_calculation["RDA_PERCENT"])
+    percentage_calculation["EAR_PERCENT"] = np.ceil(percentage_calculation["EAR_PERCENT"])
+    percentage_calculation["Nutritions"] = units
+
+    Fat_percentage = np.ceil(((nutrition["Amount"].iloc[2] * 9) / nutrition["Amount"].iloc[0]) * 100)
+
+    percentage_calculation.columns = ["Nutritions", "Nutrition composition", "Perc. of EAR (%)", "Perc. of RDA (%)"]
+    other_nut.columns = ["Nutritions", "Nutrition composition"]
+    return percentage_calculation, Fat_percentage, other_nut
+
+
 def NUTCAL(quantity_food):
     Food = quantity_food["Food_Name"]
     Food = Food.sort_values()
@@ -1257,16 +1305,34 @@ class GetPdf(View):
         lactating = request.session['lactating']
 
         lact_data = ''
-        inft_data_lessKcal = ''
-        preg_data = ''
-        todd_data = ''
-        inft_data = ''
-
-        inft_total = 0
-        inft_total_lessKcal = 0
-        todd_total = 0
-        preg_total = 0
         lact_total = 0
+        lact_fat_perc = 0
+        lact_perc = pd.DataFrame()
+        lact_other_nut = pd.DataFrame()
+
+        preg_data = ''
+        preg_total = 0
+        preg_perc = pd.DataFrame()
+        preg_other_nut = pd.DataFrame()
+        preg_fat_perc = 0
+
+        todd_data = ''
+        todd_total = 0
+        todd_perc = pd.DataFrame()
+        todd_other_nut = pd.DataFrame()
+        todd_fat_perc = 0
+
+        inft_data = ''
+        inft_total = 0
+        inft_perc = pd.DataFrame()
+        inft_fat_perc = pd.DataFrame()
+        inft_other_nut = 0
+
+        inft_data_lessKcal = ''
+        inft_total_lessKcal = 0
+        inft_perc_lessKcal = pd.DataFrame()
+        inft_other_nut_lessKcal = pd.DataFrame()
+        inft_fat_perc_lessKcal = 0
 
         cost_list = request.session['cost_list']
         for k, v in cost_list.items():
@@ -1290,6 +1356,8 @@ class GetPdf(View):
             Food = infantFoodCost['Food_Name']
 
             final_out_infant = LPPWOVAR(Age_group, Food, infantFoodCost, scheme, milkPowderQuantity)
+            inft_nutrition = NUTCAL(final_out_infant)
+
             final_out_infant = final_out_infant[final_out_infant['Amount'] > 0]
             final_out_infant.columns = ['Food Name', 'Per Person Intake (gm)', 'Food Group', 'Per Person Cost (Rs)']
             final_out_infant.reset_index(inplace=True, drop=True)
@@ -1300,7 +1368,14 @@ class GetPdf(View):
             inft_total = final_out_infant['Total Cost (Rs)'].sum()
             inft_total = inft_total.round(2)
 
+            inft_perc, inft_fat_perc, inft_other_nut = Percentagecalculation(inft_nutrition, Age_group)
+            inft_perc = inft_perc.to_html(classes='mystyle')
+            inft_other_nut = inft_other_nut.to_html(classes='mystyle')
+
+            # 6 month to 1 year 250Kcal
             final_out_infant_lessKcal = LPPWOVAR_LESSKCAL(Age_group, Food, infantFoodCost, scheme, milkPowderQuantity)
+            inft_nutrition_lessKcal = NUTCAL(final_out_infant_lessKcal)
+
             final_out_infant_lessKcal = final_out_infant_lessKcal[final_out_infant_lessKcal['Amount'] > 0]
             final_out_infant_lessKcal.columns = ['Food Name', 'Per Person Intake (gm)', 'Food Group',
                                                  'Per Person Cost (Rs)']
@@ -1313,6 +1388,11 @@ class GetPdf(View):
 
             inft_total_lessKcal = final_out_infant_lessKcal['Total Cost (Rs)'].sum()
             inft_total_lessKcal = inft_total_lessKcal.round(2)
+
+            inft_perc_lessKcal, inft_fat_perc_lessKcal, inft_other_nut_lessKcal = Percentagecalculation(
+                inft_nutrition_lessKcal, Age_group)
+            inft_perc_lessKcal = inft_perc_lessKcal.to_html(classes='mystyle')
+            inft_other_nut_lessKcal = inft_other_nut_lessKcal.to_html(classes='mystyle')
 
         if toddler > 0:
             toddlersscheme = request.session['toddlersscheme']
@@ -1329,6 +1409,8 @@ class GetPdf(View):
             Food = toddlersFoodCost['Food_Name']
 
             final_out_toddler = LPPWOVAR(Age_group, Food, toddlersFoodCost, toddlersscheme, toddlersmilkPowderQuantity)
+            todd_nutrition = NUTCAL(final_out_toddler)
+
             final_out_toddler = final_out_toddler[final_out_toddler['Amount'] > 0]
             final_out_toddler.columns = ['Food Name', 'Per Person Intake (gm)', 'Food Group', 'Per Person Cost (Rs)']
             final_out_toddler.reset_index(inplace=True, drop=True)
@@ -1339,6 +1421,10 @@ class GetPdf(View):
 
             todd_total = final_out_toddler['Total Cost (Rs)'].sum()
             todd_total = todd_total.round(2)
+
+            todd_perc, todd_fat_perc, todd_other_nut = Percentagecalculation(todd_nutrition, Age_group)
+            todd_perc = todd_perc.to_html(classes='mystyle')
+            todd_other_nut = todd_other_nut.to_html(classes='mystyle')
 
         if pregnant > 0:
             pregnantscheme = request.session['pregnantscheme']
@@ -1355,6 +1441,7 @@ class GetPdf(View):
             Food = pregnantFoodCost['Food_Name']
 
             final_out_pregnant = LPPWOVAR(Age_group, Food, pregnantFoodCost, pregnantscheme, pregnantmilkPowderQuantity)
+            preg_nutrition = NUTCAL(final_out_pregnant)
 
             final_out_pregnant = final_out_pregnant[final_out_pregnant['Amount'] > 0]
             final_out_pregnant.columns = ['Food Name', 'Per Person Intake (gm)', 'Food Group', 'Per Person Cost (Rs)']
@@ -1366,6 +1453,10 @@ class GetPdf(View):
 
             preg_total = final_out_pregnant['Total Cost (Rs)'].sum()
             preg_total = preg_total.round(2)
+
+            preg_perc, preg_fat_perc, preg_other_nut = Percentagecalculation(preg_nutrition, Age_group)
+            preg_perc = preg_perc.to_html(classes='mystyle')
+            preg_other_nut = preg_other_nut.to_html(classes='mystyle')
 
         if lactating > 0:
             lactatingscheme = request.session['lactatingscheme']
@@ -1383,7 +1474,7 @@ class GetPdf(View):
 
             final_out_lactating = LPPWOVAR(Age_group, Food, lactatingFoodCost, lactatingscheme,
                                            lactatingmilkPowderQuantity)
-
+            lact_nutrition = NUTCAL(final_out_lactating)
             final_out_lactating = final_out_lactating[final_out_lactating['Amount'] > 0]
             final_out_lactating.columns = ['Food Name', 'Per Person Intake (gm)', 'Food Group', 'Per Person Cost (Rs)']
             final_out_lactating.reset_index(inplace=True, drop=True)
@@ -1394,6 +1485,9 @@ class GetPdf(View):
 
             lact_total = final_out_lactating['Total Cost (Rs)'].sum()
             lact_total = lact_total.round(2)
+            lact_perc, lact_fat_perc, lact_other_nut = Percentagecalculation(lact_nutrition, Age_group)
+            lact_perc = lact_perc.to_html(classes='mystyle')
+            lact_other_nut = lact_other_nut.to_html(classes='mystyle')
 
         params = {
             'today': datetime.now(),
@@ -1402,6 +1496,12 @@ class GetPdf(View):
             'preg_data': preg_data, 'inft_data_lessKcal': inft_data_lessKcal,
             'inft_total': inft_total, 'inft_total_lessKcal': inft_total_lessKcal, 'todd_total': todd_total,
             'preg_total': preg_total,
-            'lact_total': lact_total
+            'lact_total': lact_total,
+            'lact_perc': lact_perc, 'lact_other_nut': lact_other_nut, 'lact_fat_perc': lact_fat_perc,
+            'preg_perc': preg_perc, 'preg_fat_perc': preg_fat_perc, 'preg_other_nut': preg_other_nut,
+            'todd_perc': todd_perc, 'todd_fat_perc': todd_fat_perc, 'todd_other_nut': todd_other_nut,
+            'inft_perc_lessKcal': inft_perc_lessKcal, 'inft_fat_perc_lessKcal': inft_fat_perc_lessKcal,
+            'inft_other_nut_lessKcal': inft_other_nut_lessKcal,
+            'inft_perc': inft_perc, 'inft_fat_perc': inft_fat_perc, 'inft_other_nut': inft_other_nut
         }
         return Render.render('icds/pdf.html', params)
