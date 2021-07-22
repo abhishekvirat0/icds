@@ -997,7 +997,7 @@ def filter_data(request):
 
             i = render_to_string('icds/resultInfant.html',
                                  {
-                                     'Cereals': Cereals, 'Pulses': Pulses, 'Others': Others,'milkpowder': milkpowder,
+                                     'Cereals': Cereals, 'Pulses': Pulses, 'Others': Others, 'milkpowder': milkpowder,
                                      'cereal_prop': cereal_prop, 'pulse_prop': pulse_prop, 'other_prop': other_prop,
                                      'milk_prop': milk_prop,
                                      'final_q': final_q, 'final_optimized_cost': final_optimized_cost,
@@ -1020,7 +1020,7 @@ def filter_data(request):
         toddlersscheme = request.session['toddlersscheme']
         toddlersmilkPowderQuantity = request.session['toddlersmilkPowderQuantity']
         if toddlersmilkPowderQuantity is not None:
-            milkPowderQuantity = int(toddlersmilkPowderQuantity)
+            toddlersmilkPowderQuantity = int(toddlersmilkPowderQuantity)
         cereal_prop_toddler = []
         pulse_prop_toddler = []
         other_prop_toddler = []
@@ -1256,12 +1256,89 @@ class GetPdf(View):
         pregnant = request.session['pregnant']
         lactating = request.session['lactating']
 
+        lact_data = ''
+        inft_data_lessKcal = ''
+        preg_data = ''
+        todd_data = ''
+        inft_data = ''
+
+        inft_total = 0
+        inft_total_lessKcal = 0
+        todd_total = 0
+        preg_total = 0
+        lact_total = 0
+
         cost_list = request.session['cost_list']
         for k, v in cost_list.items():
             cost_list[k] = float(v)
 
         cost_list = pd.DataFrame(cost_list.items(), columns=['Food_Name', 'input_cost'])
         print(cost_list)
+
+        if infant > 0:
+            scheme = request.session['scheme']
+            milkPowderQuantity = request.session['milkPowderQuantity']
+            if milkPowderQuantity is not None:
+                milkPowderQuantity = int(milkPowderQuantity)
+            infantFood = request.session['infantFood']
+            print(infantFood)
+            infantFoodCost = cost_list[cost_list['Food_Name'].isin(infantFood)]
+            print(infantFoodCost)
+
+            infantFoodCost['input_cost'] = infantFoodCost['input_cost'] / 1000
+            Age_group = "6-12 months"
+            Food = infantFoodCost['Food_Name']
+
+            final_out_infant = LPPWOVAR(Age_group, Food, infantFoodCost, scheme, milkPowderQuantity)
+            final_out_infant = final_out_infant[final_out_infant['Amount'] > 0]
+            final_out_infant.columns = ['Food Name', 'Per Person Intake (gm)', 'Food Group', 'Per Person Cost (Rs)']
+            final_out_infant.reset_index(inplace=True, drop=True)
+            final_out_infant = final_out_infant.drop(['Food Group'], axis=1)
+            final_out_infant['Total Quantity (gm)'] = final_out_infant['Per Person Intake (gm)'] * lactating
+            final_out_infant['Total Cost (Rs)'] = final_out_infant['Per Person Cost (Rs)'] * lactating
+            inft_data = final_out_infant.to_html(classes='mystyle')
+            inft_total = final_out_infant['Total Cost (Rs)'].sum()
+            inft_total = inft_total.round(2)
+
+            final_out_infant_lessKcal = LPPWOVAR_LESSKCAL(Age_group, Food, infantFoodCost, scheme, milkPowderQuantity)
+            final_out_infant_lessKcal = final_out_infant_lessKcal[final_out_infant_lessKcal['Amount'] > 0]
+            final_out_infant_lessKcal.columns = ['Food Name', 'Per Person Intake (gm)', 'Food Group',
+                                                 'Per Person Cost (Rs)']
+            final_out_infant_lessKcal.reset_index(inplace=True, drop=True)
+            final_out_infant_lessKcal = final_out_infant_lessKcal.drop(['Food Group'], axis=1)
+            final_out_infant_lessKcal['Total Quantity (gm)'] = final_out_infant_lessKcal[
+                                                                   'Per Person Intake (gm)'] * lactating
+            final_out_infant_lessKcal['Total Cost (Rs)'] = final_out_infant_lessKcal['Per Person Cost (Rs)'] * lactating
+            inft_data_lessKcal = final_out_infant_lessKcal.to_html(classes='mystyle')
+
+            inft_total_lessKcal = final_out_infant_lessKcal['Total Cost (Rs)'].sum()
+            inft_total_lessKcal = inft_total_lessKcal.round(2)
+
+        if toddler > 0:
+            toddlersscheme = request.session['toddlersscheme']
+            toddlersmilkPowderQuantity = request.session['toddlersmilkPowderQuantity']
+            if toddlersmilkPowderQuantity is not None:
+                toddlersmilkPowderQuantity = int(toddlersmilkPowderQuantity)
+            toddlersFood = request.session['toddlersFood']
+            print(toddlersFood)
+            toddlersFoodCost = cost_list[cost_list['Food_Name'].isin(toddlersFood)]
+            print(toddlersFoodCost)
+
+            toddlersFoodCost['input_cost'] = toddlersFoodCost['input_cost'] / 1000
+            Age_group = "child(1-3)yrs"
+            Food = toddlersFoodCost['Food_Name']
+
+            final_out_toddler = LPPWOVAR(Age_group, Food, toddlersFoodCost, toddlersscheme, toddlersmilkPowderQuantity)
+            final_out_toddler = final_out_toddler[final_out_toddler['Amount'] > 0]
+            final_out_toddler.columns = ['Food Name', 'Per Person Intake (gm)', 'Food Group', 'Per Person Cost (Rs)']
+            final_out_toddler.reset_index(inplace=True, drop=True)
+            final_out_toddler = final_out_toddler.drop(['Food Group'], axis=1)
+            final_out_toddler['Total Quantity (gm)'] = final_out_toddler['Per Person Intake (gm)'] * lactating
+            final_out_toddler['Total Cost (Rs)'] = final_out_toddler['Per Person Cost (Rs)'] * lactating
+            todd_data = final_out_toddler.to_html(classes='mystyle')
+
+            todd_total = final_out_toddler['Total Cost (Rs)'].sum()
+            todd_total = todd_total.round(2)
 
         if pregnant > 0:
             pregnantscheme = request.session['pregnantscheme']
@@ -1279,7 +1356,16 @@ class GetPdf(View):
 
             final_out_pregnant = LPPWOVAR(Age_group, Food, pregnantFoodCost, pregnantscheme, pregnantmilkPowderQuantity)
 
-            print(final_out_pregnant)
+            final_out_pregnant = final_out_pregnant[final_out_pregnant['Amount'] > 0]
+            final_out_pregnant.columns = ['Food Name', 'Per Person Intake (gm)', 'Food Group', 'Per Person Cost (Rs)']
+            final_out_pregnant.reset_index(inplace=True, drop=True)
+            final_out_pregnant = final_out_pregnant.drop(['Food Group'], axis=1)
+            final_out_pregnant['Total Quantity (gm)'] = final_out_pregnant['Per Person Intake (gm)'] * lactating
+            final_out_pregnant['Total Cost (Rs)'] = final_out_pregnant['Per Person Cost (Rs)'] * lactating
+            preg_data = final_out_pregnant.to_html(classes='mystyle')
+
+            preg_total = final_out_pregnant['Total Cost (Rs)'].sum()
+            preg_total = preg_total.round(2)
 
         if lactating > 0:
             lactatingscheme = request.session['lactatingscheme']
@@ -1298,11 +1384,24 @@ class GetPdf(View):
             final_out_lactating = LPPWOVAR(Age_group, Food, lactatingFoodCost, lactatingscheme,
                                            lactatingmilkPowderQuantity)
 
-            # Write the DataFrame to JSON (as easy as can be)
-            data = final_out_lactating.to_json(orient='records')
-            print(data)
+            final_out_lactating = final_out_lactating[final_out_lactating['Amount'] > 0]
+            final_out_lactating.columns = ['Food Name', 'Per Person Intake (gm)', 'Food Group', 'Per Person Cost (Rs)']
+            final_out_lactating.reset_index(inplace=True, drop=True)
+            final_out_lactating = final_out_lactating.drop(['Food Group'], axis=1)
+            final_out_lactating['Total Quantity (gm)'] = final_out_lactating['Per Person Intake (gm)'] * lactating
+            final_out_lactating['Total Cost (Rs)'] = final_out_lactating['Per Person Cost (Rs)'] * lactating
+            lact_data = final_out_lactating.to_html(classes='mystyle')
+
+            lact_total = final_out_lactating['Total Cost (Rs)'].sum()
+            lact_total = lact_total.round(2)
+
         params = {
             'today': datetime.now(),
-            'data': data
+            'infant': infant, 'toddler': toddler, 'pregnant': pregnant, 'lactating': lactating,
+            'todd_data': todd_data, 'inft_data': inft_data, 'lact_data': lact_data,
+            'preg_data': preg_data, 'inft_data_lessKcal': inft_data_lessKcal,
+            'inft_total': inft_total, 'inft_total_lessKcal': inft_total_lessKcal, 'todd_total': todd_total,
+            'preg_total': preg_total,
+            'lact_total': lact_total
         }
-        return Render.render('icds/pdf.html')
+        return Render.render('icds/pdf.html', params)

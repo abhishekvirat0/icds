@@ -11,75 +11,85 @@
             margin: 1cm;
         }
 
-        .table {
-            width: 100%;
-            max-width: 100%;
-            margin-bottom: 5px;
-            background-color: #fff;
-        }
+    .mystyle {
+        font-size: 11pt;
+        font-family: Arial;
+        border-collapse: collapse;
+        border: 1px solid #909090;
+        text-align: center;
+    }
 
-        .table th,
-        .table td {
-            padding: 5px;
-            vertical-align: top;
-            border-top: 1px solid #000;
-            text-align: center;
-        }
+    .mystyle td, th {
+        padding: 5px;
+    }
 
-        .table thead th {
-            vertical-align: bottom;
-            border-bottom: 2px solid #000;
-        }
+    .mystyle tr:nth-child(even) {
+        background: #E0E0E0;
+    }
 
-        .table tbody + tbody {
-            border-top: 2px solid #000;
-        }
-
-        .table .table {
-            background-color: #fff;
-        }
-
-        .list-group {
-            display: block;
-            width: 100%;
-            list-style: none;
-            margin-top: 15px;
-            margin-bottom: 15px;
-        }
-
-        .list-group p {
-            width: 100%;
-            height: 20px;
-            line-height: 20px;
-            list-style: none;
-            font-size: 1.1em;
-        }
-
+    .mystyle tr:hover {
+        background: #e0e0e0;
+        cursor: pointer;
+    }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="card">
-        <div class="card-header">
-            <h3>Nutrition Optimization Report - {{ today | date:"d/m/Y" }}</h3>
+        <div class="card">
+            <div class="card-header">
+                <h3>Nutrition Optimization Report - {{ today | date:"d/m/Y" }}</h3>
+            </div>
+            {% if inft_data %}
+                <div class="card-header">
+                    <h2>6 months to 1 year (Total Cost: Rs. {{inft_total}})</h2>
+                </div>
+                {{inft_data | safe}}
+            {% endif %}
         </div>
-        {% if data %}
-        <table>
-            {% for k in data %}
-            {{ k }}
-                {% for item_1, item_2, item_3,item_4 in k.items %}
-                <tr>
-                    <td>{{ item_1 }}</td>
-                    <td>{{ item_2 }}</td>
-                    <td>{{ item_3 }}</td>
-                    <td>{{ item_4 }}</td>
-                </tr>
-                {% endfor %}
-            {% endfor %}
-        </table>
+
+    <div class="card">
+        {% if inft_data_lessKcal %}
+            <div class="card-header">
+                <h2>6 months to 1 year (250 Kcal) (Total Cost: Rs. {{inft_total_lessKcal}})</h2>
+            </div>
+                {{inft_data_lessKcal | safe}}
         {% endif %}
     </div>
+
+
+    <div class="card">
+        {% if todd_data %}
+            <div class="card-header">
+                <h2>1 year to 3 years (Total Cost: Rs. {{todd_total}})</h2>
+            </div>
+                {{todd_data | safe}}
+
+        {% endif %}
+    </div>
+
+    <div class="card">
+        {% if preg_data %}
+            <div class="card-header">
+                <h2>Pregnant women (Total Cost: Rs. {{preg_total}})</h2>
+            </div>
+            <table>
+                {{preg_data | safe}}
+            </table>
+        {% endif %}
+    </div>
+
+    <div class="card">
+        {% if lact_data %}
+            <div class="card-header">
+                <h2>Lactating women (Total Cost: Rs. {{lact_total}}) </h2>
+            </div>
+            <table>
+                {{lact_data | safe}}
+            </table>
+        {% endif %}
+    </div>
+
 </div>
 
 </body>
