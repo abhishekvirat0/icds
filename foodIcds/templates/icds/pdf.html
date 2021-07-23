@@ -37,29 +37,29 @@
 
 <div class="container">
         <div class="card">
-            <div class="card-header text-center align-center">
-                <h3>ICDS - THR Report - {{ today | date:"d/m/Y" }}</h3>
+            <div class="card-header" style="text-align:center;">
+                <h2>ICDS - THR Report - {{ today | date:"d/m/Y" }}</h2>
             </div>
             {% if inft_data %}
-                <div class="card-header">
-                    <h2>6 months to 1 year (Total Cost: Rs. {{inft_total}})</h2>
+                <div class="card-header" style="text-align:center;">
+                    <h1>6 months to 1 year (Total Cost: Rs. {{inft_total}})</h1>
                 </div>
                 {{inft_data | safe}}
             {% endif %}
         </div>
         <div class="card mt-4">
         {% if inft_data %}
-            <div class="card-header">
-                    <h2>Macro Nutrition Composition</h2>
-                    <h3>Fat to Energy Percent: {{inft_fat_perc}} %</h3>
-            </div>
+            <div class="card-header" style="text-align:center;">
+                    <h1>Macro Nutrition Composition</h1>
+
+            </div> <h2>Fat to Energy Percent: {{inft_fat_perc}} %</h2>
             {{inft_other_nut | safe}}
         {% endif %}
         </div>
-        <div class="card mt-4">
+        <div class="card mt-4" style="text-align:center;">
             {% if inft_data %}
                 <div class="card-header">
-                    <h2>Micro Nutrition Composition</h2>
+                    <h1>Micro Nutrition Composition</h1>
                 </div>
                 {{inft_perc | safe}}
             {% endif %}
@@ -68,25 +68,25 @@
 <!--    6 month to 1 year - 250 Kcal-->
     <div class="card">
         {% if inft_data_lessKcal %}
-            <div class="card-header">
-                <h2>6 months to 1 year (250 Kcal) (Total Cost: Rs. {{inft_total_lessKcal}})</h2>
+            <div class="card-header" style="text-align:center;">
+                <h1>6 months to 1 year (250 Kcal) (Total Cost: Rs. {{inft_total_lessKcal}})</h1>
             </div>
                 {{inft_data_lessKcal | safe}}
         {% endif %}
     </div>
     <div class="card mt-4">
         {% if inft_data_lessKcal %}
-            <div class="card-header">
-                    <h2>Macro Nutrition Composition</h2>
-                    <h3>Fat to Energy Percent: {{inft_fat_perc_lessKcal}} %</h3>
-            </div>
+            <div class="card-header" style="text-align:center;">
+                    <h1>Macro Nutrition Composition</h1>
+
+            </div><h2>Fat to Energy Percent: {{inft_fat_perc_lessKcal}} %</h2>
             {{inft_other_nut_lessKcal | safe}}
         {% endif %}
     </div>
     <div class="card mt-4">
         {% if inft_data_lessKcal %}
-            <div class="card-header">
-                <h2>Micro Nutrition Composition</h2>
+            <div class="card-header" style="text-align:center;">
+                <h1>Micro Nutrition Composition</h1>
             </div>
             {{inft_perc_lessKcal | safe}}
         {% endif %}
@@ -96,25 +96,25 @@
 
     <div class="card">
         {% if todd_data %}
-            <div class="card-header">
-                <h2>1 year to 3 years (Total Cost: Rs. {{todd_total}})</h2>
+            <div class="card-header" style="text-align:center;">
+                <h1>1 year to 3 years (Total Cost: Rs. {{todd_total}})</h1>
             </div>
                 {{todd_data | safe}}
         {% endif %}
     </div>
     <div class="card mt-4">
         {% if todd_data %}
-            <div class="card-header">
-                    <h2>Macro Nutrition Composition</h2>
-                    <h3>Fat to Energy Percent: {{todd_fat_perc}} %</h3>
-            </div>
+            <div class="card-header" style="text-align:center;">
+                    <h1>Macro Nutrition Composition</h1>
+
+            </div><h2>Fat to Energy Percent: {{todd_fat_perc}} %</h2>
             {{todd_other_nut | safe}}
         {% endif %}
     </div>
     <div class="card mt-4">
         {% if todd_data %}
-            <div class="card-header">
-                <h2>Micro Nutrition Composition</h2>
+            <div class="card-header" style="text-align:center;">
+                <h1>Micro Nutrition Composition</h1>
             </div>
             {{todd_perc | safe}}
         {% endif %}
@@ -123,8 +123,8 @@
 <!--    pregnant women-->
     <div class="card">
         {% if preg_data %}
-            <div class="card-header">
-                <h2>Pregnant women (Total Cost: Rs. {{preg_total}})</h2>
+            <div class="card-header" style="text-align:center;">
+                <h1>Pregnant women (Total Cost: Rs. {{preg_total}})</h1>
             </div>
             <table>
                 {{preg_data | safe}}
@@ -133,17 +133,17 @@
     </div>
     <div class="card mt-4">
         {% if preg_data %}
-            <div class="card-header">
-                    <h2>Macro Nutrition Composition</h2>
-                    <h3>Fat to Energy Percent: {{preg_fat_perc}} %</h3>
-            </div>
+            <div class="card-header" style="text-align:center;">
+                    <h1>Macro Nutrition Composition</h1>
+
+            </div><h2>Fat to Energy Percent: {{preg_fat_perc}} %</h2>
             {{preg_other_nut | safe}}
         {% endif %}
     </div>
     <div class="card mt-4">
         {% if preg_data %}
-            <div class="card-header">
-                <h2>Micro Nutrition Composition</h2>
+            <div class="card-header" style="text-align:center;">
+                <h1>Micro Nutrition Composition</h1>
             </div>
             {{preg_perc | safe}}
         {% endif %}
@@ -152,26 +152,25 @@
     <!--lactating women-->
     <div class="card">
         {% if lact_data %}
-            <div class="card-header">
-                <h2>Lactating women (Total Cost: Rs. {{lact_total}}) </h2>
+            <div class="card-header" style="text-align:center;">
+                <h1>Lactating women (Total Cost: Rs. {{lact_total}}) </h1>
             </div>
                 {{lact_data | safe}}
         {% endif %}
     </div>
     <div class="card mt-4">
         {% if lact_data %}
-            <div class="card-header">
-                    <h2>Macro Nutrition Composition</h2>
-                    <h3>Fat to Energy Percent: {{lact_fat_perc}} %</h3>
+            <div class="card-header" style="text-align:center;">
+                    <h1>Macro Nutrition Composition</h1>
             </div>
-
+<h2>Fat to Energy Percent: {{lact_fat_perc}} %</h2>
             {{lact_other_nut | safe}}
         {% endif %}
     </div>
         <div class="card mt-4">
             {% if lact_data %}
-                <div class="card-header">
-                    <h2>Micro Nutrition Composition</h2>
+                <div class="card-header" style="text-align:center;">
+                    <h1>Micro Nutrition Composition</h1>
                 </div>
                 {{lact_perc | safe}}
             {% endif %}
