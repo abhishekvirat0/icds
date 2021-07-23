@@ -322,8 +322,9 @@ def LPPWOVAR_LESSKCAL(Age_group, Food, input_cost, scheme, quantity):
     quan = np.array(final_out_lessKcal["Amount"])
     c_1 = costperitem * quan
     final_out_lessKcal["cost"] = c_1
+    final_out_lessKcal["Cost (per Kg)"]= costperitem * 1000
     if scheme is None:
-        final_out_lessKcal.loc[len(final_out_lessKcal.index)] = ['Milk powder', int(quantity), 'Milk powder', 0]
+        final_out_lessKcal.loc[len(final_out_lessKcal.index)] = ['Milk powder', int(quantity), 'Milk powder', 0, 0]
     print(final_out_lessKcal)
     return final_out_lessKcal
 
@@ -555,8 +556,9 @@ def LPPWOVAR(Age_group, Food, input_cost, scheme, quantity):
     quan = np.array(final_out["Amount"])
     c_1 = costperitem * quan
     final_out["cost"] = c_1
+    final_out["Cost (per Kg)"] = costperitem * 1000
     if scheme is None:
-        final_out.loc[len(final_out.index)] = ['Milk powder', quantity, 'Milk powder', 0]
+        final_out.loc[len(final_out.index)] = ['Milk powder', quantity, 'Milk powder', 0, 0]
     print(final_out)
     return final_out
 
@@ -1359,18 +1361,18 @@ class GetPdf(View):
             inft_nutrition = NUTCAL(final_out_infant)
 
             final_out_infant = final_out_infant[final_out_infant['Amount'] > 0]
-            final_out_infant.columns = ['Food Name', 'Per Person Intake (gm)', 'Food Group', 'Per Person Cost (Rs)']
+            final_out_infant.columns = ['Food Name', 'Per Person Intake (gm)', 'Food Group', 'Per Person Cost (Rs)','Cost (per kg)']
             final_out_infant.reset_index(inplace=True, drop=True)
             final_out_infant = final_out_infant.drop(['Food Group'], axis=1)
             final_out_infant['Total Quantity (gm)'] = final_out_infant['Per Person Intake (gm)'] * lactating
             final_out_infant['Total Cost (Rs)'] = final_out_infant['Per Person Cost (Rs)'] * lactating
-            inft_data = final_out_infant.to_html(classes='mystyle')
+            inft_data = final_out_infant.to_html(classes='mystyle',index=False)
             inft_total = final_out_infant['Total Cost (Rs)'].sum()
             inft_total = inft_total.round(2)
 
             inft_perc, inft_fat_perc, inft_other_nut = Percentagecalculation(inft_nutrition, Age_group)
-            inft_perc = inft_perc.to_html(classes='mystyle')
-            inft_other_nut = inft_other_nut.to_html(classes='mystyle')
+            inft_perc = inft_perc.to_html(classes='mystyle',index=False)
+            inft_other_nut = inft_other_nut.to_html(classes='mystyle',index=False)
 
             # 6 month to 1 year 250Kcal
             final_out_infant_lessKcal = LPPWOVAR_LESSKCAL(Age_group, Food, infantFoodCost, scheme, milkPowderQuantity)
@@ -1378,21 +1380,21 @@ class GetPdf(View):
 
             final_out_infant_lessKcal = final_out_infant_lessKcal[final_out_infant_lessKcal['Amount'] > 0]
             final_out_infant_lessKcal.columns = ['Food Name', 'Per Person Intake (gm)', 'Food Group',
-                                                 'Per Person Cost (Rs)']
+                                                 'Per Person Cost (Rs)','Cost (per kg)']
             final_out_infant_lessKcal.reset_index(inplace=True, drop=True)
             final_out_infant_lessKcal = final_out_infant_lessKcal.drop(['Food Group'], axis=1)
             final_out_infant_lessKcal['Total Quantity (gm)'] = final_out_infant_lessKcal[
                                                                    'Per Person Intake (gm)'] * lactating
             final_out_infant_lessKcal['Total Cost (Rs)'] = final_out_infant_lessKcal['Per Person Cost (Rs)'] * lactating
-            inft_data_lessKcal = final_out_infant_lessKcal.to_html(classes='mystyle')
+            inft_data_lessKcal = final_out_infant_lessKcal.to_html(classes='mystyle',index=False)
 
             inft_total_lessKcal = final_out_infant_lessKcal['Total Cost (Rs)'].sum()
             inft_total_lessKcal = inft_total_lessKcal.round(2)
 
             inft_perc_lessKcal, inft_fat_perc_lessKcal, inft_other_nut_lessKcal = Percentagecalculation(
                 inft_nutrition_lessKcal, Age_group)
-            inft_perc_lessKcal = inft_perc_lessKcal.to_html(classes='mystyle')
-            inft_other_nut_lessKcal = inft_other_nut_lessKcal.to_html(classes='mystyle')
+            inft_perc_lessKcal = inft_perc_lessKcal.to_html(classes='mystyle',index=False)
+            inft_other_nut_lessKcal = inft_other_nut_lessKcal.to_html(classes='mystyle',index=False)
 
         if toddler > 0:
             toddlersscheme = request.session['toddlersscheme']
@@ -1412,19 +1414,19 @@ class GetPdf(View):
             todd_nutrition = NUTCAL(final_out_toddler)
 
             final_out_toddler = final_out_toddler[final_out_toddler['Amount'] > 0]
-            final_out_toddler.columns = ['Food Name', 'Per Person Intake (gm)', 'Food Group', 'Per Person Cost (Rs)']
+            final_out_toddler.columns = ['Food Name', 'Per Person Intake (gm)', 'Food Group', 'Per Person Cost (Rs)','Cost (per kg)']
             final_out_toddler.reset_index(inplace=True, drop=True)
             final_out_toddler = final_out_toddler.drop(['Food Group'], axis=1)
             final_out_toddler['Total Quantity (gm)'] = final_out_toddler['Per Person Intake (gm)'] * lactating
             final_out_toddler['Total Cost (Rs)'] = final_out_toddler['Per Person Cost (Rs)'] * lactating
-            todd_data = final_out_toddler.to_html(classes='mystyle')
+            todd_data = final_out_toddler.to_html(classes='mystyle',index=False)
 
             todd_total = final_out_toddler['Total Cost (Rs)'].sum()
             todd_total = todd_total.round(2)
 
             todd_perc, todd_fat_perc, todd_other_nut = Percentagecalculation(todd_nutrition, Age_group)
-            todd_perc = todd_perc.to_html(classes='mystyle')
-            todd_other_nut = todd_other_nut.to_html(classes='mystyle')
+            todd_perc = todd_perc.to_html(classes='mystyle',index=False)
+            todd_other_nut = todd_other_nut.to_html(classes='mystyle',index=False)
 
         if pregnant > 0:
             pregnantscheme = request.session['pregnantscheme']
@@ -1444,19 +1446,19 @@ class GetPdf(View):
             preg_nutrition = NUTCAL(final_out_pregnant)
 
             final_out_pregnant = final_out_pregnant[final_out_pregnant['Amount'] > 0]
-            final_out_pregnant.columns = ['Food Name', 'Per Person Intake (gm)', 'Food Group', 'Per Person Cost (Rs)']
+            final_out_pregnant.columns = ['Food Name', 'Per Person Intake (gm)', 'Food Group', 'Per Person Cost (Rs)','Cost (per kg)']
             final_out_pregnant.reset_index(inplace=True, drop=True)
             final_out_pregnant = final_out_pregnant.drop(['Food Group'], axis=1)
             final_out_pregnant['Total Quantity (gm)'] = final_out_pregnant['Per Person Intake (gm)'] * lactating
             final_out_pregnant['Total Cost (Rs)'] = final_out_pregnant['Per Person Cost (Rs)'] * lactating
-            preg_data = final_out_pregnant.to_html(classes='mystyle')
+            preg_data = final_out_pregnant.to_html(classes='mystyle',index=False)
 
             preg_total = final_out_pregnant['Total Cost (Rs)'].sum()
             preg_total = preg_total.round(2)
 
             preg_perc, preg_fat_perc, preg_other_nut = Percentagecalculation(preg_nutrition, Age_group)
-            preg_perc = preg_perc.to_html(classes='mystyle')
-            preg_other_nut = preg_other_nut.to_html(classes='mystyle')
+            preg_perc = preg_perc.to_html(classes='mystyle',index=False)
+            preg_other_nut = preg_other_nut.to_html(classes='mystyle', index=False)
 
         if lactating > 0:
             lactatingscheme = request.session['lactatingscheme']
@@ -1475,19 +1477,20 @@ class GetPdf(View):
             final_out_lactating = LPPWOVAR(Age_group, Food, lactatingFoodCost, lactatingscheme,
                                            lactatingmilkPowderQuantity)
             lact_nutrition = NUTCAL(final_out_lactating)
+
             final_out_lactating = final_out_lactating[final_out_lactating['Amount'] > 0]
-            final_out_lactating.columns = ['Food Name', 'Per Person Intake (gm)', 'Food Group', 'Per Person Cost (Rs)']
+            final_out_lactating.columns = ['Food Name', 'Per Person Intake (gm)', 'Food Group', 'Per Person Cost (Rs)', 'Cost (per kg)']
             final_out_lactating.reset_index(inplace=True, drop=True)
             final_out_lactating = final_out_lactating.drop(['Food Group'], axis=1)
             final_out_lactating['Total Quantity (gm)'] = final_out_lactating['Per Person Intake (gm)'] * lactating
             final_out_lactating['Total Cost (Rs)'] = final_out_lactating['Per Person Cost (Rs)'] * lactating
-            lact_data = final_out_lactating.to_html(classes='mystyle')
+            lact_data = final_out_lactating.to_html(classes='mystyle', index=False, )
 
             lact_total = final_out_lactating['Total Cost (Rs)'].sum()
             lact_total = lact_total.round(2)
             lact_perc, lact_fat_perc, lact_other_nut = Percentagecalculation(lact_nutrition, Age_group)
-            lact_perc = lact_perc.to_html(classes='mystyle')
-            lact_other_nut = lact_other_nut.to_html(classes='mystyle')
+            lact_perc = lact_perc.to_html(classes='mystyle',index=False)
+            lact_other_nut = lact_other_nut.to_html(classes='mystyle',index=False)
 
         params = {
             'today': datetime.now(),
