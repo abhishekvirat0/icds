@@ -1,0 +1,61 @@
+
+.header p{
+    font-family: Circular Std Bold;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0px;
+    padding: 0px;
+
+}
+
+.sub-heading{
+    font-family: Circular Std Black;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 38px;
+    letter-spacing: -0.06px;
+}
+
+@media (min-width: 600px) {
+    .sub-heading{
+        font-family: Circular Std Medium;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 28px;
+        line-height: 35px;
+        letter-spacing: -0.06px;
+    }
+  }
+
+   .btnBack{
+    padding: 10px 45px 10px 45px;
+    font-family: Circular Std Black;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 18px;
+    border-radius: 100px;
+    border: 2px solid #000000;
+    background: #fff;
+    color: #000;
+    transition: all 0.3s ease-in-out;
+    }
+
+    .btnBack:hover {
+        background: #FB6845;
+        border: 2px solid #FB6845;
+        color:white;
+    }
+
+
+
+@font-face {
+    font-family: 'Circular Std Black';
+    src:
+        url('../fonts/Circular\ Std\ Book.ttf'),
+        url('../fonts/Circular\ Std\ Medium.ttf'),
+        url('../fonts/CircularSpUIv3T-Bold.ttf'),
+        url('../fonts/Circular\ Std\ Black.ttf');
+        }

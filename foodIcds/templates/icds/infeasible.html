@@ -1,0 +1,48 @@
+{% load static %}
+    {% block head %}
+        <link rel="stylesheet" href="{% static 'css/infeasible.css' %}">
+    {% endblock %}
+
+    {% block body %}
+    <body>
+
+        <section style="height: 100vh;">
+
+                <div class="row">
+                    <div class="col col-12 col-md-12" style="margin-top: 100px;">
+                    </div>
+                </div>
+
+                <div class="row justify-content-center p-5" style="border: 1px solid #E0E0E0; border-radius: 15px; background-color: #fff; box-shadow: 0px 10px 50px rgba(0, 0, 0, 0.1);">
+
+                    <div class="col col-12 col-md-7 p-2">
+                        <img class="img-fluid" src="/static/images/infeasible.svg"/>
+                    </div>
+
+                    <div data-aos="fade-up" class="col col-12 col-md-5 p-2 align-self-end" style="margin-top:70px;">
+                        <p data-aos="fade-up" class="sub-heading ml-3">Infeasible
+                        <br>Solution !</p>
+
+                        <p class="mt-4 ml-3" style="font-family: Circular Std Medium;font-weight: 500; font-size: 16px;">Do not Worry.</p>
+                        <p class="mt-2 ml-3" style="font-family: Circular Std Book;font-weight: 500; font-size: 16px;"> This happened because the food combinations selected by you may not be sufficient to meet all nutrient requirements.</p>
+                        <p class="mt-1 ml-3" style="font-family: Circular Std Book;font-weight: 500; font-size: 16px;"><span style="color:#FFC000;">We suggest:</span> Try different combinations or select more food items.</p>
+                    </div>
+
+                    <div class="col col-12 col-md-12 text-center mt-5">
+                        <button class="btnBack" onclick="window.history.go(-2)">Go Back</button>
+                    </div>
+
+                </div>
+
+        </section>
+
+        <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+        <script>
+            AOS.init({
+              duration: 1200,
+              once: 'true',
+            })
+        </script>
+
+    </body>
+    {% endblock %}

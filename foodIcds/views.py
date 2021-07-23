@@ -1045,6 +1045,9 @@ def filter_data(request):
             nutrition_calc_lessKcal = NUTCAL(final_out_infant_lessKcal)
             final_q_less = nutrition_calc_lessKcal.set_index('Nutritions')['Amount'].to_dict()
 
+            if opStatus == 'Infeasible' and opStatus_lessKcal == 'Infeasible':
+                i_Infeasible = render_to_string('icds/infeasible.html')
+                return JsonResponse({'data': i_Infeasible})
             i = render_to_string('icds/resultInfant.html',
                                  {
                                      'Cereals': Cereals, 'Pulses': Pulses, 'Others': Others, 'milkpowder': milkpowder,
@@ -1130,7 +1133,9 @@ def filter_data(request):
             print(final_optimized_cost)
             nutrition_calc = NUTCAL(final_out_toddler)
             final_q = nutrition_calc.set_index('Nutritions')['Amount'].to_dict()
-            print(final_q)
+            if opStatus == 'Infeasible':
+                t_Infeasible = render_to_string('icds/infeasible.html')
+                return JsonResponse({'data': t_Infeasible})
             t = render_to_string('icds/resultToddler.html',
                                  {
                                      'toddlersCereals': toddlersCereals, 'toddlersPulses': toddlersPulses,
@@ -1203,7 +1208,9 @@ def filter_data(request):
             print(final_optimized_cost)
             nutrition_calc = NUTCAL(final_out_pregnant)
             final_q = nutrition_calc.set_index('Nutritions')['Amount'].to_dict()
-            print(final_q)
+            if opStatus == 'Infeasible':
+                p_Infeasible = render_to_string('icds/infeasible.html')
+                return JsonResponse({'data': p_Infeasible})
             p = render_to_string('icds/resultPregnant.html',
                                  {
                                      'pregnantCereals': pregnantCereals, 'pregnantPulses': pregnantPulses,
@@ -1280,6 +1287,9 @@ def filter_data(request):
             final_q = nutrition_calc.set_index('Nutritions')['Amount'].to_dict()
 
             print(final_q, opStatus)
+            if opStatus == 'Infeasible':
+                lw_Infeasible = render_to_string('icds/infeasible.html')
+                return JsonResponse({'data': lw_Infeasible})
 
             lw = render_to_string('icds/resultLactating.html',
                                   {
@@ -1336,6 +1346,12 @@ class GetPdf(View):
         inft_other_nut_lessKcal = pd.DataFrame()
         inft_fat_perc_lessKcal = 0
 
+        inft_Status = ''
+        inft_Status_lessKcal = ''
+        todd_Status = ''
+        preg_Status = ''
+        lact_Status = ''
+
         cost_list = request.session['cost_list']
         for k, v in cost_list.items():
             cost_list[k] = float(v)
@@ -1358,6 +1374,7 @@ class GetPdf(View):
             Food = infantFoodCost['Food_Name']
 
             final_out_infant = LPPWOVAR(Age_group, Food, infantFoodCost, scheme, milkPowderQuantity)
+            inft_Status = opStatus
             inft_nutrition = NUTCAL(final_out_infant)
 
             final_out_infant = final_out_infant[final_out_infant['Amount'] > 0]
@@ -1380,6 +1397,7 @@ class GetPdf(View):
 
             # 6 month to 1 year 250Kcal
             final_out_infant_lessKcal = LPPWOVAR_LESSKCAL(Age_group, Food, infantFoodCost, scheme, milkPowderQuantity)
+            inft_Status_lessKcal = opStatus
             inft_nutrition_lessKcal = NUTCAL(final_out_infant_lessKcal)
 
             final_out_infant_lessKcal = final_out_infant_lessKcal[final_out_infant_lessKcal['Amount'] > 0]
@@ -1418,6 +1436,7 @@ class GetPdf(View):
             Food = toddlersFoodCost['Food_Name']
 
             final_out_toddler = LPPWOVAR(Age_group, Food, toddlersFoodCost, toddlersscheme, toddlersmilkPowderQuantity)
+            todd_Status = opStatus
             todd_nutrition = NUTCAL(final_out_toddler)
 
             final_out_toddler = final_out_toddler[final_out_toddler['Amount'] > 0]
@@ -1453,6 +1472,7 @@ class GetPdf(View):
             Food = pregnantFoodCost['Food_Name']
 
             final_out_pregnant = LPPWOVAR(Age_group, Food, pregnantFoodCost, pregnantscheme, pregnantmilkPowderQuantity)
+            preg_Status = opStatus
             preg_nutrition = NUTCAL(final_out_pregnant)
 
             final_out_pregnant = final_out_pregnant[final_out_pregnant['Amount'] > 0]
@@ -1490,6 +1510,7 @@ class GetPdf(View):
 
             final_out_lactating = LPPWOVAR(Age_group, Food, lactatingFoodCost, lactatingscheme,
                                            lactatingmilkPowderQuantity)
+            lact_Status = opStatus
             lact_nutrition = NUTCAL(final_out_lactating)
 
             final_out_lactating = final_out_lactating[final_out_lactating['Amount'] > 0]
@@ -1523,6 +1544,8 @@ class GetPdf(View):
             'todd_perc': todd_perc, 'todd_fat_perc': todd_fat_perc, 'todd_other_nut': todd_other_nut,
             'inft_perc_lessKcal': inft_perc_lessKcal, 'inft_fat_perc_lessKcal': inft_fat_perc_lessKcal,
             'inft_other_nut_lessKcal': inft_other_nut_lessKcal,
-            'inft_perc': inft_perc, 'inft_fat_perc': inft_fat_perc, 'inft_other_nut': inft_other_nut
+            'inft_perc': inft_perc, 'inft_fat_perc': inft_fat_perc, 'inft_other_nut': inft_other_nut,
+            'inft_Status': inft_Status, 'inft_Status_lessKcal': inft_Status_lessKcal, 'todd_Status': todd_Status,
+            'preg_Status': preg_Status, 'lact_Status': lact_Status
         }
         return Render.render('icds/pdf.html', params)

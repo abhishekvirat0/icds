@@ -36,36 +36,44 @@
 <body>
 
 <div class="container">
-        <div class="card">
-            <div class="card-header" style="text-align:center;">
+        <div class="card-header" style="text-align:center;">
                 <h1>ICDS - THR Report - {{ today | date:"d/m/Y" }}</h1>
+        </div>
+
+        {% if inft_Status == 'Infeasible' %}
+            <p>&nbsp;&nbsp;</p>
+        {% else %}
+            <div class="card">
+                {% if inft_data %}
+                    <div class="card-header" style="text-align:center;">
+                        <h1>6 months to 1 year (Total Cost: Rs. {{inft_total}})</h1>
+                    </div>
+                    {{inft_data | safe}}
+                {% endif %}
             </div>
+            <div class="card mt-4">
             {% if inft_data %}
                 <div class="card-header" style="text-align:center;">
-                    <h1>6 months to 1 year (Total Cost: Rs. {{inft_total}})</h1>
-                </div>
-                {{inft_data | safe}}
-            {% endif %}
-        </div>
-        <div class="card mt-4">
-        {% if inft_data %}
-            <div class="card-header" style="text-align:center;">
-                    <h1>Macro Nutrition Composition</h1>
+                        <h1>Macro Nutrition Composition</h1>
 
-            </div> <h1>Fat to Energy Percent: {{inft_fat_perc}} %</h1>
-            {{inft_other_nut | safe}}
+                </div> <h1>Fat to Energy Percent: {{inft_fat_perc}} %</h1>
+                {{inft_other_nut | safe}}
+            {% endif %}
+            </div>
+            <div class="card mt-4" style="text-align:center;">
+                {% if inft_data %}
+                    <div class="card-header">
+                        <h1>Micro Nutrition Composition</h1>
+                    </div>
+                    {{inft_perc | safe}}
+                {% endif %}
+            </div>
         {% endif %}
-        </div>
-        <div class="card mt-4" style="text-align:center;">
-            {% if inft_data %}
-                <div class="card-header">
-                    <h1>Micro Nutrition Composition</h1>
-                </div>
-                {{inft_perc | safe}}
-            {% endif %}
-        </div>
-
 <!--    6 month to 1 year - 250 Kcal-->
+    {% if inft_Status_lessKcal == 'Infeasible' %}
+        <p>&nbsp;&nbsp;</p>
+    {% else %}
+
     <div class="card">
         {% if inft_data_lessKcal %}
             <div class="card-header" style="text-align:center;">
@@ -91,8 +99,11 @@
             {{inft_perc_lessKcal | safe}}
         {% endif %}
     </div>
-
+ {% endif %}
 <!--    1 year to 3 years-->
+    {% if todd_Status == 'Infeasible' %}
+        <p>&nbsp;&nbsp;</p>
+    {% else %}
 
     <div class="card">
         {% if todd_data %}
@@ -119,8 +130,12 @@
             {{todd_perc | safe}}
         {% endif %}
     </div>
-
+ {% endif %}
 <!--    pregnant women-->
+    {% if preg_Status == 'Infeasible' %}
+        <p>&nbsp;&nbsp;</p>
+    {% else %}
+
     <div class="card">
         {% if preg_data %}
             <div class="card-header" style="text-align:center;">
@@ -148,8 +163,11 @@
             {{preg_perc | safe}}
         {% endif %}
     </div>
-
+{% endif %}
     <!--lactating women-->
+    {% if lact_Status == 'Infeasible' %}
+        <p>&nbsp;&nbsp;</p>
+    {% else %}
     <div class="card">
         {% if lact_data %}
             <div class="card-header" style="text-align:center;">
@@ -176,6 +194,6 @@
             {% endif %}
         </div>
 </div>
-
+{% endif %}
 </body>
 </html>
