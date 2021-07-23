@@ -38,7 +38,7 @@
 <div class="container">
         <div class="card">
             <div class="card-header" style="text-align:center;">
-                <h2>ICDS - THR Report - {{ today | date:"d/m/Y" }}</h2>
+                <h1>ICDS - THR Report - {{ today | date:"d/m/Y" }}</h1>
             </div>
             {% if inft_data %}
                 <div class="card-header" style="text-align:center;">
@@ -52,7 +52,7 @@
             <div class="card-header" style="text-align:center;">
                     <h1>Macro Nutrition Composition</h1>
 
-            </div> <h2>Fat to Energy Percent: {{inft_fat_perc}} %</h2>
+            </div> <h1>Fat to Energy Percent: {{inft_fat_perc}} %</h1>
             {{inft_other_nut | safe}}
         {% endif %}
         </div>
@@ -79,7 +79,7 @@
             <div class="card-header" style="text-align:center;">
                     <h1>Macro Nutrition Composition</h1>
 
-            </div><h2>Fat to Energy Percent: {{inft_fat_perc_lessKcal}} %</h2>
+            </div><h1>Fat to Energy Percent: {{inft_fat_perc_lessKcal}} %</h1>
             {{inft_other_nut_lessKcal | safe}}
         {% endif %}
     </div>
@@ -107,7 +107,7 @@
             <div class="card-header" style="text-align:center;">
                     <h1>Macro Nutrition Composition</h1>
 
-            </div><h2>Fat to Energy Percent: {{todd_fat_perc}} %</h2>
+            </div><h1>Fat to Energy Percent: {{todd_fat_perc}} %</h1>
             {{todd_other_nut | safe}}
         {% endif %}
     </div>
@@ -136,7 +136,7 @@
             <div class="card-header" style="text-align:center;">
                     <h1>Macro Nutrition Composition</h1>
 
-            </div><h2>Fat to Energy Percent: {{preg_fat_perc}} %</h2>
+            </div><h1>Fat to Energy Percent: {{preg_fat_perc}} %</h1>
             {{preg_other_nut | safe}}
         {% endif %}
     </div>
@@ -163,7 +163,7 @@
             <div class="card-header" style="text-align:center;">
                     <h1>Macro Nutrition Composition</h1>
             </div>
-<h2>Fat to Energy Percent: {{lact_fat_perc}} %</h2>
+<h1>Fat to Energy Percent: {{lact_fat_perc}} %</h1>
             {{lact_other_nut | safe}}
         {% endif %}
     </div>
