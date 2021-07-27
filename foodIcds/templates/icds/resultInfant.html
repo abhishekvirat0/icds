@@ -1,12 +1,15 @@
 {% load filterFile %}
+<div class="mt-2 header">
+    <a href="#500Kcal" class="linkHeader">500 Kcal</a>
+    <a href="#250Kcal" class="linkHeader">250 Kcal</a>
+</div>
                         <div class="mt-5 header">
-                            <p>Optimized for 500 Kcal</p>
+                            <p><a name="500Kcal">Optimized for 500 Kcal</a></p>
                         </div>
             {% if opStatus == 'Infeasible' %}
                         <p style="font-family: Circular Std Medium;font-weight: 500; font-size: 16px;">Do not Worry.</p>
                         <p style="font-family: Circular Std Book;font-weight: 500; font-size: 16px;"> This happened because the food combinations selected by you may not be sufficient to meet all nutrient requirements.</p>
                         <p style="font-family: Circular Std Book;font-weight: 500; font-size: 16px;"><span style="color:#FFC000;">We suggest:</span> Try different combinations or select more food items.</p>
-
             {% else%}
                         <div class="d-flex align-items-center">
                             <span class="cost-heading">CEREALS</span>
@@ -140,7 +143,7 @@
 
                         <!--   for less calories-->
                         <div class="mt-5 header">
-                            <p>Optimized for 250 Kcal</p>
+                            <p><a name="250Kcal">Optimized for 250 Kcal</a></p>
                         </div>
             {% if opStatus_lessKcal == 'Infeasible' %}
                         <p style="font-family: Circular Std Medium;font-weight: 500; font-size: 16px;">Do not Worry.</p>

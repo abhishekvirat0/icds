@@ -9,6 +9,14 @@
     text-transform: capitalize;
 }
 
+.linkHeader{
+    font-family: Circular Std Bold;
+    border: 1px solid #E0E0E0;
+    border-radius: 12px;
+    padding: 9px 10px;
+    color: #EC4E20;
+}
+
 .navbar-hide {
   pointer-events: none;
   opacity: 0;
