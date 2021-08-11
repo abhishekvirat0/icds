@@ -2,7 +2,7 @@
 {% load filterFile %}
 {% load static %}
     {% block head %}
-        <link rel="stylesheet" href="{% static 'css/result.css' %}">
+        <link rel="stylesheet" href="{% static 'css/resultFAA.css' %}">
     {% endblock %}
 
     {% block body %}
@@ -23,7 +23,7 @@
                 <div class="row">
                     <div class="col col-12 col-md-12" style="margin-top: 190px;">
                         <div class="d-flex">
-                            <img src="/static/images/decorationTHR.png" alt="" style="margin-left:-50px; margin-top: -55px;" width="104px" height="101px">
+                            <img src="/static/images/decorationFAA.png" alt="" style="margin-left:-50px; margin-top: -55px;" width="104px" height="101px">
                             <p class="page-heading">Result</p>
                         </div>
                     </div>
@@ -32,10 +32,22 @@
                 <div class="row justify-content-center p-5" style="border-radius: 15px; background-color: #fff; border: 2px solid #eaeaea; ">
 
                     <div class="col col-12 col-md-12">
-                        <div class="d-flex align-items-center ">
+                        {% if module == 'FAA' %}
+                            <a style="font-family:Circular Std Bold;" href="{% url 'recipe' %}" class="mr-auto">Nutrition composition for recipe</a>
+                        {% endif %}
+                        <div class="d-flex align-items-center mt-2">
 
                             <div class="input-group check col col-10 col-md-8" style="margin-left: -15px;">
-                                    {% if lactating > 0 %}
+                                    {% if preSchool > 0 %}
+                                        <label tabindex="0" class="mr-2">
+                                            <input tabindex="-1" type="radio" name="category" value="4 yrs to 6 yrs" checked/>
+                                                <div class="icon-box">
+                                                  <span>4 yrs to 6 yrs</span>
+                                                </div>
+                                        </label>
+                                    {% endif %}
+
+                                    {% if lactatingFAA > 0 %}
                                         <label tabindex="0" class="mr-2">
                                             <input tabindex="-1" type="radio" name="category" value="lactating women" checked/>
                                                 <div class="icon-box">
@@ -43,28 +55,12 @@
                                                 </div>
                                         </label>
                                     {% endif %}
-                                    {% if pregnant > 0 %}
+
+                                    {% if pregnantFAA > 0 %}
                                         <label tabindex="0" class="mr-2">
                                             <input tabindex="-1" type="radio" name="category" value="pregnant women" checked/>
                                                 <div class="icon-box">
                                                   <span>pregnant women</span>
-                                                </div>
-                                        </label>
-                                    {% endif %}
-
-                                    {% if toddler > 0 %}
-                                        <label tabindex="0" class="mr-2">
-                                            <input tabindex="-1" type="radio" name="category" value="1 yr to 3 yrs" checked/>
-                                                <div class="icon-box">
-                                                  <span>1 yr to 3 yrs</span>
-                                                </div>
-                                        </label>
-                                    {% endif %}
-                                    {% if infant > 0 %}
-                                        <label tabindex="0" class="mr-2">
-                                            <input tabindex="-1" type="radio" name="category" value="6 mo to 1 yr" id="checkbox1" checked/>
-                                                <div class="icon-box">
-                                                  <span>6 mo to 1 yr</span>
                                                 </div>
                                         </label>
                                     {% endif %}
@@ -115,7 +111,6 @@
             </script>
         <script>
 
-<!--            $("input[name='category']").change(function(e){-->
             $(document).ready(function() {
                 var query;
                 query = $("input[name='category']:checked").val();

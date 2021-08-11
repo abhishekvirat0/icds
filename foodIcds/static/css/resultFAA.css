@@ -9,6 +9,14 @@
     text-transform: capitalize;
 }
 
+.linkHeader{
+    font-family: Circular Std Bold;
+    border: 1px solid #E0E0E0;
+    border-radius: 12px;
+    padding: 9px 10px;
+    color: #FF9505;
+}
+
 .navbar-hide {
   pointer-events: none;
   opacity: 0;
@@ -36,6 +44,34 @@
     background-color: #fafafa;
 }
 
+.custom-select{
+    font-family: Circular Std Book;
+    font-style: normal;
+    font-weight: 450;
+    font-size: 14px;
+    line-height: 18px;
+    letter-spacing: -0.36px;
+    border: 1px solid #E0E0E0;
+    border-radius: 8px;
+}
+
+.card-title{
+    font-family: Circular Std Bold;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 18px;
+    letter-spacing: -0.02em;
+}
+
+.card-subHeading{
+    font-family: Circular Std Bold;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 30px;
+    letter-spacing: -0.02em;
+}
 
 .check label input[type="radio"] {
   position: absolute;
@@ -59,7 +95,7 @@
 }
 
 .check label input[type="radio"]:checked ~ .icon-box {
-  background: #EC4E20;
+  background: #FF9505;
   color: #fff;
 }
 
@@ -111,10 +147,9 @@ input-group:focus{
     border: none;
     background-color: #eaeaea;
     text-align: right;
-    max-width: 30%;
+    max-width: 100%;
     font-family: Circular Std Bold;
     font-size: 18px;
-    line-height: 43px;
     letter-spacing: -0.02em;
 }
 
@@ -125,44 +160,59 @@ input-group:focus{
     border-color: transparent;
 }
 
-.btnSubmit{
+.btnExport{
     font-family: Circular Std Bold;
     font-style: normal;
     font-weight: bold;
     font-size: 16px;
-    padding: 5px 24px;
-    background-color: #F0F0F0;
+    background-color: #fff;
     border-radius: 12px;
-    color: #EC4E20;
+    color: #FF9505;
+    border: 1px solid #E0E0E0;
 }
 
-.btnSubmit:focus{
-    background: #EC4E20;
+.btnExport:focus{
+    background: #FF9505;
     border-radius: 12px;
-    color: #000000;
+    color: #fff;
     outline-style: none;
     box-shadow: none;
     border-color: transparent;
 }
 
+.col-md-3point6 {
+    border: 2px solid #E0E0E0;
+    border-radius: 12px;
+    background-color: #fff;
+    padding: 8px;
+    margin: 1px;
+    width: 115px;
+    height: 112px;
+}
 
-.btnSubmitFAA{
+
+@media (min-width: 600px) {
+    .col-md-3point6 {
+            border: 2px solid #E0E0E0;
+            border-radius: 15px;
+            background-color: #fff;
+            padding: 8px;
+            width: 198px;
+            margin: 0.19rem;
+            height: 120px;
+    }
+}
+
+.opCost{
     font-family: Circular Std Bold;
     font-style: normal;
     font-weight: bold;
     font-size: 16px;
-    padding: 5px 24px;
-    background-color: #F0F0F0;
-    border-radius: 12px;
-    color: #FF9505;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    letter-spacing: -0.02em;
 }
-
-.btnSubmitFAA:focus{
-    background: #FF9505;
-    border-radius: 12px;
-    color: #000000;
-}
-
 
 .container{
     width:350px
@@ -194,13 +244,4 @@ input-group:focus{
 
 input:focus::placeholder {
   color: black;
-}
-
-.note{
-    font-family: Circular Std Book;
-    font-style: normal;
-    font-weight: 450;
-    font-size: 14px;
-    line-height: 18px;
-    letter-spacing: -0.02em;
 }

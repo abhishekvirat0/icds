@@ -1,0 +1,37 @@
+Food_Group,Food_Name,Quantity (g),Energy (Kcal),Protein (g),Fat (g),Iron (mg),Calcium (mg),Zinc (mg), Folates (µg),Cost
+GLV,Amanranth leaves (red),100,33.46,3.93,0.63,7.25,245,1.37,81.95,2.6
+GLV,Bathua leaves,100,27.72,2.5,0.44,2.66,211,0.98,42.55,3.7
+GLV,Fenugreek leaves,100,34.42,3.68,0.83,5.69,274,0.54,75.26,3
+GLV,Mustard leaves,100,30.35,3.52,0.51,2.84,191,0.68,110,3.7
+GLV,Palak,100,24.38,2.14,0.64,2.95,82.29,0.42,142,7
+GLV,Drumstick leaves,100,67.39961759,6.41,1.64,4.56,314,0.72,42.89,9
+GLV,Colocasia leaves,100,43.49904398,3.42,1.38,3.41,216,0.82,159,8.7
+Roots and tubers,Potato,100,69.79,1.54,0.23,0.57,9.52,0.28,15.51,2.2
+Roots and tubers,Onion,100,48.04015296,1.5,0.24,0.43,21.03,0.35,28.88,3.7
+Roots and tubers,Sweet potato,100,108.03,1.27,0.33,0.51,28.93,0.14,14.44,2.2
+Roots and tubers,Yam elephant,100,84.37,2.56,0.14,1.22,46.91,0.26,20.54,2.1
+Roots and tubers,Tapioca,100,79.83,1.03,0.2,0.81,25.89,0.17,25.64,2
+Roots and tubers,Colocasia,100,88.91,3.31,0.17,0.66,30.18,0.41,19.91,3
+Other vegetables,French beans,100,22.23,2.12,0.19,0.98,49.9,0.37,61.98,3
+Other vegetables,Carrot,100,33.22,0.95,0.47,0.6,35.09,0.25,24.04,1.6
+Other vegetables,Tomato,100,18.88,0.76,0.25,0.22,8.9,0.11,15.41,2.6
+Other vegetables,"Bottle gourd (pale green, elongated)",100,10.99,0.53,0.13,0.26,15.42,0.15,41.99,1.3
+Other vegetables,Brinjal (all varieties),100,25.33,1.48,0.32,0.37,16.59,0.21,33.93,2.1
+Other vegetables,Pumpkin (Orange),100,23.18,0.84,0.16,0.36,23.06,0.11,24.14,1.1
+Other vegetables,Cauliflower,100,22.944576,2.15,0.44,0.96,25.16,0.31,45.95,
+Other vegetables,Tinda(apple gourd),100,13.862348,1.02,0.17,0.41,19.68,0.2,43.23,
+Fruits,Guava,100,32.27,1.44,0.32,0.32,18.52,0.23,29.76,1.3
+Fruits,Banana,100,105.16,1.23,0.33,0.28,5.07,0.12,16.18,1.4
+Fruits,Papaya,100,23.9,0.42,0.16,0.23,15.02,0.08,60.9,1.7
+Fruits,Sapota,100,73.37,0.92,1.26,0.49,17.87,0.18,10.83,2.4
+Fruits,Raisins(dry grapes),100,305.688674,2.57,0.34,6.81,73.24,0.22,38.3,
+Condiments & Spices,Coriander leaves,100,31.07078,3.52,0.7,5.3,146,0.68,51.01,
+Condiments & Spices,Groundnuts,100,520.077056,23.65,39.63,3.44,54,3.18,90.87,10.275
+Condiments & Spices,Tamarind pulp,100,288.480242,2.92,0.15,9.16,149,0.58,9.79,
+Condiments & Spices,Cumin seeds,100,304.493644,13.91,16.64,20.58,878,4.29,27.79,
+Condiments & Spices,Green chil,100,42.304062,2.36,0.72,1.2,18.45,0.27,21.5,
+Condiments & Spices,Ginger,100,54.97138,2.22,0.85,1.9,18.88,0.39,10.82,
+Condiments & Spices,Salt,100,0,0,0,9.5,0,0,0,1.8
+Condiments & Spices,Curd,100,60,3.1,4,0.2,149,0.59,12.5,4
+Condiments & Spices,Murmura(puffed rice),100,361.855084,7.47,1.62,4.55,15.09,1.45,0,
+Condiments & Spices,Curry leaves,100,63.575596,7.41,1.06,8.67,659,1.18,117,

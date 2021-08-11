@@ -1,0 +1,414 @@
+{% extends "icds/base.html" %}
+{% load filterFile %}
+{% load static %}
+    {% block head %}
+        <link rel="stylesheet" href="{% static 'css/foodCost.css' %}">
+    {% endblock %}
+
+    {% block body %}
+    <body class="bgPic">
+
+        <nav class="navbar fixed-top navbar-light navbar-expand-lg">
+            <div class="container">
+                <div class="header d-flex align-items-center">
+                    <img width="63px" height="86px" src="/static/images/logo.svg" alt="logo" />
+                    <p class="ml-3 ">Integrated Child
+                        <br>Development Scheme</p>
+                </div>
+            </div>
+        </nav>
+        <section>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col col-12 col-md-12" style="margin-top: 190px;">
+                        <div class="d-flex">
+                            <img src="/static/images/decorationFAA.png" alt="" style="margin-left:-50px; margin-top: -55px;" width="104px" height="101px">
+                            <p class="page-heading">Verify Food Cost</p>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row justify-content-center p-5" style="border-radius: 15px; background-color: #fff; border: 2px solid #eaeaea; ">
+
+                    <form style="display: contents;" action="{% url 'vegQuantity' %}" method="post" id="frmTest">
+                        {% csrf_token %}
+
+                    <div data-aos="fade-up" class="col col-12 col-md-12 mt-4">
+
+                        {% if preSchool > 0 %}
+                            <div class="header d-flex">
+                                <img src="/static/images/preSchool.svg" alt="" width="26px" height="30px" class="mr-1"/>
+                                <p style="color: #FF9505;">4 yrs to 6 yrs</p>
+                            </div>
+                            <!-- GREEN LEAFY VEGETABLES Here  -->
+                            <div class="d-flex align-items-center">
+                                <span class="cost-heading">GREEN LEAFY VEGETABLES</span>
+                            </div>
+                            <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">
+                            <div class="form-row">
+                                  {% for glv in preSchoolGlv %}
+                                      <div class="form-group col-md-3">
+                                          <div style="position: relative;">
+                                              <label>{{glv}}</label>
+                                              <div class="input-group" style="min-height: 60px;overflow: hidden;">
+                                                   <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" name="preSchool_{{glv}}" value="0">
+                                                   <div class="input-group-append">
+                                                       <span class="input-group-text">gm</span>
+                                                   </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  {% endfor %}
+                            </div>
+
+                            <!-- ROOTS AND TUBERS Here  -->
+                            <div class="d-flex align-items-center mt-2">
+                                <span class="cost-heading">ROOTS AND TUBERS</span>
+                            </div>
+                             <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">
+                             <div class="form-row">
+                                    {% for Rt in preSchoolRt %}
+                                    <div class="form-group col-md-3">
+                                        <div style="position: relative;">
+                                            <label>{{Rt}}</label>
+                                            <div class="input-group mb-3" style="min-height: 60px;overflow: hidden;">
+                                                <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" name="preSchool_{{Rt}}" value="0">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">gm</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+
+                            <!-- OTHER VEGETABLES Here  -->
+                            <div class="d-flex align-items-center mt-2">
+                                <span class="cost-heading">OTHER VEGETABLES</span>
+                            </div>
+                            <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">
+                            <div class="form-row">
+                                {% for Oveg in preSchoolOveg %}
+                                    <div class="form-group col-md-3">
+                                        <div style="position: relative;">
+                                            <label>{{Oveg}}</label>
+                                            <div class="input-group mb-3" style="min-height: 60px;overflow: hidden;">
+                                                <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" name="preSchool_{{Oveg}}" value="0">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">gm</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+
+                            <!-- FRUITS Here  -->
+                            <div class="d-flex align-items-center mt-2">
+                                <span class="cost-heading">FRUITS</span>
+                            </div>
+                            <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">
+                            <div class="form-row">
+                                {% for Fruit in preSchoolFruit %}
+                                    <div class="form-group col-md-3">
+                                        <div style="position: relative;">
+                                            <label>{{Fruit}}</label>
+                                            <div class="input-group mb-3" style="min-height: 60px;overflow: hidden;">
+                                                <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" name="preSchool_{{Fruit}}" value="0">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">gm</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+
+                            <!-- CONDIMENTS AND SPICES Here  -->
+                            <div class="d-flex align-items-center mt-2">
+                                <span class="cost-heading">CONDIMENTS AND SPICES</span>
+                            </div>
+                            <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">
+                            <div class="form-row">
+                                {% for Cs in preSchoolCs %}
+                                    <div class="form-group col-md-3">
+                                        <div style="position: relative;">
+                                            <label>{{Cs}}</label>
+                                            <div class="input-group mb-3" style="min-height: 60px;overflow: hidden;">
+                                                <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" name="preSchool_{{Cs}}" value="0">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">gm</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+
+                        {% if pregnantFAA > 0 %}
+                            <div class="header d-flex">
+                                <img src="/static/images/pregnantFAA.svg" alt="" width="26px" height="30px" class="mr-1"/>
+                                <p style="color: #FF9505;">Pregnant Women</p>
+                            </div>
+
+                            <!-- GREEN LEAFY VEGETABLES Here  -->
+                            <div class="d-flex align-items-center">
+                                <span class="cost-heading">GREEN LEAFY VEGETABLES</span>
+                            </div>
+                            <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">
+                            <div class="form-row">
+                                  {% for glv in pregnantGlv %}
+                                      <div class="form-group col-md-3">
+                                          <div style="position: relative;">
+                                              <label>{{glv}}</label>
+                                              <div class="input-group" style="min-height: 60px;overflow: hidden;">
+                                                   <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" name="pregnant_{{glv}}" value="0">
+                                                   <div class="input-group-append">
+                                                       <span class="input-group-text">gm</span>
+                                                   </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  {% endfor %}
+                            </div>
+
+                            <!-- ROOTS AND TUBERS Here  -->
+                            <div class="d-flex align-items-center mt-2">
+                                <span class="cost-heading">ROOTS AND TUBERS</span>
+                            </div>
+                            <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">
+                            <div class="form-row">
+                                    {% for Rt in pregnantRt %}
+                                    <div class="form-group col-md-3">
+                                        <div style="position: relative;">
+                                            <label>{{Rt}}</label>
+                                            <div class="input-group mb-3" style="min-height: 60px;overflow: hidden;">
+                                                <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" name="pregnant_{{Rt}}" value="0">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">gm</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                            </div>
+
+                            <!-- OTHER VEGETABLES Here  -->
+                            <div class="d-flex align-items-center mt-2">
+                                <span class="cost-heading">OTHER VEGETABLES</span>
+                            </div>
+                            <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">
+                            <div class="form-row">
+                                {% for Oveg in pregnantOveg %}
+                                    <div class="form-group col-md-3">
+                                        <div style="position: relative;">
+                                            <label>{{Oveg}}</label>
+                                            <div class="input-group mb-3" style="min-height: 60px;overflow: hidden;">
+                                                <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" name="pregnant_{{Oveg}}" value="0">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">gm</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+
+                            <!-- FRUITS Here  -->
+                            <div class="d-flex align-items-center mt-2">
+                                <span class="cost-heading">FRUITS</span>
+                            </div>
+                            <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">
+                            <div class="form-row">
+                                {% for Fruit in pregnantFruit %}
+                                    <div class="form-group col-md-3">
+                                        <div style="position: relative;">
+                                            <label>{{Fruit}}</label>
+                                            <div class="input-group mb-3" style="min-height: 60px;overflow: hidden;">
+                                                <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" name="pregnant_{{Fruit}}" value="0">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">gm</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+
+                            <!-- CONDIMENTS AND SPICES Here  -->
+                            <div class="d-flex align-items-center mt-2">
+                                <span class="cost-heading">CONDIMENTS AND SPICES</span>
+                            </div>
+                            <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">
+                            <div class="form-row">
+                                {% for Cs in pregnantCs %}
+                                    <div class="form-group col-md-3">
+                                        <div style="position: relative;">
+                                            <label>{{Cs}}</label>
+                                            <div class="input-group mb-3" style="min-height: 60px;overflow: hidden;">
+                                                <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" name="pregnant_{{Cs}}" value="0">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">gm</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+
+                        {% if lactatingFAA > 0 %}
+                            <div class="header d-flex ">
+                                <img src="/static/images/lactatingFAA.svg" alt="" width="26px" height="30px" class="mr-1"/>
+                                <p style="color: #FF9505;">Lactating Women</p>
+                            </div>
+
+                            <!-- GREEN LEAFY VEGETABLES Here  -->
+                            <div class="d-flex align-items-center">
+                                <span class="cost-heading">GREEN LEAFY VEGETABLES</span>
+                            </div>
+                            <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">
+                            <div class="form-row">
+                                  {% for glv in lactatingGlv %}
+                                      <div class="form-group col-md-3">
+                                          <div style="position: relative;">
+                                              <label>{{glv}}</label>
+                                              <div class="input-group" style="min-height: 60px;overflow: hidden;">
+                                                   <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" name="lactating_{{glv}}" value="0">
+                                                   <div class="input-group-append">
+                                                       <span class="input-group-text">gm</span>
+                                                   </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  {% endfor %}
+                            </div>
+
+                            <!-- ROOTS AND TUBERS Here  -->
+                            <div class="d-flex align-items-center mt-2">
+                                <span class="cost-heading">ROOTS AND TUBERS</span>
+                            </div>
+                            <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">
+                            <div class="form-row">
+                                    {% for Rt in lactatingRt %}
+                                    <div class="form-group col-md-3">
+                                        <div style="position: relative;">
+                                            <label>{{Rt}}</label>
+                                            <div class="input-group mb-3" style="min-height: 60px;overflow: hidden;">
+                                                <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" name="lactating_{{Rt}}" value="0">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">gm</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                            </div>
+
+                            <!-- OTHER VEGETABLES Here  -->
+                            <div class="d-flex align-items-center mt-2">
+                                <span class="cost-heading">OTHER VEGETABLES</span>
+                            </div>
+                            <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">
+                            <div class="form-row">
+                                {% for Oveg in lactatingOveg %}
+                                    <div class="form-group col-md-3">
+                                        <div style="position: relative;">
+                                            <label>{{Oveg}}</label>
+                                            <div class="input-group mb-3" style="min-height: 60px;overflow: hidden;">
+                                                <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" name="lactating_{{Oveg}}" value="0">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">gm</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+
+                            <!-- FRUITS Here  -->
+                            <div class="d-flex align-items-center mt-2">
+                                <span class="cost-heading">FRUITS</span>
+                            </div>
+                            <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">
+                            <div class="form-row">
+                                {% for Fruit in lactatingFruit %}
+                                    <div class="form-group col-md-3">
+                                        <div style="position: relative;">
+                                            <label>{{Fruit}}</label>
+                                            <div class="input-group mb-3" style="min-height: 60px;overflow: hidden;">
+                                                <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" name="lactating_{{Fruit}}" value="0">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">gm</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+
+                            <!-- CONDIMENTS AND SPICES Here  -->
+                            <div class="d-flex align-items-center mt-2">
+                                <span class="cost-heading">CONDIMENTS AND SPICES</span>
+                            </div>
+                            <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">
+                            <div class="form-row">
+                                {% for Cs in lactatingCs %}
+                                    <div class="form-group col-md-3">
+                                        <div style="position: relative;">
+                                            <label>{{Cs}}</label>
+                                            <div class="input-group mb-3" style="min-height: 60px;overflow: hidden;">
+                                                <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" name="lactating_{{Cs}}" value="0">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">gm</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+
+                        {% endif %}
+                    </div>
+
+
+                   <div class="col col-12 col-md-12 text-center">
+                       <button class="btn btnSubmitFAA footer">SUBMIT</button>
+                   </div>
+
+           </form>
+        </div>
+    </section>
+
+
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script>
+            function isNumberKey(evt)
+               {
+                  var charCode = (evt.which) ? evt.which : evt.keyCode;
+                  if (charCode != 46 && charCode > 31
+                    && (charCode < 48 || charCode > 57))
+                     return false;
+
+                  return true;
+               }
+        </script>
+         <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+        <script>
+            AOS.init({
+              duration: 1200,
+              once: 'true',
+            })
+        </script>
+        <script>
+             $(window).scroll(function(e) {
+                  $('.navbar')[$(window).scrollTop() >= 100 ? 'addClass' : 'removeClass']('navbar-hide');
+             });
+        </script>
+
+    </body>
+    {% endblock %}

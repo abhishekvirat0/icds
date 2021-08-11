@@ -2,7 +2,7 @@
 
 {% load static %}
     {% block head %}
-        <link rel="stylesheet" href="{% static 'css/foodselection.css' %}">
+        <link rel="stylesheet" href="{% static 'css/foodselectionFAA.css' %}">
     {% endblock %}
 
     {% block body %}
@@ -24,7 +24,7 @@
                 <div class="row">
                     <div class="col col-12 col-md-4" style="margin-top: 190px;">
                         <div class="d-flex">
-                            <img src="/static/images/decorationTHR.png" alt="" style="margin-left:-50px; margin-top: -55px;" width="104px" height="101px">
+                            <img src="/static/images/decorationFAA.png" alt="" style="margin-left:-50px; margin-top: -55px;" width="104px" height="101px">
                             <p class="page-heading">Select food for each categories</p>
                         </div>
                     </div>
@@ -36,18 +36,18 @@
 
                     <div id="accordion" class="accordion">
 
-                        {% if infant > 0 %}
+                        {% if preSchool > 0 %}
                         <div class="card mb-3">
                                 <div class="card-header collapsed" data-toggle="collapse" href="#collapseOne">
                                     <a class="card-title">
-                                        <img src="/static/images/newBorn.svg" alt="" width="26px" height="30px" class="mr-1"/>
-                                        6 mo to 1 yr
+                                        <img src="/static/images/preSchool.svg" alt="" width="26px" height="30px" class="mr-1"/>
+                                        4 yrs to 6 yrs
                                     </a>
                                 </div>
                                 <div id="collapseOne" class="card-body collapse show" data-parent="#accordion" >
                                     <div class="row">
 
-                                        <!-- 6 mo to 1 yr Cereals -->
+                                        <!-- 4 yrs to 6 yrs Cereals -->
 
                                         <div class="col col-12 col-md-12">
                                             <div class="d-flex align-items-center">
@@ -132,7 +132,7 @@
                                             </div>
                                         </div>
 
-                                        <!-- 6 mo to 1 yr Pulses -->
+                                        <!-- 4 yrs to 6 yrs Pulses -->
 
                                         <div class="col col-12 col-md-12 mt-4">
                                             <div class="d-flex align-items-center">
@@ -235,7 +235,7 @@
                                             </div>
                                         </div>
 
-                                         <!-- 6 mo to 1 yr Others -->
+                                         <!-- 4 yrs to 6 yrs Others -->
 
                                         <div class="col col-12 col-md-12 mt-4">
                                             <div class="d-flex align-items-center">
@@ -311,6 +311,8 @@
                                             </div>
                                         </div>
 
+                                        <!-- 4 yrs to 6 yrs MilkPowder -->
+
                                         <div class="col col-12 col-md-12 mt-4">
                                             <div class="d-flex align-items-center">
                                                 <span class="checkbox-heading">MILK POWDER</span>
@@ -349,329 +351,18 @@
                             </div>
                         {% endif %}
 
-                        {% if toddler > 0 %}
-                        <div class="card mb-3">
-                                <div class="card-header collapsed" data-toggle="collapse" href="#collapseTwo">
-                                    <a class="card-title">
-                                        <img src="/static/images/toddler.svg" alt="" width="25px" height="30px" class="mr-1"/>
-                                        1 yr to 3 yrs
-                                    </a>
-                                </div>
-                                <div id="collapseTwo" class="card-body collapse" data-parent="#accordion" >
-                                    <div class="row">
-
-                                        <!-- 1 yr to 3 yrs Cereals -->
-
-                                        <div class="col col-12 col-md-12">
-                                            <div class="d-flex align-items-center">
-                                                <span class="checkbox-heading">CEREALS</span>
-                                                <button class="btn ml-auto checkbox-selectAll" id="checkAll4" type="button">select all</button>
-                                            </div>
-                                            <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">
-
-                                            <div class="col col-12 col-md-12 check" id="checkboxes4">
-                                                    <label tabindex="0">
-                                                      <input tabindex="-1" type="checkbox" name="toddlersCereals" value="Jowar" />
-                                                        <div class="icon-box">
-                                                            <span>Jowar</span>
-                                                            <i class="fas fa-plus"></i>
-                                                            <i class="fas fa-check"></i>
-                                                        </div>
-                                                    </label>
-
-                                                    <label tabindex="0">
-                                                        <input tabindex="-1" type="checkbox" name="toddlersCereals" value="Ragi" />
-                                                        <div class="icon-box">
-                                                            <span>Ragi</span>
-                                                            <i class="fas fa-plus"></i>
-                                                            <i class="fas fa-check"></i>
-                                                        </div>
-                                                    </label>
-
-                                                    <label tabindex="0">
-                                                      <input tabindex="-1" type="checkbox" name="toddlersCereals" value="Wheat" />
-                                                        <div class="icon-box">
-                                                            <span>Wheat</span>
-                                                            <i class="fas fa-plus"></i>
-                                                            <i class="fas fa-check"></i>
-                                                        </div>
-                                                    </label>
-
-                                                    <label tabindex="0">
-                                                        <input tabindex="-1" type="checkbox" name="toddlersCereals" value="Wheat flour Atta" />
-                                                        <div class="icon-box">
-                                                            <span>Wheat Flour Atta</span>
-                                                            <i class="fas fa-plus"></i>
-                                                            <i class="fas fa-check"></i>
-                                                        </div>
-                                                    </label>
-
-                                                    <label tabindex="0">
-                                                      <input tabindex="-1" type="checkbox" name="toddlersCereals" value="Wheat Broken" />
-                                                        <div class="icon-box">
-                                                            <span>Wheat Broken</span>
-                                                            <i class="fas fa-plus"></i>
-                                                            <i class="fas fa-check"></i>
-                                                        </div>
-                                                    </label>
-
-                                                    <label tabindex="0">
-                                                        <input tabindex="-1" type="checkbox" name="toddlersCereals" value="Maize" />
-                                                        <div class="icon-box">
-                                                            <span>Maize</span>
-                                                            <i class="fas fa-plus"></i>
-                                                            <i class="fas fa-check"></i>
-                                                        </div>
-                                                    </label>
-
-                                                    <label tabindex="0">
-                                                      <input tabindex="-1" type="checkbox" name="toddlersCereals" value="Rava" />
-                                                        <div class="icon-box">
-                                                            <span>Rava</span>
-                                                            <i class="fas fa-plus"></i>
-                                                            <i class="fas fa-check"></i>
-                                                        </div>
-                                                    </label>
-
-                                                    <label tabindex="0">
-                                                        <input tabindex="-1" type="checkbox" name="toddlersCereals" value="Rice" />
-                                                        <div class="icon-box">
-                                                            <span>Rice</span>
-                                                            <i class="fas fa-plus"></i>
-                                                            <i class="fas fa-check"></i>
-                                                        </div>
-                                                    </label>
-
-                                            </div>
-                                        </div>
-
-                                        <!-- 1 yr to 3 yrs Pulses -->
-
-                                        <div class="col col-12 col-md-12 mt-4">
-                                            <div class="d-flex align-items-center">
-                                                <span class="checkbox-heading">PULSES</span>
-                                                <button class="btn ml-auto checkbox-selectAll" id="checkAll5" type="button">select all</button>
-                                            </div>
-                                            <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">
-
-                                            <div class="col col-12 col-md-12 check" id="checkboxes5">
-                                                    <label tabindex="0">
-                                                      <input tabindex="-1" type="checkbox" name="toddlersPulses" value="Rajma Red (Kidney beans)" />
-                                                        <div class="icon-box">
-                                                            <span>Rajma Red (Kidney beans)</span>
-                                                            <i class="fas fa-plus"></i>
-                                                            <i class="fas fa-check"></i>
-                                                        </div>
-                                                    </label>
-
-                                                    <label tabindex="0">
-                                                        <input tabindex="-1" type="checkbox" name="toddlersPulses" value="Soya bean (Brown)" />
-                                                        <div class="icon-box">
-                                                            <span>Soya bean (Brown)</span>
-                                                            <i class="fas fa-plus"></i>
-                                                            <i class="fas fa-check"></i>
-                                                        </div>
-                                                    </label>
-
-                                                    <label tabindex="0">
-                                                      <input tabindex="-1" type="checkbox" name="toddlersPulses" value="Soya bean (White)" />
-                                                        <div class="icon-box">
-                                                            <span>Soya bean (White)</span>
-                                                            <i class="fas fa-plus"></i>
-                                                            <i class="fas fa-check"></i>
-                                                        </div>
-                                                    </label>
-
-                                                    <label tabindex="0">
-                                                        <input tabindex="-1" type="checkbox" name="toddlersPulses" value="Bengal Gram (Channa dal)" />
-                                                        <div class="icon-box">
-                                                            <span>Bengal Gram (Channa dal)</span>
-                                                            <i class="fas fa-plus"></i>
-                                                            <i class="fas fa-check"></i>
-                                                        </div>
-                                                    </label>
-
-                                                    <label tabindex="0">
-                                                      <input tabindex="-1" type="checkbox" name="toddlersPulses" value="Black Gram (Urad dal)" />
-                                                        <div class="icon-box">
-                                                            <span>Black Gram (Urad dal)</span>
-                                                            <i class="fas fa-plus"></i>
-                                                            <i class="fas fa-check"></i>
-                                                        </div>
-                                                    </label>
-
-                                                    <label tabindex="0">
-                                                        <input tabindex="-1" type="checkbox" name="toddlersPulses" value="Yellow Lentil (Mung dal)" />
-                                                        <div class="icon-box">
-                                                            <span>Yellow Lentil (Mung dal)</span>
-                                                            <i class="fas fa-plus"></i>
-                                                            <i class="fas fa-check"></i>
-                                                        </div>
-                                                    </label>
-
-                                                    <label tabindex="0">
-                                                      <input tabindex="-1" type="checkbox" name="toddlersPulses" value="Peas" />
-                                                        <div class="icon-box">
-                                                            <span>Peas</span>
-                                                            <i class="fas fa-plus"></i>
-                                                            <i class="fas fa-check"></i>
-                                                        </div>
-                                                    </label>
-
-                                                    <label tabindex="0">
-                                                        <input tabindex="-1" type="checkbox" name="toddlersPulses" value="Red Gram (Arhar dal)(Toor dal)" />
-                                                        <div class="icon-box">
-                                                            <span>Red Gram (Arhar dal)(Toor dal)</span>
-                                                            <i class="fas fa-plus"></i>
-                                                            <i class="fas fa-check"></i>
-                                                        </div>
-                                                    </label>
-
-                                                    <label tabindex="0">
-                                                      <input tabindex="-1" type="checkbox" name="toddlersPulses" value="Green Gram (Moong dal)" />
-                                                        <div class="icon-box">
-                                                            <span>Green Gram dal</span>
-                                                            <i class="fas fa-plus"></i>
-                                                            <i class="fas fa-check"></i>
-                                                        </div>
-                                                    </label>
-
-                                                    <label tabindex="0">
-                                                        <input tabindex="-1" type="checkbox" name="toddlersPulses" value="Red Lentil (Masoor dal)" />
-                                                        <div class="icon-box">
-                                                            <span>Red Lentil (Masoor dal)</span>
-                                                            <i class="fas fa-plus"></i>
-                                                            <i class="fas fa-check"></i>
-                                                        </div>
-                                                    </label>
-
-
-                                            </div>
-                                        </div>
-
-                                        <!-- 1 yr to 3 yrs Others -->
-                                        <div class="col col-12 col-md-12 mt-4">
-                                            <div class="d-flex align-items-center">
-                                                <span class="checkbox-heading">OTHERS</span>
-                                                <button class="btn ml-auto checkbox-selectAll" id="checkAll6" type="button">select all</button>
-                                            </div>
-                                            <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">
-
-                                            <div class="col col-12 col-md-12 check" id="checkboxes6">
-                                                    <label tabindex="0">
-                                                      <input tabindex="-1" type="checkbox" name="toddlersOthers" value="Jaggery" />
-                                                        <div class="icon-box">
-                                                            <span>Jaggery</span>
-                                                            <i class="fas fa-plus"></i>
-                                                            <i class="fas fa-check"></i>
-                                                        </div>
-                                                    </label>
-
-                                                    <label tabindex="0">
-                                                        <input tabindex="-1" type="checkbox" name="toddlersOthers" value="Sugar" />
-                                                        <div class="icon-box">
-                                                            <span>Sugar</span>
-                                                            <i class="fas fa-plus"></i>
-                                                            <i class="fas fa-check"></i>
-                                                        </div>
-                                                    </label>
-
-                                                    <label tabindex="0">
-                                                      <input tabindex="-1" type="checkbox" name="toddlersOthers" value="Ghee" />
-                                                        <div class="icon-box">
-                                                            <span>Ghee</span>
-                                                            <i class="fas fa-plus"></i>
-                                                            <i class="fas fa-check"></i>
-                                                        </div>
-                                                    </label>
-
-                                                    <label tabindex="0">
-                                                        <input tabindex="-1" type="checkbox" name="toddlersOthers" value="Oil" />
-                                                        <div class="icon-box">
-                                                            <span>Oil</span>
-                                                            <i class="fas fa-plus"></i>
-                                                            <i class="fas fa-check"></i>
-                                                        </div>
-                                                    </label>
-
-                                                    <label tabindex="0">
-                                                      <input tabindex="-1" type="checkbox" name="toddlersOthers" value="Ground nut" />
-                                                        <div class="icon-box">
-                                                            <span>Ground nut</span>
-                                                            <i class="fas fa-plus"></i>
-                                                            <i class="fas fa-check"></i>
-                                                        </div>
-                                                    </label>
-
-                                                    <label tabindex="0">
-                                                        <input tabindex="-1" type="checkbox" name="toddlersOthers" value="Egg" />
-                                                        <div class="icon-box">
-                                                            <span>Egg</span>
-                                                            <i class="fas fa-plus"></i>
-                                                            <i class="fas fa-check"></i>
-                                                        </div>
-                                                    </label>
-
-                                                    <label tabindex="0">
-                                                      <input tabindex="-1" type="checkbox" name="toddlersOthers" value="Banana" />
-                                                        <div class="icon-box">
-                                                            <span>Banana</span>
-                                                            <i class="fas fa-plus"></i>
-                                                            <i class="fas fa-check"></i>
-                                                        </div>
-                                                    </label>
-                                            </div>
-                                        </div>
-
-                                        <div class="col col-12 col-md-12 mt-4">
-                                            <div class="d-flex align-items-center">
-                                                <span class="checkbox-heading">MILK POWDER</span>
-                                            </div>
-                                            <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">
-
-                                            <div class="col col-12 col-md-12 check">
-                                                <label tabindex="0">
-                                                      <input tabindex="-1" type="checkbox" name="toddlersmilkpowder" value="Milk powder" />
-                                                        <div class="icon-box">
-                                                            <span>Milk Powder</span>
-                                                            <i class="fas fa-plus"></i>
-                                                            <i class="fas fa-check"></i>
-                                                        </div>
-                                                    </label>
-                                                <div class="d-flex align-items-center">
-                                                    <span class="checkbox-heading">ICDS</span>
-                                                    <label class="toogle ml-auto"><input id="yourtoddlersBox" autocomplete='off' type="checkbox" name="toddlersscheme" value="icds"/><span class="box"></span></label>
-                                                </div>
-
-                                                <div class="d-flex align-items-center">
-                                                    <span class="input-group">Consumption of milk Powder per day</span>
-                                                    <div class="input-group mb-3 ">
-                                                        <input id="yourtoddlersText" onkeypress="return isNumberKey(event)" type="text" class="form-control ml-auto" aria-label="" name="toddlersmilkPowderQuantity" required>
-                                                        <div class="input-group-append">
-                                                            <span class="input-group-text">gm</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        {% endif %}
-
-                        {% if pregnant > 0 %}
+                        {% if pregnantFAA > 0 %}
                         <div class="card mb-3">
                                 <div class="card-header collapsed" data-toggle="collapse" href="#collapseThree">
                                     <a class="card-title">
-                                        <img src="/static/images/pregnant.svg" alt="" width="26px" height="30px" class="mr-1"/>
+                                        <img src="/static/images/pregnantFAA.svg" alt="" width="26px" height="30px" class="mr-1"/>
                                         pregnant women
                                     </a>
                                 </div>
                                 <div id="collapseThree" class="card-body collapse" data-parent="#accordion" >
                                     <div class="row">
 
-                                        <!-- pregnant women Cereals -->
+                                        <!-- pregnantFAA women Cereals -->
 
                                         <div class="col col-12 col-md-12">
                                             <div class="d-flex align-items-center">
@@ -756,7 +447,7 @@
                                             </div>
                                         </div>
 
-                                        <!-- pregnant women pulses -->
+                                        <!-- pregnantFAA women pulses -->
 
                                         <div class="col col-12 col-md-12 mt-4">
                                             <div class="d-flex align-items-center">
@@ -860,7 +551,7 @@
                                             </div>
                                         </div>
 
-                                        <!-- pregnant women Others -->
+                                        <!-- pregnantFAA women Others -->
 
                                         <div class="col col-12 col-md-12 mt-4">
                                             <div class="d-flex align-items-center">
@@ -936,6 +627,8 @@
                                             </div>
                                         </div>
 
+                                        <!-- pregnantFAA women MilkPowder -->
+
                                         <div class="col col-12 col-md-12 mt-4">
                                             <div class="d-flex align-items-center">
                                                 <span class="checkbox-heading">MILK POWDER</span>
@@ -974,18 +667,18 @@
                             </div>
                         {% endif %}
 
-                        {% if lactating > 0 %}
+                        {% if lactatingFAA > 0 %}
                         <div class="card mb-0">
                                 <div class="card-header collapsed" data-toggle="collapse" href="#collapseFour">
                                     <a class="card-title">
-                                        <img src="/static/images/lactating.svg" alt="" width="26px" height="30px" class="mr-1"/>
+                                        <img src="/static/images/lactatingFAA.svg" alt="" width="26px" height="30px" class="mr-1"/>
                                         lactating women
                                     </a>
                                 </div>
                                 <div id="collapseFour" class="card-body collapse" data-parent="#accordion" >
                                     <div class="row">
 
-                                        <!-- lactating women Cereals -->
+                                        <!-- lactatingFAA women Cereals -->
 
                                         <div class="col col-12 col-md-12">
                                             <div class="d-flex align-items-center">
@@ -1070,7 +763,7 @@
                                             </div>
                                         </div>
 
-                                        <!-- lactating women Pulses -->
+                                        <!-- lactatingFAA women Pulses -->
 
                                         <div class="col col-12 col-md-12 mt-4">
                                             <div class="d-flex align-items-center">
@@ -1173,7 +866,7 @@
                                             </div>
                                         </div>
 
-                                        <!-- lactating women Others -->
+                                        <!-- lactatingFAA women Others -->
 
                                         <div class="col col-12 col-md-12 mt-4">
                                             <div class="d-flex align-items-center">
@@ -1249,6 +942,9 @@
 
                                             </div>
                                         </div>
+
+                                        <!-- lactatingFAA women MilkPowder -->
+
                                         <div class="col col-12 col-md-12 mt-4">
                                             <div class="d-flex align-items-center">
                                                 <span class="checkbox-heading">MILK POWDER</span>
@@ -1290,7 +986,7 @@
 
 
                      <div class="col col-12 col-md-12 text-right mt-4 mb-3">
-                        <button class="btn btnSubmit footer" type="submit">SUBMIT</button>
+                        <button class="btn btnSubmitFAA footer" type="submit">SUBMIT</button>
                      </div>
                         </form>
                     </div>
@@ -1319,18 +1015,7 @@
                             var checked = $(this).prop('click');
                             $('#checkboxes3').find('input:checkbox').prop('checked', true);
                         });
-                        $('#checkAll4').click(function() {
-                            var checked = $(this).prop('click');
-                            $('#checkboxes4').find('input:checkbox').prop('checked', true);
-                        });
-                        $('#checkAll5').click(function() {
-                            var checked = $(this).prop('click');
-                            $('#checkboxes5').find('input:checkbox').prop('checked', true);
-                        });
-                        $('#checkAll6').click(function() {
-                            var checked = $(this).prop('click');
-                            $('#checkboxes6').find('input:checkbox').prop('checked', true);
-                        });
+
                         $('#checkAll7').click(function() {
                             var checked = $(this).prop('click');
                             $('#checkboxes7').find('input:checkbox').prop('checked', true);
@@ -1362,10 +1047,6 @@
                 var checked2 = $('input[name="Pulses"]:checked').length > 0;
                 var checked3 = $('input[name="Others"]:checked').length > 0;
 
-                var checked4 = $('input[name="toddlersCereals"]:checked').length > 0;
-                var checked5 = $('input[name="toddlersPulses"]:checked').length > 0;
-                var checked6 = $('input[name="toddlersOthers"]:checked').length > 0;
-
                 var checked7 = $('input[name="pregnantCereals"]:checked').length > 0;
                 var checked8 = $('input[name="pregnantPulses"]:checked').length > 0;
                 var checked9 = $('input[name="pregnantOthers"]:checked').length > 0;
@@ -1396,34 +1077,6 @@
 
                 if($('input[name="Others"]').length > 0){
                     if(!checked3){
-                        swal({
-                          text: "Please select at least 1 other food",
-                          icon: "warning",
-                        });
-                        return false;
-                    }
-                }
-
-                if($('input[name="toddlersCereals"]').length > 0){
-                    if(!checked4){
-                        swal({
-                          text: "Please select at least 1 Cereal",
-                          icon: "warning",
-                        });
-                        return false;
-                    }
-                }
-                if($('input[name="toddlersPulses"]').length > 0){
-                    if(!checked5){
-                        swal({
-                          text: "Please select at least 1 Pulse",
-                          icon: "warning",
-                        });
-                        return false;
-                    }
-                }
-                if($('input[name="toddlersOthers"]').length > 0){
-                    if(!checked6){
                         swal({
                           text: "Please select at least 1 other food",
                           icon: "warning",
@@ -1498,11 +1151,7 @@
             };
 
         </script>
-    <script>
-            document.getElementById('yourtoddlersBox').onchange = function() {
-                document.getElementById('yourtoddlersText').disabled = this.checked;
-            };
-    </script>
+
     <script>
          document.getElementById('yourpregnantBox').onchange = function() {
                document.getElementById('yourpregnantText').disabled = this.checked;

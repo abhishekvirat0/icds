@@ -127,6 +127,24 @@ input:focus::placeholder {
     color: #000000;
 }
 
+.btnSubmitFAA{
+    font-family: Circular Std Bold;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 5px 24px;
+    background-color: #F0F0F0;
+    border-radius: 12px;
+    color: #FF9505;
+}
+
+.btnSubmitFAA:focus{
+    background: #FF9505;
+    border-radius: 12px;
+    color: #000000;
+}
+
+
 .container{
     width:350px
 }
