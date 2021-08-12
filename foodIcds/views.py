@@ -2392,7 +2392,7 @@ class GetPdf(View):
                 Age_group = "lactation"
                 Food = lactatingFoodCost['Food_Name']
 
-                final_out_lactating = LPPWOVAR(Age_group, Food, lactatingFoodCost, lactatingscheme,
+                final_out_lactating = LPPWOVARHCM(Age_group, Food, lactatingFoodCost, lactatingscheme,
                                                lactatingmilkPowderQuantity)
                 lact_Status = opStatus
                 lact_nutrition = NUTCAL(final_out_lactating)
