@@ -381,6 +381,7 @@ def Percentagecalculation(nutrition, Age_group):
 
 
 def NUTCAL(quantity_food, quantity):
+    print(quantity)
     Food = quantity_food["Food_Name"]
     Food = Food.sort_values()
 
@@ -408,7 +409,7 @@ def NUTCAL(quantity_food, quantity):
     nutritions = pd.DataFrame(A.index)
     ##nutritional_calculation
     ## A and quantity_food
-
+    quantity_food=quantity_food.sort_values(["Food_Name"])
     A1 = np.array(A)
     A2 = np.array(quantity_food["Amount"])
 
@@ -416,10 +417,13 @@ def NUTCAL(quantity_food, quantity):
 
     ou = pd.concat([nut_out, nutritions], axis=1, ignore_index=False)
     ou.columns = ["Amount", "Nutritions"]
-    if quantity is not None:
-        milk = pd.read_csv("Milk_powder.csv", encoding='unicode_escape')
-        ou1 = ou["Amount"] + milk["Milk_powder"] * (quantity/100)
-        ou["Amount"] = ou1
+
+    # milkpowder is already in dataframe
+    # if quantity is not None:
+    #     milk = pd.read_csv("Milk_powder.csv", encoding='unicode_escape')
+    #
+    #     ou1 = ou["Amount"] + milk["Milk_powder"] * (quantity / 100)
+    #     ou["Amount"] = ou1
 
     ou = np.round(ou, 1)
     print(ou)
@@ -2400,7 +2404,7 @@ class GetPdf(View):
                 Food = lactatingFoodCost['Food_Name']
 
                 final_out_lactating = LPPWOVARHCM(Age_group, Food, lactatingFoodCost, lactatingscheme,
-                                               lactatingmilkPowderQuantity)
+                                                  lactatingmilkPowderQuantity)
                 lact_Status = opStatus
                 lact_nutrition = NUTCAL(final_out_lactating, lactatingmilkPowderQuantity)
 
