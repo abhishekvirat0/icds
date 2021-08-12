@@ -168,32 +168,33 @@
     {% if lact_Status == 'Infeasible' %}
         <p>&nbsp;&nbsp;</p>
     {% else %}
-    <div class="card">
-        {% if lact_data %}
-            <div class="card-header" style="text-align:center;">
-                <h1>Lactating women (Total Cost: Rs. {{lact_total}}) </h1>
-            </div>
-                {{lact_data | safe}}
-        {% endif %}
-    </div>
-    <div class="card mt-4">
-        {% if lact_data %}
-            <div class="card-header" style="text-align:center;">
-                    <h1>Macro Nutrition Composition</h1>
-            </div>
-<h1>Fat to Energy Percent: {{lact_fat_perc}} %</h1>
-            {{lact_other_nut | safe}}
-        {% endif %}
-    </div>
+        <div class="card">
+            {% if lact_data %}
+                <div class="card-header" style="text-align:center;">
+                    <h1>Lactating women (Total Cost: Rs. {{lact_total}}) </h1>
+                </div>
+                    {{lact_data | safe}}
+            {% endif %}
+        </div>
         <div class="card mt-4">
             {% if lact_data %}
                 <div class="card-header" style="text-align:center;">
-                    <h1>Micro Nutrition Composition</h1>
+                        <h1>Macro Nutrition Composition</h1>
                 </div>
-                {{lact_perc | safe}}
+                <h1>Fat to Energy Percent: {{lact_fat_perc}} %</h1>
+                {{lact_other_nut | safe}}
             {% endif %}
         </div>
+            <div class="card mt-4">
+                {% if lact_data %}
+                    <div class="card-header" style="text-align:center;">
+                        <h1>Micro Nutrition Composition</h1>
+                    </div>
+                    {{lact_perc | safe}}
+                {% endif %}
+            </div>
+    {% endif %}
 </div>
-{% endif %}
+
 </body>
 </html>
