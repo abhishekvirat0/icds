@@ -193,6 +193,7 @@ def LPPWOVARHCM(Age_group, Food, input_cost, scheme, quantity):
     #####constraints for upper limit for fat based on energy
 
     model += lpSum(A.iloc[2,] * allocation) <= lpSum(A.iloc[0,] * allocation) * 0.40 / 9
+    model += lpSum(A.iloc[2,] * allocation) >= lpSum(A.iloc[0,] * allocation) * 0.35 / 9
 
     if Age_group == "child(4-6)yrs":
         model += lpSum(allocation * cost_matrix) <= 8
@@ -558,6 +559,7 @@ def LPPWOVAR_LESSKCAL(Age_group, Food, input_cost, scheme, quantity):
     # constraints for upper limit for protein and energy
 
     model += lpSum(A.iloc[2,] * allocation) <= lpSum(A.iloc[0,] * allocation) * 0.4 / 9
+    model += lpSum(A.iloc[2,] * allocation) >= lpSum(A.iloc[0,] * allocation) * 0.35 / 9
 
     if Age_group == "6-12 months":
         Cereals = data[data["Food_Group"] == "Cereals"]
@@ -770,6 +772,7 @@ def LPPWOVAR(Age_group, Food, input_cost, scheme, quantity):
     # constraints for upper limit for protein and energy
 
     model += lpSum(A.iloc[2,] * allocation) <= lpSum(A.iloc[0,] * allocation) * 0.4 / 9
+    model += lpSum(A.iloc[2,] * allocation) >= lpSum(A.iloc[0,] * allocation) * 0.35 / 9
 
     # cereal
     if (Age_group == "pregnant") or (Age_group == "lactation"):
