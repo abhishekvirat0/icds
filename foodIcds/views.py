@@ -2078,6 +2078,7 @@ class GetPdf(View):
                     ["Food Name", "Cost (per kg)", "Per Person Intake (gm)", "Per Person Cost (Rs)",
                      "Total Quantity (gm)",
                      "Total Cost (Rs)"]]
+                final_out_infant = np.round(final_out_infant, decimals=2)
                 inft_data = final_out_infant.to_html(classes='mystyle', index=False)
                 inft_total = final_out_infant['Total Cost (Rs)'].sum()
                 inft_total = inft_total.round(2)
@@ -2105,6 +2106,7 @@ class GetPdf(View):
                     ["Food Name", "Cost (per kg)", "Per Person Intake (gm)", "Per Person Cost (Rs)",
                      "Total Quantity (gm)",
                      "Total Cost (Rs)"]]
+                final_out_infant_lessKcal = np.round(final_out_infant_lessKcal, decimals=2)
                 inft_data_lessKcal = final_out_infant_lessKcal.to_html(classes='mystyle', index=False)
 
                 inft_total_lessKcal = final_out_infant_lessKcal['Total Cost (Rs)'].sum()
@@ -2146,6 +2148,7 @@ class GetPdf(View):
                     ["Food Name", "Cost (per kg)", "Per Person Intake (gm)", "Per Person Cost (Rs)",
                      "Total Quantity (gm)",
                      "Total Cost (Rs)"]]
+                final_out_toddler = np.round(final_out_toddler, decimals=2)
                 todd_data = final_out_toddler.to_html(classes='mystyle', index=False)
                 todd_total = final_out_toddler['Total Cost (Rs)'].sum()
                 todd_total = todd_total.round(2)
@@ -2185,6 +2188,7 @@ class GetPdf(View):
                     ["Food Name", "Cost (per kg)", "Per Person Intake (gm)", "Per Person Cost (Rs)",
                      "Total Quantity (gm)",
                      "Total Cost (Rs)"]]
+                final_out_pregnant = np.round(final_out_pregnant, decimals=2)
                 preg_data = final_out_pregnant.to_html(classes='mystyle', index=False)
 
                 preg_total = final_out_pregnant['Total Cost (Rs)'].sum()
@@ -2225,6 +2229,7 @@ class GetPdf(View):
                     ["Food Name", "Cost (per kg)", "Per Person Intake (gm)", "Per Person Cost (Rs)",
                      "Total Quantity (gm)",
                      "Total Cost (Rs)"]]
+                final_out_lactating = np.round(final_out_lactating, decimals=2)
                 lact_data = final_out_lactating.to_html(classes='mystyle', index=False, )
 
                 lact_total = final_out_lactating['Total Cost (Rs)'].sum()
@@ -2318,6 +2323,7 @@ class GetPdf(View):
                     print(df_add)
                     inft_perc, inft_fat_perc, inft_other_nut = PercentagecalculationHCM(df_add, Age_group)
 
+                final_out_preSchool = np.round(final_out_preSchool, decimals=2)
                 inft_data = final_out_preSchool.to_html(classes='mystyle', index=False)
 
                 inft_perc = inft_perc.to_html(classes='mystyle', index=False)
@@ -2384,6 +2390,7 @@ class GetPdf(View):
                     print(df_add)
                     preg_perc, preg_fat_perc, preg_other_nut = PercentagecalculationHCM(df_add, Age_group)
 
+                final_out_pregnant = np.round(final_out_pregnant, decimals=2)
                 preg_data = final_out_pregnant.to_html(classes='mystyle', index=False)
 
                 preg_perc = preg_perc.to_html(classes='mystyle', index=False)
@@ -2448,6 +2455,7 @@ class GetPdf(View):
                     print(df_add)
                     lact_perc, lact_fat_perc, lact_other_nut = PercentagecalculationHCM(df_add, Age_group)
 
+                final_out_lactating = np.round(final_out_lactating, decimals=2)
                 lact_data = final_out_lactating.to_html(classes='mystyle', index=False)
 
                 lact_perc = lact_perc.to_html(classes='mystyle', index=False)
