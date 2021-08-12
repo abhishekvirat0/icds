@@ -380,7 +380,7 @@ def Percentagecalculation(nutrition, Age_group):
     return percentage_calculation, Fat_percentage, other_nut
 
 
-def NUTCAL(quantity_food):
+def NUTCAL(quantity_food, quantity):
     Food = quantity_food["Food_Name"]
     Food = Food.sort_values()
 
@@ -416,6 +416,10 @@ def NUTCAL(quantity_food):
 
     ou = pd.concat([nut_out, nutritions], axis=1, ignore_index=False)
     ou.columns = ["Amount", "Nutritions"]
+    if quantity is not None:
+        milk = pd.read_csv("Milk_powder.csv", encoding='unicode_escape')
+        ou1 = ou["Amount"] + milk["Milk_powder"] * (quantity/100)
+        ou["Amount"] = ou1
 
     ou = np.round(ou, 1)
     print(ou)
@@ -1570,7 +1574,7 @@ def filter_data(request):
             request.session['milk_prop'] = milk_prop
 
             print(final_optimized_cost)
-            nutrition_calc = NUTCAL(final_out_infant)
+            nutrition_calc = NUTCAL(final_out_infant, milkPowderQuantity)
             final_q = nutrition_calc.set_index('Nutritions')['Amount'].to_dict()
             print(final_q)
 
@@ -1609,7 +1613,7 @@ def filter_data(request):
 
             request.session['milk_prop_lessKcal'] = milk_prop_lessKcal
 
-            nutrition_calc_lessKcal = NUTCAL(final_out_infant_lessKcal)
+            nutrition_calc_lessKcal = NUTCAL(final_out_infant_lessKcal, milkPowderQuantity)
             final_q_less = nutrition_calc_lessKcal.set_index('Nutritions')['Amount'].to_dict()
 
             if opStatus == 'Infeasible' and opStatus_lessKcal == 'Infeasible':
@@ -1698,7 +1702,7 @@ def filter_data(request):
             request.session['milk_prop_toddler'] = milk_prop_toddler
 
             print(final_optimized_cost)
-            nutrition_calc = NUTCAL(final_out_toddler)
+            nutrition_calc = NUTCAL(final_out_toddler, toddlersmilkPowderQuantity)
             final_q = nutrition_calc.set_index('Nutritions')['Amount'].to_dict()
             if opStatus == 'Infeasible':
                 t_Infeasible = render_to_string('icds/infeasible.html')
@@ -1785,7 +1789,7 @@ def filter_data(request):
                     milk_prop_pregnant.append(final_prop_pregnant[milk])
 
             print(final_optimized_cost)
-            nutrition_calc = NUTCAL(final_out_pregnant)
+            nutrition_calc = NUTCAL(final_out_pregnant, pregnantmilkPowderQuantity)
             final_q = nutrition_calc.set_index('Nutritions')['Amount'].to_dict()
             print(opStatus)
             if opStatus == 'Infeasible':
@@ -1873,7 +1877,7 @@ def filter_data(request):
                     milk_prop_lactating.append(final_prop_lactating[milk])
 
             print(final_optimized_cost)
-            nutrition_calc = NUTCAL(final_out_lactating)
+            nutrition_calc = NUTCAL(final_out_lactating, lactatingmilkPowderQuantity)
             final_q = nutrition_calc.set_index('Nutritions')['Amount'].to_dict()
 
             print(final_q, opStatus)
@@ -1964,7 +1968,7 @@ def filter_data(request):
             request.session['milk_prop'] = milk_prop
 
             print(final_optimized_cost)
-            nutrition_calc = NUTCAL(final_out_infant)
+            nutrition_calc = NUTCAL(final_out_infant, milkPowderQuantity)
             final_q = nutrition_calc.set_index('Nutritions')['Amount'].to_dict()
             print(final_q)
 
@@ -2057,7 +2061,7 @@ class GetPdf(View):
 
                 final_out_infant = LPPWOVAR(Age_group, Food, infantFoodCost, scheme, milkPowderQuantity)
                 inft_Status = opStatus
-                inft_nutrition = NUTCAL(final_out_infant)
+                inft_nutrition = NUTCAL(final_out_infant, milkPowderQuantity)
 
                 final_out_infant = final_out_infant[final_out_infant['Amount'] > 0]
                 final_out_infant.columns = ['Food Name', 'Per Person Intake (gm)', 'Food Group', 'Per Person Cost (Rs)',
@@ -2082,7 +2086,7 @@ class GetPdf(View):
                 final_out_infant_lessKcal = LPPWOVAR_LESSKCAL(Age_group, Food, infantFoodCost, scheme,
                                                               milkPowderQuantity)
                 inft_Status_lessKcal = opStatus
-                inft_nutrition_lessKcal = NUTCAL(final_out_infant_lessKcal)
+                inft_nutrition_lessKcal = NUTCAL(final_out_infant_lessKcal, milkPowderQuantity)
 
                 final_out_infant_lessKcal = final_out_infant_lessKcal[final_out_infant_lessKcal['Amount'] > 0]
                 final_out_infant_lessKcal.columns = ['Food Name', 'Per Person Intake (gm)', 'Food Group',
@@ -2124,7 +2128,7 @@ class GetPdf(View):
                 final_out_toddler = LPPWOVAR(Age_group, Food, toddlersFoodCost, toddlersscheme,
                                              toddlersmilkPowderQuantity)
                 todd_Status = opStatus
-                todd_nutrition = NUTCAL(final_out_toddler)
+                todd_nutrition = NUTCAL(final_out_toddler, toddlersmilkPowderQuantity)
 
                 final_out_toddler = final_out_toddler[final_out_toddler['Amount'] > 0]
                 final_out_toddler.columns = ['Food Name', 'Per Person Intake (gm)', 'Food Group',
@@ -2163,7 +2167,7 @@ class GetPdf(View):
                 final_out_pregnant = LPPWOVAR(Age_group, Food, pregnantFoodCost, pregnantscheme,
                                               pregnantmilkPowderQuantity)
                 preg_Status = opStatus
-                preg_nutrition = NUTCAL(final_out_pregnant)
+                preg_nutrition = NUTCAL(final_out_pregnant, pregnantmilkPowderQuantity)
 
                 final_out_pregnant = final_out_pregnant[final_out_pregnant['Amount'] > 0]
                 final_out_pregnant.columns = ['Food Name', 'Per Person Intake (gm)', 'Food Group',
@@ -2203,7 +2207,7 @@ class GetPdf(View):
                 final_out_lactating = LPPWOVAR(Age_group, Food, lactatingFoodCost, lactatingscheme,
                                                lactatingmilkPowderQuantity)
                 lact_Status = opStatus
-                lact_nutrition = NUTCAL(final_out_lactating)
+                lact_nutrition = NUTCAL(final_out_lactating, lactatingmilkPowderQuantity)
 
                 final_out_lactating = final_out_lactating[final_out_lactating['Amount'] > 0]
                 final_out_lactating.columns = ['Food Name', 'Per Person Intake (gm)', 'Food Group',
@@ -2270,7 +2274,7 @@ class GetPdf(View):
 
                 final_out_preSchool = LPPWOVARHCM(Age_group, Food, preSchoolFoodCost, scheme, milkPowderQuantity)
                 inft_Status = opStatus
-                inft_nutrition = NUTCAL(final_out_preSchool)
+                inft_nutrition = NUTCAL(final_out_preSchool, milkPowderQuantity)
 
                 final_out_preSchool = final_out_preSchool[final_out_preSchool['Amount'] > 0]
                 final_out_preSchool.columns = ['Food Name', 'Per Person Intake (gm)', 'Food Group',
@@ -2334,7 +2338,7 @@ class GetPdf(View):
                 final_out_pregnant = LPPWOVARHCM(Age_group, Food, pregnantFoodCost, pregnantscheme,
                                                  pregnantmilkPowderQuantity)
                 preg_Status = opStatus
-                preg_nutrition = NUTCAL(final_out_pregnant)
+                preg_nutrition = NUTCAL(final_out_pregnant, pregnantmilkPowderQuantity)
 
                 final_out_pregnant = final_out_pregnant[final_out_pregnant['Amount'] > 0]
                 final_out_pregnant.columns = ['Food Name', 'Per Person Intake (gm)', 'Food Group',
@@ -2398,7 +2402,7 @@ class GetPdf(View):
                 final_out_lactating = LPPWOVARHCM(Age_group, Food, lactatingFoodCost, lactatingscheme,
                                                lactatingmilkPowderQuantity)
                 lact_Status = opStatus
-                lact_nutrition = NUTCAL(final_out_lactating)
+                lact_nutrition = NUTCAL(final_out_lactating, lactatingmilkPowderQuantity)
 
                 final_out_lactating = final_out_lactating[final_out_lactating['Amount'] > 0]
                 final_out_lactating.columns = ['Food Name', 'Per Person Intake (gm)', 'Food Group',
@@ -2892,7 +2896,7 @@ def filter_vegetable_data(request):
             nutrition_calc = VEGNUTCAL(pregnant_Qnt_df)
             print(nutrition_calc)
 
-            temp_nut = NUTCAL(final_out_pregnant)
+            temp_nut = NUTCAL(final_out_pregnant, pregnantmilkPowderQuantity)
             print(temp_nut)
             df_add = pd.DataFrame()
             df_add["Nutritions"] = temp_nut["Nutritions"]
@@ -2990,7 +2994,7 @@ def filter_vegetable_data(request):
             nutrition_calc = VEGNUTCAL(lactating_Qnt_df)
             print(nutrition_calc)
 
-            temp_nut = NUTCAL(final_out_lactating)
+            temp_nut = NUTCAL(final_out_lactating, lactatingmilkPowderQuantity)
             print(temp_nut)
             df_add = pd.DataFrame()
             df_add["Nutritions"] = temp_nut["Nutritions"]
@@ -3091,7 +3095,7 @@ def filter_vegetable_data(request):
 
             nutrition_calc = VEGNUTCAL(preSchool_Qnt_df)
             print(nutrition_calc)
-            temp_nut = NUTCAL(final_out_infant)
+            temp_nut = NUTCAL(final_out_infant, milkPowderQuantity)
             print(temp_nut)
 
             df_add = pd.DataFrame()
