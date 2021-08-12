@@ -1339,101 +1339,48 @@
                     })
 
             $("#frmTest").submit(function(){
-                var checked = $('input[name="Cereals"]:checked').length > 0;
-                var checked2 = $('input[name="Pulses"]:checked').length > 0;
-                var checked3 = $('input[name="Others"]:checked').length > 0;
+                var checked = $('input[name="preSchoolGlv"]:checked').length > 0;
+                var checked2 = $('input[name="preSchoolRt"]:checked').length > 0;
+                var checked3 = $('input[name="preSchoolOveg"]:checked').length > 0;
+                var checked4 = $('input[name="preSchoolFruit"]:checked').length > 0;
+                var checked5 = $('input[name="preSchoolCs"]:checked').length > 0;
 
-                var checked7 = $('input[name="pregnantCereals"]:checked').length > 0;
-                var checked8 = $('input[name="pregnantPulses"]:checked').length > 0;
-                var checked9 = $('input[name="pregnantOthers"]:checked').length > 0;
+                var checked6 = $('input[name="pregnantGlv"]:checked').length > 0;
+                var checked7 = $('input[name="pregnantRt"]:checked').length > 0;
+                var checked8 = $('input[name="pregnantOveg"]:checked').length > 0;
+                var checked9 = $('input[name="pregnantFruit"]:checked').length > 0;
+                var checked10 = $('input[name="pregnantCs"]:checked').length > 0;
 
-                var checked10 = $('input[name="lactatingCereals"]:checked').length > 0;
-                var checked11 = $('input[name="lactatingPulses"]:checked').length > 0;
-                var checked12 = $('input[name="lactatingOthers"]:checked').length > 0;
+                var checked11 = $('input[name="lactatingGlv"]:checked').length > 0;
+                var checked12 = $('input[name="lactatingRt"]:checked').length > 0;
+                var checked13 = $('input[name="lactatingOveg"]:checked').length > 0;
+                var checked14 = $('input[name="lactatingFruit"]:checked').length > 0;
+                var checked15 = $('input[name="lactatingCs"]:checked').length > 0;
 
-                if($('input[name="Cereals"]').length > 0){
-                    if(!checked){
+                if($('input[name="preSchoolGlv"]').length > 0){
+                    if(!checked && !checked2 && !checked3 && !checked4 && !checked5){
                         swal({
-                          text: "Please select at least 1 Cereal",
+                          text: "Please select any one in 4 yrs to 6 yrs Category!",
                           icon: "warning",
                         });
                         return false;
                     }
                 }
 
-                if($('input[name="Pulses"]').length > 0){
-                    if(!checked2){
+                if($('input[name="pregnantGlv"]').length > 0){
+                    if(!checked6 && !checked7 && !checked8 && !checked9 && !checked10){
                         swal({
-                          text: "Please select at least 1 Pulse ",
+                          text: "Please select any one in Pregnant Category!",
                           icon: "warning",
                         });
                         return false;
                     }
                 }
 
-                if($('input[name="Others"]').length > 0){
-                    if(!checked3){
+                if($('input[name="lactatingGlv"]').length > 0){
+                    if(!checked11 && !checked12 && !checked13 && !checked14 && !checked15){
                         swal({
-                          text: "Please select at least 1 other food",
-                          icon: "warning",
-                        });
-                        return false;
-                    }
-                }
-
-
-                if($('input[name="pregnantCereals"]').length > 0){
-                    if(!checked7){
-                        swal({
-                          text: "Please select at least 1 Cereal",
-                          icon: "warning",
-                        });
-                        return false;
-                    }
-                }
-                if($('input[name="pregnantPulses"]').length > 0){
-                    if(!checked8){
-                        swal({
-                          text: "Please select at least 1 Pulse",
-                          icon: "warning",
-                        });
-                        return false;
-                    }
-                }
-                if($('input[name="pregnantOthers"]').length > 0){
-                    if(!checked9){
-                        swal({
-                          text: "Please select at least 1 other food",
-                          icon: "warning",
-                        });
-                        return false;
-                    }
-                }
-
-                if($('input[name="lactatingCereals"]').length > 0){
-                    if(!checked10){
-                        swal({
-                          text: "Please select at least 1 Cereal",
-                          icon: "warning",
-                        });
-                        return false;
-                    }
-                }
-
-                if($('input[name="lactatingPulses"]').length > 0){
-                    if(!checked11){
-                        swal({
-                          text: "Please select at least 1 Pulse",
-                          icon: "warning",
-                        });
-                        return false;
-                    }
-                }
-
-                if($('input[name="lactatingOthers"]').length > 0){
-                    if(!checked12){
-                        swal({
-                          text: "Please select at least 1 other food",
+                          text: "Please select any one in Lactating Category!",
                           icon: "warning",
                         });
                         return false;
