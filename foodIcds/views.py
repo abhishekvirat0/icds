@@ -2309,7 +2309,7 @@ class GetPdf(View):
                     print(nutrition_calc)
 
                     preSchool_Qnt_df.columns = ['Food Name', 'Per Person Intake (gm)']
-                    preSchool_Qnt_df['Total Quantity (gm)'] = preSchool_Qnt_df['Per Person Intake (gm)'] * preSchool
+                    preSchool_Qnt_df['Total Quantity (gm)'] = pd.to_numeric(preSchool_Qnt_df['Per Person Intake (gm)']) * preSchool
 
                     final_out_preSchool = final_out_preSchool.drop(
                         ['Cost (per kg)', 'Per Person Cost (Rs)', 'Total Cost (Rs)'], axis=1)
@@ -2376,7 +2376,7 @@ class GetPdf(View):
                     print(nutrition_calc)
 
                     pregnant_Qnt_df.columns = ['Food Name', 'Per Person Intake (gm)']
-                    pregnant_Qnt_df['Total Quantity (gm)'] = pregnant_Qnt_df['Per Person Intake (gm)'] * pregnantFAA
+                    pregnant_Qnt_df['Total Quantity (gm)'] = pd.to_numeric(pregnant_Qnt_df['Per Person Intake (gm)']) * pregnantFAA
 
                     final_out_pregnant = final_out_pregnant.drop(
                         ['Cost (per kg)', 'Per Person Cost (Rs)', 'Total Cost (Rs)'], axis=1)
@@ -2441,7 +2441,7 @@ class GetPdf(View):
                     print(nutrition_calc)
 
                     lactating_Qnt_df.columns = ['Food Name', 'Per Person Intake (gm)']
-                    lactating_Qnt_df['Total Quantity (gm)'] = lactating_Qnt_df['Per Person Intake (gm)'] * lactatingFAA
+                    lactating_Qnt_df['Total Quantity (gm)'] = pd.to_numeric(lactating_Qnt_df['Per Person Intake (gm)']) * lactatingFAA
 
                     final_out_lactating = final_out_lactating.drop(
                         ['Cost (per kg)', 'Per Person Cost (Rs)', 'Total Cost (Rs)'], axis=1)
