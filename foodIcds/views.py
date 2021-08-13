@@ -974,6 +974,8 @@ class Category(View):
             pregnant = request.POST.get('pregnant', None)
             lactating = request.POST.get('lactating', None)
 
+            if infant.isalpha():
+                context['has_error'] = True
             if context['has_error']:
                 return render(request, 'icds/index.html', context=context,
                               status=status.HTTP_400_BAD_REQUEST)
