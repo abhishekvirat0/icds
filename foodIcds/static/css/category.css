@@ -35,7 +35,7 @@
 
 
 .page-heading{
-    font-family: Circular Std Bold;
+    font-family: Circular Std Bold, 'Montserrat', sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 30px;
@@ -54,7 +54,7 @@
 
 
 .sub-heading{
-    font-family: Circular Std Book;
+    font-family: Circular Std Book, 'Montserrat', sans-serif;
     font-style: normal;
     font-weight: 450;
     font-size: 16px;
@@ -66,7 +66,7 @@
 
 .numInput{
     border: none;
-    font-family: Circular Std Bold;
+    font-family: Circular Std Bold, 'Montserrat', sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 24px;
@@ -100,7 +100,7 @@ input:focus::placeholder {
 }
 
 .heading{
-    font-family: Circular Std Bold;
+    font-family: Circular Std Bold, 'Montserrat', sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 24px;
@@ -111,7 +111,7 @@ input:focus::placeholder {
 }
 
 .btnSubmit{
-    font-family: Circular Std Bold;
+    font-family: Circular Std Bold, 'Montserrat', sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 16px;
@@ -128,7 +128,7 @@ input:focus::placeholder {
 }
 
 .btnSubmitFAA{
-    font-family: Circular Std Bold;
+    font-family: Circular Std Bold, 'Montserrat', sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 16px;
@@ -186,7 +186,7 @@ input:focus::placeholder {
     line-height:23px;
 }
 .breadcrumb-item{
-    font-family: Circular Std Bold;
+    font-family: Circular Std Bold, 'Montserrat', sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 16px;

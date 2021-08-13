@@ -20,7 +20,7 @@ body.dark {
 }
 
 .header p{
-    font-family: Circular Std Bold;
+    font-family: Circular Std Bold, 'Montserrat', sans-serif;
     color: rgb(0, 0, 0);
     font-style: normal;
     font-weight: bold;
@@ -32,7 +32,7 @@ body.dark {
 
 .dark .header p{
     color: #fff;
-    font-family: Circular Std Bold;
+    font-family: Circular Std Bold, 'Montserrat', sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 18px;
@@ -58,7 +58,7 @@ body.dark {
 }
 
 .heading{
-    font-family: Circular Std Bold;
+    font-family: Circular Std Bold, 'Montserrat', sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 30px;
@@ -70,7 +70,7 @@ body.dark {
 }
 
 .dark .heading {
-    font-family: Circular Std Bold;
+    font-family: Circular Std Bold, 'Montserrat', sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 30px;
@@ -86,7 +86,7 @@ body.dark {
         font-size: 42px;
     }
     .dark .heading {
-        font-family: Circular Std Bold;
+        font-family: Circular Std Bold, 'Montserrat', sans-serif;
         font-style: normal;
         font-weight: bold;
         line-height: 53px;
@@ -98,7 +98,7 @@ body.dark {
   }
 
 .sub-heading{
-    font-family: Circular Std Book;
+    font-family: Circular Std Book, 'Montserrat', sans-serif;
     font-style: normal;
     font-weight: 450;
     font-size: 16px;
@@ -108,7 +108,7 @@ body.dark {
 }
 
 .dark .sub-heading {
-    font-family: Circular Std Book;
+    font-family: Circular Std Book, 'Montserrat', sans-serif;
     font-style: normal;
     font-weight: 450;
     color: #e0e0e0;
@@ -117,7 +117,7 @@ body.dark {
 }
 
 .card-sub-heading{
-    font-family: Circular Std Bold;
+    font-family: Circular Std Bold, 'Montserrat', sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 26px;
@@ -128,7 +128,7 @@ body.dark {
 }
 
 .dark .card-sub-heading{
-    font-family: Circular Std Bold;
+    font-family: Circular Std Bold, 'Montserrat', sans-serif;
     font-size: 26px;
     line-height: 38px;
     letter-spacing: -0.02em;
@@ -146,7 +146,7 @@ body.dark {
 
 
 .individual{
-    font-family: Circular Std Bold;
+    font-family: Circular Std Bold, 'Montserrat', sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 14px;
