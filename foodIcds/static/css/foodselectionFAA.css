@@ -1,5 +1,5 @@
 .header p{
-    font-family: Circular Std Bold;
+    font-family: Circular Std Bold, 'Montserrat', sans-serif;
     color: rgb(0, 0, 0);
     font-style: normal;
     font-weight: bold;
@@ -15,7 +15,7 @@
 }
 
 .page-heading{
-    font-family: Circular Std Bold;
+    font-family: Circular Std Bold, 'Montserrat', sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 30px;
@@ -49,7 +49,7 @@
 }
 
 .accordion .card-title{
-    font-family: Circular Std Bold;
+    font-family: Circular Std Bold, 'Montserrat', sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 22px;
@@ -68,7 +68,7 @@
 }
 
 .checkbox-heading{
-    font-family: Circular Std Bold;
+    font-family: Circular Std Bold, 'Montserrat', sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 14px;
@@ -78,7 +78,7 @@
 }
 
 .checkbox-selectAll{
-    font-family: Circular Std Bold;
+    font-family: Circular Std Bold, 'Montserrat', sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 14px;
@@ -97,7 +97,7 @@
 }
 
 .check label .icon-box {
-    font-family: Circular Std Book;
+    font-family: Circular Std Book, 'Montserrat', sans-serif;
     font-style: normal;
     font-weight: 450;
     font-size: 14px;
@@ -141,7 +141,7 @@
 }
 
 .btnSubmitFAA{
-    font-family: Circular Std Bold;
+    font-family: Circular Std Bold, 'Montserrat', sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 16px;
@@ -225,7 +225,7 @@ input:focus::placeholder {
 }
 
 .input-group-text{
-    font-family: Circular Std Book;
+    font-family: Circular Std Book, 'Montserrat', sans-serif;
     font-style: normal;
     font-weight: 450;
     line-height: 18px;
@@ -236,7 +236,7 @@ input:focus::placeholder {
 
 
 .input-group{
-    font-family: Circular Std Book;
+    font-family: Circular Std Book, 'Montserrat', sans-serif;
     font-style: normal;
     font-weight: 450;
     font-size: 14px;
@@ -254,7 +254,7 @@ input-group:focus{
     background-color: #eaeaea;
     text-align: right;
     max-width: 30%;
-    font-family: Circular Std Bold;
+    font-family: Circular Std Bold, 'Montserrat', sans-serif;
     font-size: 18px;
     line-height: 36px;
     letter-spacing: -0.02em;
@@ -278,7 +278,7 @@ input-group:focus{
     line-height:23px;
 }
 .breadcrumb-item{
-    font-family: Circular Std Bold;
+    font-family: Circular Std Bold, 'Montserrat', sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 16px;
