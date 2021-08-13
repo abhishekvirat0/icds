@@ -1,5 +1,5 @@
 .header p{
-    font-family: Circular Std Bold;
+    font-family: Circular Std Bold, 'Montserrat', sans-serif;
     color: rgb(0, 0, 0);
     font-style: normal;
     font-weight: bold;
@@ -163,7 +163,6 @@ input:focus::placeholder {
         url('../fonts/CircularSpUIv3T-Bold.ttf'),
         url('../fonts/Circular\ Std\ Black.ttf');
         }
-    src: url(https://fonts.gstatic.com/s/montserrat/v18/JTUSjIg1_i6t8kCHKm459WRhyzbi.woff2) format('woff2');
 ::-webkit-scrollbar {
     width: 2px;
   }
