@@ -1,0 +1,269 @@
+.header p{
+    font-family: Circular Std Bold;
+    color: rgb(0, 0, 0);
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 30px;
+    letter-spacing: -0.02em;
+    text-transform: capitalize;
+}
+
+.navbar-hide {
+  pointer-events: none;
+  opacity: 0;
+}
+
+.page-heading{
+    font-family: Circular Std Bold;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 30px;
+    line-height: 38px;
+    letter-spacing: -0.02em;
+    margin-left: -56px;
+    max-width: 80%;
+}
+@media (max-width: 600px) {
+    .page-heading {
+        font-size: 24px;
+        max-width: 100%;
+    }
+  }
+
+
+.bgPic{
+    background-color: #fafafa;
+}
+
+.accordion .card-header:after {
+   content: "\f077";
+   font-family: "Font Awesome 5 Free";
+        font-weight: 600;
+        float: right;
+}
+.accordion .card-header.collapsed:after {
+    /* symbol for "collapsed" panels */
+   content: "\f078";
+   font-family: "Font Awesome 5 Free";
+}
+
+.accordion .card-title{
+    font-family: Circular Std Bold;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 22px;
+    line-height: 28px;
+    letter-spacing: -0.02em;
+}
+
+.accordion .card{
+    border: 2px solid #e0e0e0;
+    border-radius: 15px;
+}
+
+.accordion .card-header{
+    border-bottom: none;
+    background-color: transparent !important;
+}
+
+.checkbox-heading{
+    font-family: Circular Std Bold;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 18px;
+    letter-spacing: 0.2em;
+    color: #000000;
+}
+
+.checkbox-selectAll{
+    font-family: Circular Std Bold;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 18px;
+    letter-spacing: 0.02em;
+    color: #EC4E20;
+    cursor: pointer;
+}
+
+
+.check label input[type="checkbox"] {
+  position: absolute;
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(50%);
+  cursor: pointer;
+}
+
+.check label .icon-box {
+    font-family: Circular Std Book;
+    font-style: normal;
+    font-weight: 450;
+    font-size: 14px;
+    line-height: 18px;
+    letter-spacing: -0.02em;
+    padding: 10px;
+    background-color: #eaeaea;
+    color: #000;
+    border-radius: 12px;
+    transition: 0.5s;
+    user-select: none;
+}
+
+.check label{
+    cursor: pointer;
+}
+
+.check label input[type="checkbox"]:checked ~ .icon-box {
+  background: #EC4E20;
+  color: #fff;
+  cursor: pointer;
+}
+
+.check label input[type="checkbox"] ~ .icon-box .fa-plus {
+   display: inline-block;
+}
+.check label input[type="checkbox"] ~ .icon-box .fa-check {
+   display: none;
+}
+.check label input[type="checkbox"]:checked ~ .icon-box .fa-plus {
+   display: none;
+}
+
+.check label input[type="checkbox"]:checked ~ .icon-box .fa-check {
+   display: inline-block;
+}
+
+.check label .icon-box span {
+  margin: 5px;
+  font-size: 18px;
+}
+
+
+.btnSubmit{
+    font-family: Circular Std Bold;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 5px 24px;
+    background-color: #F0F0F0;
+    border-radius: 12px;
+    color: #EC4E20;
+}
+
+.btnSubmit:focus{
+    background: #EC4E20;
+    border-radius: 12px;
+    color: #000000;
+}
+
+.container{
+    width:350px
+}
+
+@media (min-width: 600px) {
+    .container {
+      width: 1170px;
+    }
+  }
+
+@font-face {
+    font-family: 'Circular Std Black';
+    src:
+        font-url('../fonts/Circular\ Std\ Book.ttf'),
+        font-url('../fonts/Circular\ Std\ Medium.ttf'),
+        font-url('../fonts/CircularSpUIv3T-Bold.ttf'),
+        font-url('../fonts/Circular\ Std\ Black.ttf');
+        }
+
+::-webkit-scrollbar {
+    width: 2px;
+  }
+
+::-webkit-scrollbar-thumb {
+    background: #090A3A;
+    border-radius: 10px;
+}
+
+input:focus::placeholder {
+  color: black;
+}
+
+.toogle {
+	 display: block;
+	 width: 49px;
+	 height: 30px;
+	 background: #fff;
+	 border: 0.851875px solid #d1def7;
+	 border-radius: 15px;
+	 display: flex;
+	 align-items: center;
+	 padding: 0 5px;
+	 cursor: pointer;
+}
+ .box {
+	 width: 19.5px;
+	 height: 19.5px;
+	 background: #b5c1d8;
+	 display: block;
+	 border-radius: 50%;
+	 transition: 0.3s all;
+	 margin-left: 0;
+	 background-position: left;
+}
+ .toggle input {
+	 position: absolute;
+	 display: none;
+}
+ input:checked + .box {
+	 margin-left: 50%;
+	 background: #5054dd;
+	 background-position: right;
+}
+ :active .box {
+	 width: 24px;
+}
+
+.input-group-text{
+    font-family: Circular Std Book;
+    font-style: normal;
+    font-weight: 450;
+    line-height: 18px;
+    letter-spacing: -0.36px;
+    border: none;
+    background-color: #eaeaea;
+}
+
+
+.input-group{
+    font-family: Circular Std Book;
+    font-style: normal;
+    font-weight: 450;
+    font-size: 14px;
+    line-height: 18px;
+    letter-spacing: -0.02em;
+    color: #44443F, 100%;
+}
+
+input-group:focus{
+    border-color: blue;
+}
+
+.input-group input{
+    border: none;
+    background-color: #eaeaea;
+    text-align: right;
+    max-width: 30%;
+    font-family: Circular Std Bold;
+    font-size: 18px;
+    line-height: 36px;
+    letter-spacing: -0.02em;
+}
+
+.input-group input:focus{
+    background-color: #eaeaea;
+    outline-style: none;
+    box-shadow: none;
+    border-color: transparent;
+}

@@ -1,0 +1,257 @@
+html
+body{
+    background-color: #FAFAFA;
+    background-image: url('/static/images/womanchild.svg');
+    background-repeat: no-repeat;
+    background-position: right bottom;
+    height: 100vh;
+    background-size: 410px;
+    background-attachment: fixed;
+}
+
+body.dark {
+	background-color: #353531;
+	background-image: url('/static/images/womanwithchild_dark.svg');
+    background-repeat: no-repeat;
+    background-position: right bottom;
+    height: 100vh;
+    background-size: 410px;
+    background-attachment: fixed;
+}
+
+.header p{
+    font-family: Circular Std Bold;
+    color: rgb(0, 0, 0);
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 30px;
+    letter-spacing: -0.02em;
+    text-transform: capitalize;
+}
+
+.dark .header p{
+    color: #fff;
+    font-family: Circular Std Bold;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 30px;
+    letter-spacing: -0.02em;
+    text-transform: capitalize;
+}
+
+
+@media (min-width: 600px) {
+    .header p{
+        font-size: 24px;
+    }
+    .dark .header p{
+        font-size: 24px;
+    }
+}
+
+
+.navbar-hide {
+  pointer-events: none;
+  opacity: 0;
+}
+
+.heading{
+    font-family: Circular Std Bold;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 30px;
+    line-height: 53px;
+    letter-spacing: -0.02em;
+    text-transform: capitalize;
+    color: #000000;
+    margin-left: -56px;
+}
+
+.dark .heading {
+    font-family: Circular Std Bold;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 30px;
+    line-height: 53px;
+    letter-spacing: -0.02em;
+    text-transform: capitalize;
+    margin-left: -56px;
+    color: #fff;
+}
+
+@media (min-width: 600px) {
+    .heading{
+        font-size: 42px;
+    }
+    .dark .heading {
+        font-family: Circular Std Bold;
+        font-style: normal;
+        font-weight: bold;
+        line-height: 53px;
+        letter-spacing: -0.02em;
+        text-transform: capitalize;
+        color: #fff;
+        font-size: 42px;
+    }
+  }
+
+.sub-heading{
+    font-family: Circular Std Book;
+    font-style: normal;
+    font-weight: 450;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: -0.02em;
+    color: #909090;
+}
+
+.dark .sub-heading {
+    font-family: Circular Std Book;
+    font-style: normal;
+    font-weight: 450;
+    color: #e0e0e0;
+    font-size: 16px;
+    letter-spacing: -0.02em;
+}
+
+.card-sub-heading{
+    font-family: Circular Std Bold;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 26px;
+    line-height: 38px;
+    letter-spacing: -0.02em;
+    text-transform: capitalize;
+    color: #000000;
+}
+
+.dark .card-sub-heading{
+    font-family: Circular Std Bold;
+    font-size: 26px;
+    line-height: 38px;
+    letter-spacing: -0.02em;
+    color: #fff;
+}
+
+@media (min-width: 600px) {
+    .card-sub-heading{
+        font-size: 30px;
+    }
+    .dark .card-sub-heading{
+        font-size: 30px;
+    }
+  }
+
+
+.individual{
+    font-family: Circular Std Bold;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 18px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: #EC4E20;
+    margin-top: -10px !important;
+}
+
+.card{
+    max-width: 440px; 
+    height: 285px; 
+    border-radius: 15px; 
+    border: 2px solid #FFEEDB;
+    cursor: pointer;
+    transition: transform .2s;
+}
+
+.card:hover{
+    box-shadow: 0px 50px 60px -10px rgba(0, 0, 0, 0.05);
+    transform: scale(1.03);
+}
+
+.dark .card{
+    background-color: #44443F;
+    border: 2px solid #909090;
+}
+
+.dark .card:hover{
+    box-shadow: 0px 50px 60px -10px rgba(0, 0, 0, 0.25);
+}
+
+.card:hover .individual{
+    color: rgba(0, 0, 0, 0.4);
+}
+
+.container{
+    width:350px
+}
+
+@media (min-width: 600px) {
+    .container {
+      width: 1170px;
+    }
+  }
+
+@font-face {
+    font-family: 'Circular Std Black';
+    src: 
+        url('../fonts/Circular\ Std\ Book.ttf'),
+        url('../fonts/Circular\ Std\ Medium.ttf'),
+        url('../fonts/CircularSpUIv3T-Bold.ttf'),
+        url('../fonts/Circular\ Std\ Black.ttf');
+        }
+
+::-webkit-scrollbar {
+    width: 2px;
+  }
+
+::-webkit-scrollbar-thumb {
+    background: #090A3A;
+    border-radius: 10px;
+}
+
+.checkbox {
+	opacity: 0;
+	position: absolute;
+}
+
+.label {
+	background-color: #111;
+	border-radius: 50px;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 5px;
+	position: relative;
+	height: 26px;
+	width: 50px;
+	transform: scale(1.5);
+}
+
+.label .ball {
+	background-color: #fff;
+	border-radius: 50%;
+	position: absolute;
+	top: 2px;
+	left: 2px;
+	height: 22px;
+	width: 22px;
+	transform: translateX(0px);
+	transition: transform 0.2s linear;
+}
+
+.checkbox:checked + .label .ball {
+	transform: translateX(24px);
+}
+
+
+.fa-moon {
+	color: #f1c40f;
+}
+
+.fa-sun {
+	color: #f39c12;
+}
