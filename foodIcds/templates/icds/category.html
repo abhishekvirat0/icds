@@ -3,6 +3,7 @@
 {% load static %}
     {% block head %}
         <link rel="stylesheet" href="{% static 'css/category.css' %}">
+        <link rel="stylesheet" href="https://unpkg.com/intro.js/minified/introjs.min.css">
     {% endblock %}
 
     {% block body %}
@@ -43,7 +44,7 @@
                       {% csrf_token %}
                    <div class="row justify-content-center p-3 mt-5">
 
-                       <div class="col col-12 col-md-12 col-lg-12 " style="border: 2px solid #e0e0e0;border-radius: 15px;background-color: #ffffff;">
+                       <div data-title="Welcome!👋" data-intro="Please enter total 6 mo to 1 yr child, If there is none, please enter 0" class="col col-12 col-md-12 col-lg-12 " style="border: 2px solid #e0e0e0;border-radius: 15px;background-color: #ffffff;">
                             <div class="row align-items-center">
                                 <div class="col col-12 col-md-8 col-lg-8 d-flex align-items-center">
                                     <img src="/static/images/newBorn.svg" alt=""/>
@@ -59,7 +60,7 @@
                             </div>
                        </div>
 
-                       <div class="col col-12 col-md-12 col-lg-12 mt-2" style="border: 2px solid #e0e0e0;border-radius: 15px;background-color: #ffffff;">
+                       <div data-intro="Please enter total 1 yr to 3 yrs child, If there is none, please enter 0" class="col col-12 col-md-12 col-lg-12 mt-2" style="border: 2px solid #e0e0e0;border-radius: 15px;background-color: #ffffff;">
                             <div class="row align-items-center">
                                 <div class="col col-12 col-md-8 col-lg-8 d-flex align-items-center">
                                     <img src="/static/images/toddler.svg" alt=""/>
@@ -75,7 +76,7 @@
                             </div>
                        </div>
 
-                       <div class="col col-12 col-md-12 col-lg-12 mt-2" style="border: 2px solid #e0e0e0;border-radius: 15px;background-color: #ffffff;">
+                       <div data-intro="Please enter total Pregnant Women, If there is none, please enter 0" class="col col-12 col-md-12 col-lg-12 mt-2" style="border: 2px solid #e0e0e0;border-radius: 15px;background-color: #ffffff;">
                             <div class="row align-items-center">
                                 <div class="col col-12 col-md-8 col-lg-8 d-flex align-items-center">
                                     <img src="/static/images/pregnant.svg" alt="" />
@@ -91,7 +92,7 @@
                             </div>
                        </div>
 
-                       <div class="col col-12 col-md-12 col-lg-12 mt-2" style="border: 2px solid #e0e0e0;border-radius: 15px;background-color: #ffffff;">
+                       <div data-intro="Please enter total Lactating Women, If there is none, please enter 0" class="col col-12 col-md-12 col-lg-12 mt-2" style="border: 2px solid #e0e0e0;border-radius: 15px;background-color: #ffffff;">
                             <div class="row align-items-center">
                                 <div class="col col-12 col-md-8 col-lg-8 d-flex align-items-center">
                                     <img src="/static/images/lactating.svg" alt=""/>
@@ -108,7 +109,7 @@
                        </div>
 
                     <div class="col col-12 col-md-12 text-right mt-4">
-                        <button class="btn btnSubmit footer">SUBMIT</button>
+                        <button data-intro="Once you have entered all Details, Just Submit!" class="btn btnSubmit footer">SUBMIT</button>
                     </div>
 
                 </div>
@@ -119,6 +120,7 @@
 
         <!-- Optional JavaScript --> 
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://unpkg.com/intro.js/minified/intro.min.js"></script>
         <script>
             function isNumberKey(evt)
                {
@@ -133,6 +135,12 @@
                 $(window).scroll(function(e) {
                     $('.navbar')[$(window).scrollTop() >= 150 ? 'addClass' : 'removeClass']('navbar-hide');
                 });
+        </script>
+        <script>
+        if(!localStorage.getItem("firstTime")){
+            localStorage.setItem("firstTime","true");
+            introJs().start();
+        }
         </script>
     </body>
     {% endblock %}
