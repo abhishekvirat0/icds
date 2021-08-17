@@ -105,7 +105,7 @@
                                     {% endif %}
 
                             </div>
-                            <button class="btn ml-auto btnExport" formtarget="_blank" onclick="location.href='{% url 'pdf' %}'">
+                            <button class="btn ml-auto btnExport" formtarget="_blank" onclick="window.open('{% url 'pdf' %}')">
                                 <i class="fa fa-download" aria-hidden="true">
                                     <span style="font-family:Circular Std Bold;"> &nbsp;&nbsp;Export</span>
                                 </i>
