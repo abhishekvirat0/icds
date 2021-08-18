@@ -974,10 +974,12 @@ class Category(View):
             pregnant = request.POST.get('pregnant', None)
             lactating = request.POST.get('lactating', None)
 
-            if infant.isalpha():
+            if infant.isalpha() or toddler.isalpha() or pregnant.isalpha() or lactating.isalpha():
                 context['has_error'] = True
+
             if context['has_error']:
-                return render(request, 'icds/index.html', context=context,
+                messages.add_message(request, messages.ERROR, 'Please enter in numeric format only! ')
+                return render(request, 'icds/category.html', context=context,
                               status=status.HTTP_400_BAD_REQUEST)
 
             request.session['infant'] = int(infant)
@@ -1005,7 +1007,11 @@ class Category(View):
             pregnantFAA = request.POST.get('pregnantFAA', None)
             lactatingFAA = request.POST.get('lactatingFAA', None)
 
+            if preSchool.isalpha() or pregnantFAA.isalpha() or lactatingFAA.isalpha():
+                context['has_error'] = True
+
             if context['has_error']:
+                messages.add_message(request, messages.ERROR, 'Please enter in numeric format only! ')
                 return render(request, 'icds/index.html', context=context,
                               status=status.HTTP_400_BAD_REQUEST)
 
