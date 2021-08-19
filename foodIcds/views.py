@@ -1410,7 +1410,10 @@ class FoodCost(View):
              'Ground nut': Groundnut, 'Milk powder': MilkPowder
              })
         cost_list = dict(filter(lambda item: item[1] is not None, cost_list.items()))
-
+        for k, v in cost_list.items():
+            if v.isalpha():
+                messages.add_message(request, messages.ERROR, 'Please enter in numeric format only! ')
+                return redirect('FoodCost')
         request.session['cost_list'] = cost_list
         print(cost_list)
         return redirect('result')
