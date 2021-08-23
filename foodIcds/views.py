@@ -974,6 +974,15 @@ class Category(View):
             pregnant = request.POST.get('pregnant', None)
             lactating = request.POST.get('lactating', None)
 
+            if not infant.isdigit():
+                context['has_error'] = True
+            if not toddler.isdigit():
+                context['has_error'] = True
+            if not pregnant.isdigit():
+                context['has_error'] = True
+            if not lactating.isdigit():
+                context['has_error'] = True
+
             if infant.isalpha() or toddler.isalpha() or pregnant.isalpha() or lactating.isalpha():
                 context['has_error'] = True
 
@@ -1006,6 +1015,13 @@ class Category(View):
             preSchool = request.POST.get('preSchool', None)
             pregnantFAA = request.POST.get('pregnantFAA', None)
             lactatingFAA = request.POST.get('lactatingFAA', None)
+
+            if not preSchool.isdigit():
+                context['has_error'] = True
+            if not pregnantFAA.isdigit():
+                context['has_error'] = True
+            if not lactatingFAA.isdigit():
+                context['has_error'] = True
 
             if preSchool.isalpha() or pregnantFAA.isalpha() or lactatingFAA.isalpha():
                 context['has_error'] = True
@@ -1536,6 +1552,9 @@ def filter_data(request):
         pulse_prop_lessKcal = []
         other_prop_lessKcal = []
         milk_prop_lessKcal = []
+
+        if 'infant' not in request.session:
+            return redirect('home')
 
         if request.session['infant'] > 0:
             cost_list = request.session['cost_list']
