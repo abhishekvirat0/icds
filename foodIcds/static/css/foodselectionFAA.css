@@ -296,3 +296,12 @@ input-group:focus{
     border-color: transparent;
 }
 
+.scheme{
+    font-family: Circular Std Bold, 'Montserrat', sans-serif;
+    font-style: normal;
+    font-weight: 450;
+    font-size: 15px;
+    line-height: 16px;
+    letter-spacing: -0.02em;
+    color: #44443F, 100%;
+}

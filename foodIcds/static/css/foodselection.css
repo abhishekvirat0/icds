@@ -242,6 +242,7 @@ input:focus::placeholder {
 	 margin-left: 0;
 	 background-position: left;
 }
+
  .toggle input {
 	 position: absolute;
 	 display: none;
@@ -296,4 +297,14 @@ input-group:focus{
     outline-style: none;
     box-shadow: none;
     border-color: transparent;
+}
+
+.scheme{
+    font-family: Circular Std Bold, 'Montserrat', sans-serif;
+    font-style: normal;
+    font-weight: 450;
+    font-size: 15px;
+    line-height: 16px;
+    letter-spacing: -0.02em;
+    color: #44443F, 100%;
 }
