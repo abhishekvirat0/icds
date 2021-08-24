@@ -46,7 +46,11 @@
             <div class="card">
                 {% if inft_data %}
                     <div class="card-header" style="text-align:center;">
-                        <h1>{% if preSchool %} 4 yrs to 6 yrs {% else %} 6 months to 1 year {% endif %} (Total Cost: Rs. {{inft_total}}) </h1>
+                        <h1>{% if preSchool %}
+                                4 yrs to 6 yrs (Overall Cost: Rs. {{inft_total}}, PerPerson Cost: Rs. {% widthratio inft_total preSchool 1 %} )
+                            {% else %}
+                                6 m to 1 y (500 Kcal)  (Overall Cost: Rs. {{inft_total}}, PerPerson Cost: Rs. {% widthratio inft_total infant 1 %}) {% endif %}
+                        </h1>
                     </div>
                     {{inft_data | safe}}
                 {% endif %}
@@ -55,9 +59,10 @@
             {% if inft_data %}
                 <div class="card-header" style="text-align:center;">
                         <h1>Macro Nutrient Composition</h1>
-
-                </div> <h1>Fat to Energy Percent: {{inft_fat_perc}} %</h1>
+                </div>
                 {{inft_other_nut | safe}}
+                <h1 style="text-align:center;">Fat Energy Percentage: {{inft_fat_perc}} %</h1>
+                <h1 style="text-align:center;">Protein Energy Percentage: {{inft_prot_perc}} %</h1>
             {% endif %}
             </div>
             <div class="card mt-4" style="text-align:center;">
@@ -77,7 +82,7 @@
     <div class="card">
         {% if inft_data_lessKcal %}
             <div class="card-header" style="text-align:center;">
-                <h1>6 months to 1 year (250 Kcal) (Total Cost: Rs. {{inft_total_lessKcal}})</h1>
+                <h1>6 m to 1 y (250 Kcal) (Overall Cost: Rs. {{inft_total_lessKcal}}, PerPerson Cost: Rs. {% widthratio inft_total_lessKcal infant 1 %} )</h1>
             </div>
                 {{inft_data_lessKcal | safe}}
         {% endif %}
@@ -86,9 +91,10 @@
         {% if inft_data_lessKcal %}
             <div class="card-header" style="text-align:center;">
                     <h1>Macro Nutrient Composition</h1>
-
-            </div><h1>Fat to Energy Percent: {{inft_fat_perc_lessKcal}} %</h1>
+            </div>
             {{inft_other_nut_lessKcal | safe}}
+            <h1 style="text-align:center;">Fat Energy Percentage: {{inft_fat_perc_lessKcal}} %</h1>
+            <h1 style="text-align:center;">Protein Energy Percentage: {{inft_prot_perc_lessKcal}} %</h1>
         {% endif %}
     </div>
     <div class="card mt-4">
@@ -108,7 +114,7 @@
     <div class="card">
         {% if todd_data %}
             <div class="card-header" style="text-align:center;">
-                <h1>1 year to 3 years (Total Cost: Rs. {{todd_total}})</h1>
+                <h1>1 y to 3 y (Overall Cost: Rs. {{todd_total}}, PerPerson Cost: Rs. {% widthratio todd_total toddler 1.0 %} ))</h1>
             </div>
                 {{todd_data | safe}}
         {% endif %}
@@ -117,9 +123,10 @@
         {% if todd_data %}
             <div class="card-header" style="text-align:center;">
                     <h1>Macro Nutrient Composition</h1>
-
-            </div><h1>Fat to Energy Percent: {{todd_fat_perc}} %</h1>
+            </div>
             {{todd_other_nut | safe}}
+        <h1 style="text-align:center;">Fat Energy Percentage: {{todd_fat_perc}} %</h1>
+        <h1 style="text-align:center;">Protein Energy Percentage: {{todd_prot_perc}} %</h1>
         {% endif %}
     </div>
     <div class="card mt-4">
@@ -130,8 +137,10 @@
             {{todd_perc | safe}}
         {% endif %}
     </div>
- {% endif %}
-<!--    pregnant women-->
+    {% endif %}
+
+    <!--    pregnant women-->
+
     {% if preg_Status == 'Infeasible' %}
         <p>&nbsp;&nbsp;</p>
     {% else %}
@@ -139,7 +148,13 @@
     <div class="card">
         {% if preg_data %}
             <div class="card-header" style="text-align:center;">
-                <h1>Pregnant women (Total Cost: Rs. {{preg_total}})</h1>
+                <h1>Pregnant women (Overall Cost: Rs. {{preg_total}} ,
+                    {% if pregnant %}
+                        PerPerson Cost: Rs. {% widthratio preg_total pregnant 1.0 %}
+                    {% else %}
+                        PerPerson Cost: Rs. {% widthratio preg_total pregnantFAA 1.0 %}
+                    {% endif %})
+                </h1>
             </div>
             <table>
                 {{preg_data | safe}}
@@ -150,9 +165,10 @@
         {% if preg_data %}
             <div class="card-header" style="text-align:center;">
                     <h1>Macro Nutrient Composition</h1>
-
-            </div><h1>Fat to Energy Percent: {{preg_fat_perc}} %</h1>
+            </div>
             {{preg_other_nut | safe}}
+            <h1 style="text-align:center;">Fat Energy Percentage: {{preg_fat_perc}} %</h1>
+            <h1 style="text-align:center;">Protein Energy Percentage: {{preg_prot_perc}} %</h1>
         {% endif %}
     </div>
     <div class="card mt-4">
@@ -163,15 +179,22 @@
             {{preg_perc | safe}}
         {% endif %}
     </div>
-{% endif %}
+    {% endif %}
+
     <!--lactating women-->
+
     {% if lact_Status == 'Infeasible' %}
         <p>&nbsp;&nbsp;</p>
     {% else %}
         <div class="card">
             {% if lact_data %}
                 <div class="card-header" style="text-align:center;">
-                    <h1>Lactating women (Total Cost: Rs. {{lact_total}}) </h1>
+                    <h1>Lactating women (Overall Cost: Rs. {{lact_total}}) ,
+                        {% if lactating %}
+                            PerPerson Cost: Rs. {% widthratio lact_total lactating 1.0 %}
+                        {% else %}
+                            PerPerson Cost: Rs. {% widthratio lact_total lactatingFAA 1.0 %}
+                        {% endif %})
                 </div>
                     {{lact_data | safe}}
             {% endif %}
@@ -181,8 +204,9 @@
                 <div class="card-header" style="text-align:center;">
                         <h1>Macro Nutrient Composition</h1>
                 </div>
-                <h1>Fat to Energy Percent: {{lact_fat_perc}} %</h1>
                 {{lact_other_nut | safe}}
+            <h1 style="text-align:center;">Fat Energy Percentage: {{lact_fat_perc}} %</h1>
+            <h1 style="text-align:center;">Protein Energy Percentage: {{lact_prot_perc}} %</h1>
             {% endif %}
         </div>
             <div class="card mt-4">
