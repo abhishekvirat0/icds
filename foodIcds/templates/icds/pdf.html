@@ -47,9 +47,12 @@
                 {% if inft_data %}
                     <div class="card-header" style="text-align:center;">
                         <h1>{% if preSchool %}
-                                4 yrs to 6 yrs (Overall Cost: Rs. {{inft_total}}, PerPerson Cost: Rs. {% widthratio inft_total preSchool 1 %} )
+                                Recommendation- Energy: 500Kcal; Protein: 12g; Fat: 19g <br>
+                                4 y to 6 y
                             {% else %}
-                                6 m to 1 y (500 Kcal)  (Overall Cost: Rs. {{inft_total}}, PerPerson Cost: Rs. {% widthratio inft_total infant 1 %}) {% endif %}
+                                Recommendation- Energy: 500Kcal; Protein: 12g; Fat: 19g <br>
+                                6 m to 1 y
+                            {% endif %}
                         </h1>
                     </div>
                     {{inft_data | safe}}
@@ -61,8 +64,6 @@
                         <h1>Macro Nutrient Composition</h1>
                 </div>
                 {{inft_other_nut | safe}}
-                <h1 style="text-align:center;">Fat Energy Percentage: {{inft_fat_perc}} %</h1>
-                <h1 style="text-align:center;">Protein Energy Percentage: {{inft_prot_perc}} %</h1>
             {% endif %}
             </div>
             <div class="card mt-4" style="text-align:center;">
@@ -82,7 +83,9 @@
     <div class="card">
         {% if inft_data_lessKcal %}
             <div class="card-header" style="text-align:center;">
-                <h1>6 m to 1 y (250 Kcal) (Overall Cost: Rs. {{inft_total_lessKcal}}, PerPerson Cost: Rs. {% widthratio inft_total_lessKcal infant 1 %} )</h1>
+                <h1>
+                    Recommendation- Energy: 250Kcal; Protein: 5g; Fat: 10g <br>
+                    6 m to 1 y </h1>
             </div>
                 {{inft_data_lessKcal | safe}}
         {% endif %}
@@ -93,8 +96,6 @@
                     <h1>Macro Nutrient Composition</h1>
             </div>
             {{inft_other_nut_lessKcal | safe}}
-            <h1 style="text-align:center;">Fat Energy Percentage: {{inft_fat_perc_lessKcal}} %</h1>
-            <h1 style="text-align:center;">Protein Energy Percentage: {{inft_prot_perc_lessKcal}} %</h1>
         {% endif %}
     </div>
     <div class="card mt-4">
@@ -114,7 +115,9 @@
     <div class="card">
         {% if todd_data %}
             <div class="card-header" style="text-align:center;">
-                <h1>1 y to 3 y (Overall Cost: Rs. {{todd_total}}, PerPerson Cost: Rs. {% widthratio todd_total toddler 1.0 %} ))</h1>
+                <h1>
+                    Recommendation- Energy: 500Kcal; Protein: 12g; Fat: 19g <br>
+                    1 y to 3 y </h1>
             </div>
                 {{todd_data | safe}}
         {% endif %}
@@ -125,8 +128,6 @@
                     <h1>Macro Nutrient Composition</h1>
             </div>
             {{todd_other_nut | safe}}
-        <h1 style="text-align:center;">Fat Energy Percentage: {{todd_fat_perc}} %</h1>
-        <h1 style="text-align:center;">Protein Energy Percentage: {{todd_prot_perc}} %</h1>
         {% endif %}
     </div>
     <div class="card mt-4">
@@ -139,6 +140,39 @@
     </div>
     {% endif %}
 
+<!--    1 year to 3 years - 250 Kcal-->
+    {% if todd_Status_lessKcal == 'Infeasible' %}
+        <p>&nbsp;&nbsp;</p>
+    {% else %}
+
+    <div class="card">
+        {% if todd_data_lessKcal %}
+            <div class="card-header" style="text-align:center;">
+                <h1>
+                    Recommendation- Energy: 250Kcal; Protein: 9g; Fat: 10g <br>
+                    1 y to 3 y </h1>
+            </div>
+                {{todd_data_lessKcal | safe}}
+        {% endif %}
+    </div>
+    <div class="card mt-4">
+        {% if todd_data_lessKcal %}
+            <div class="card-header" style="text-align:center;">
+                    <h1>Macro Nutrient Composition</h1>
+            </div>
+            {{todd_other_nut_lessKcal | safe}}
+        {% endif %}
+    </div>
+    <div class="card mt-4">
+        {% if todd_data_lessKcal %}
+            <div class="card-header" style="text-align:center;">
+                <h1>Micro Nutrient Composition</h1>
+            </div>
+            {{todd_perc_lessKcal | safe}}
+        {% endif %}
+    </div>
+ {% endif %}
+
     <!--    pregnant women-->
 
     {% if preg_Status == 'Infeasible' %}
@@ -148,12 +182,14 @@
     <div class="card">
         {% if preg_data %}
             <div class="card-header" style="text-align:center;">
-                <h1>Pregnant women (Overall Cost: Rs. {{preg_total}} ,
+                <h1>
                     {% if pregnant %}
-                        PerPerson Cost: Rs. {% widthratio preg_total pregnant 1.0 %}
+                        Recommendation- Energy: 600Kcal; Protein: 18g; Fat: 23g <br>
+                        Pregnant women
                     {% else %}
-                        PerPerson Cost: Rs. {% widthratio preg_total pregnantFAA 1.0 %}
-                    {% endif %})
+                        Recommendation- Energy: 1350Kcal; Protein: 41g; Fat: 52g <br>
+                        Pregnant women
+                    {% endif %}
                 </h1>
             </div>
             <table>
@@ -167,8 +203,6 @@
                     <h1>Macro Nutrient Composition</h1>
             </div>
             {{preg_other_nut | safe}}
-            <h1 style="text-align:center;">Fat Energy Percentage: {{preg_fat_perc}} %</h1>
-            <h1 style="text-align:center;">Protein Energy Percentage: {{preg_prot_perc}} %</h1>
         {% endif %}
     </div>
     <div class="card mt-4">
@@ -189,12 +223,15 @@
         <div class="card">
             {% if lact_data %}
                 <div class="card-header" style="text-align:center;">
-                    <h1>Lactating women (Overall Cost: Rs. {{lact_total}}) ,
+                    <h1>
                         {% if lactating %}
-                            PerPerson Cost: Rs. {% widthratio lact_total lactating 1.0 %}
-                        {% else %}
-                            PerPerson Cost: Rs. {% widthratio lact_total lactatingFAA 1.0 %}
-                        {% endif %})
+                            Recommendation- Energy: 600Kcal; Protein: 18g; Fat: 23g <br>
+                            Lactating women
+                        {% elif lactatingFAA %}
+                            Recommendation- Energy: 1640Kcal; Protein: 37g; Fat: 64g <br>
+                            Lactating women
+                        {% endif %}
+
                 </div>
                     {{lact_data | safe}}
             {% endif %}
@@ -205,8 +242,6 @@
                         <h1>Macro Nutrient Composition</h1>
                 </div>
                 {{lact_other_nut | safe}}
-            <h1 style="text-align:center;">Fat Energy Percentage: {{lact_fat_perc}} %</h1>
-            <h1 style="text-align:center;">Protein Energy Percentage: {{lact_prot_perc}} %</h1>
             {% endif %}
         </div>
             <div class="card mt-4">
