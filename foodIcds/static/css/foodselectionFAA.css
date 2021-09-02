@@ -196,6 +196,55 @@
 .breadcrumb >.active {
    color: black;
 }
+
+.check label input[type="radio"] {
+  position: absolute;
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(50%);
+  cursor: pointer;
+}
+
+.check label .icon-box {
+    font-family: Circular Std Book, 'Montserrat', sans-serif;
+    font-style: normal;
+    font-weight: 450;
+    font-size: 14px;
+    line-height: 18px;
+    letter-spacing: -0.02em;
+    padding: 10px;
+    background-color: #eaeaea;
+    color: #000;
+    border-radius: 12px;
+    transition: 0.5s;
+    user-select: none;
+}
+
+.check label{
+    cursor: pointer;
+}
+
+.check label input[type="radio"]:checked ~ .icon-box {
+  background: #FF9505;
+  color: #fff;
+  cursor: pointer;
+}
+
+.check label input[type="radio"] ~ .icon-box .fa-plus {
+   display: inline-block;
+}
+.check label input[type="radio"] ~ .icon-box .fa-check {
+   display: none;
+}
+.check label input[type="radio"]:checked ~ .icon-box .fa-plus {
+   display: none;
+}
+
+.check label input[type="radio"]:checked ~ .icon-box .fa-check {
+   display: inline-block;
+}
+
+
+
 @font-face {
     font-family: 'Circular Std Black';
     src:

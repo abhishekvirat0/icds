@@ -47,8 +47,18 @@
                 {% if inft_data %}
                     <div class="card-header" style="text-align:center;">
                         <h1>{% if preSchool %}
-                                Recommendation- Energy: 500Kcal; Protein: 12g; Fat: 19g <br>
-                                4 y to 6 y
+                                {% if mealType == 'snacks' %}
+                                    Recommendation- Energy: 167Kcal; Protein: 4g; Fat: 6.5g <br>
+                                    4 y to 6 y
+
+                                {% elif mealType == 'meals' %}
+                                    Recommendation- Energy: 333Kcal; Protein: 8g; Fat: 13g <br>
+                                    4 y to 6 y
+
+                                {% else %}
+                                    Recommendation- Energy: 500Kcal; Protein: 12g; Fat: 19.5g <br>
+                                    4 y to 6 y
+                                {% endif %}
                             {% else %}
                                 Recommendation- Energy: 500Kcal; Protein: 12g; Fat: 19g <br>
                                 6 m to 1 y

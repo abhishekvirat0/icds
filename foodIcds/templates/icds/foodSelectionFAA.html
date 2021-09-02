@@ -54,7 +54,7 @@
                     <div id="accordion" class="accordion">
 
                         {% if preSchool > 0 %}
-                        <div class="card mb-3">
+                        <div class="card mb-3" data-intro="Please select at least 1 food from each category">
                                 <div class="card-header collapsed" data-toggle="collapse" href="#collapseOne">
                                     <a class="card-title">
                                         <img src="/static/images/preSchool.svg" alt="" width="26px" height="30px" class="mr-1"/>
@@ -64,11 +64,34 @@
                                 <div id="collapseOne" class="card-body collapse show" data-parent="#accordion" >
                                     <div class="row">
 
+                                         <div class="col col-12 col-md-12">
+                                            <div class="d-flex align-items-center check">
+                                                <label tabindex="0" class="mr-2" title="33 Percent of ICDS Nutrient requirement">
+                                                      <input tabindex="-1" type="radio" name="mealType" value="snacks"/>
+                                                         <div class="icon-box">
+                                                            <span>snacks</span>
+                                                         </div>
+                                                </label>
+                                                <label tabindex="0" class="mr-2" title="67 Percent of ICDS Nutrient requirement">
+                                                      <input tabindex="-1" type="radio" name="mealType" value="Meals" />
+                                                      <div class="icon-box">
+                                                          <span>Meals</span>
+                                                      </div>
+                                                </label>
+                                                <label tabindex="0" title="Complete ICDS Nutrient requirement">
+                                                      <input tabindex="-1" type="radio" name="mealType" value="compMeal" checked/>
+                                                      <div class="icon-box">
+                                                          <span>Meals (100%)</span>
+                                                      </div>
+                                                </label>
+
+                                            </div>
+                                         </div>
                                         <!-- 4 yrs to 6 yrs Cereals -->
 
                                         <div class="col col-12 col-md-12">
                                             <div class="d-flex align-items-center">
-                                                <span class="checkbox-heading">CEREALS</span>
+                                                <span class="checkbox-heading">CEREALS AND MILLET'S</span>
                                                 <button class="btn ml-auto checkbox-selectAll" id="checkAll1" type="button">select all</button>
                                             </div>
                                             <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">
@@ -131,7 +154,7 @@
                                                     <label tabindex="0">
                                                       <input tabindex="-1" type="checkbox" name="Cereals" value="Rava" />
                                                         <div class="icon-box">
-                                                            <span>Rava</span>
+                                                            <span>Wheat Rava</span>
                                                             <i class="fas fa-plus"></i>
                                                             <i class="fas fa-check"></i>
                                                         </div>
@@ -216,7 +239,7 @@
                                                     <label tabindex="0">
                                                       <input tabindex="-1" type="checkbox" name="Pulses" value="Peas" />
                                                         <div class="icon-box">
-                                                            <span>Peas</span>
+                                                            <span>Dry Peas</span>
                                                             <i class="fas fa-plus"></i>
                                                             <i class="fas fa-check"></i>
                                                         </div>
@@ -337,7 +360,7 @@
                                             <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">
 
                                             <div class="col col-12 col-md-12 check">
-                                                <label tabindex="0">
+                                                <label tabindex="0" title="Whole Milk Powder">
                                                       <input tabindex="-1" type="checkbox" name="milkpowder" value="Milk powder" />
                                                         <div class="icon-box">
                                                             <span>Milk Powder</span>
@@ -350,10 +373,10 @@
                                                         <span class="checkbox-heading">SCHEME</span>
                                                     </div>
                                                     <div class="col col-12 col-md-6">
-                                                        <div class="d-flex align-items-center float-md-right float-sm-none">
+                                                        <div class="d-flex align-items-center float-md-right float-sm-none" data-intro="If you select <br/> <b>Other Scheme</b> - Only the nutrition composition of milk powder is considered in optimisation <br/> <b>ICDS</b> - both nutrition composition and cost of milk powder is considered in optimisation <br> for more information, refer <a target='_blank' href='{% url 'documentation' %}'>
                                                             <p class="scheme">Other Scheme</p>
                                                             <label class="toogle" style="margin-bottom:18px;margin-left:5px; margin-right:5px;">
-                                                                <input id="yourBox" autocomplete='off' type="checkbox" name="scheme" value="icds"/>
+                                                                <input id="yourBox" autocomplete='on' type="checkbox" name="scheme" value="icds"/>
                                                                 <span class="box"></span>
                                                             </label>
                                                             <p class="scheme">ICDS</p>
@@ -364,9 +387,9 @@
                                                 <div class="d-flex align-items-center">
                                                     <span class="input-group">Consumption of milk powder per day</span>
                                                     <div class="input-group mb-3 ">
-                                                        <input id="yourText" onkeypress="return isNumberKey(event)" type="text" class="form-control ml-auto" aria-label="" name="milkPowderQuantity" required>
+                                                        <input id="yourText" onkeypress="return isNumberKey(event)" type="text" class="form-control ml-auto" aria-label="" name="milkPowderQuantity" autocomplete="on" required>
                                                         <div class="input-group-append">
-                                                            <span class="input-group-text">gm</span>
+                                                            <span class="input-group-text">gm/day</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -380,7 +403,7 @@
                         {% endif %}
 
                         {% if pregnantFAA > 0 %}
-                        <div class="card mb-3">
+                        <div class="card mb-3" data-intro="Please select at least 1 food from each category">
                                 <div class="card-header collapsed" data-toggle="collapse" href="#collapseThree">
                                     <a class="card-title">
                                         <img src="/static/images/pregnantFAA.svg" alt="" width="26px" height="30px" class="mr-1"/>
@@ -457,7 +480,7 @@
                                                     <label tabindex="0">
                                                       <input tabindex="-1" type="checkbox" name="pregnantCereals" value="Rava" />
                                                         <div class="icon-box">
-                                                            <span>Rava</span>
+                                                            <span>Wheat Rava</span>
                                                             <i class="fas fa-plus"></i>
                                                             <i class="fas fa-check"></i>
                                                         </div>
@@ -542,7 +565,7 @@
                                                     <label tabindex="0">
                                                       <input tabindex="-1" type="checkbox" name="pregnantPulses" value="Peas" />
                                                         <div class="icon-box">
-                                                            <span>Peas</span>
+                                                            <span>Dry Peas</span>
                                                             <i class="fas fa-plus"></i>
                                                             <i class="fas fa-check"></i>
                                                         </div>
@@ -680,7 +703,7 @@
                                                         <div class="d-flex align-items-center float-md-right float-sm-none">
                                                             <p class="scheme">Other Scheme</p>
                                                             <label class="toogle" style="margin-bottom:18px;margin-left:5px; margin-right:5px;">
-                                                                <input id="yourpregnantBox" autocomplete='off' type="checkbox" name="pregnantscheme" value="icds"/>
+                                                                <input id="yourpregnantBox" autocomplete='on' type="checkbox" name="pregnantscheme" value="icds"/>
                                                                 <span class="box"></span>
                                                             </label>
                                                             <p class="scheme">ICDS</p>
@@ -691,9 +714,9 @@
                                                 <div class="d-flex align-items-center">
                                                     <span class="input-group">Consumption of milk powder per day</span>
                                                     <div class="input-group mb-3 ">
-                                                        <input id="yourpregnantText" onkeypress="return isNumberKey(event)" type="text" class="form-control ml-auto" aria-label="" name="pregnantmilkPowderQuantity" required>
+                                                        <input id="yourpregnantText" onkeypress="return isNumberKey(event)" type="text" class="form-control ml-auto" aria-label="" name="pregnantmilkPowderQuantity" autocomplete="on" required>
                                                         <div class="input-group-append">
-                                                            <span class="input-group-text">gm</span>
+                                                            <span class="input-group-text">gm/day</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -707,7 +730,7 @@
                         {% endif %}
 
                         {% if lactatingFAA > 0 %}
-                        <div class="card mb-0">
+                        <div class="card mb-0"  data-intro="Please select at least 1 food from each category">
                                 <div class="card-header collapsed" data-toggle="collapse" href="#collapseFour">
                                     <a class="card-title">
                                         <img src="/static/images/lactatingFAA.svg" alt="" width="26px" height="30px" class="mr-1"/>
@@ -784,7 +807,7 @@
                                                     <label tabindex="0">
                                                       <input tabindex="-1" type="checkbox" name="lactatingCereals" value="Rava" />
                                                         <div class="icon-box">
-                                                            <span>Rava</span>
+                                                            <span>Wheat Rava</span>
                                                             <i class="fas fa-plus"></i>
                                                             <i class="fas fa-check"></i>
                                                         </div>
@@ -869,7 +892,7 @@
                                                     <label tabindex="0">
                                                       <input tabindex="-1" type="checkbox" name="lactatingPulses" value="Peas" />
                                                         <div class="icon-box">
-                                                            <span>Peas</span>
+                                                            <span>Dry Peas</span>
                                                             <i class="fas fa-plus"></i>
                                                             <i class="fas fa-check"></i>
                                                         </div>
@@ -1007,7 +1030,7 @@
                                                         <div class="d-flex align-items-center float-md-right float-sm-none">
                                                             <p class="scheme">Other Scheme</p>
                                                             <label class="toogle" style="margin-bottom:18px;margin-left:5px; margin-right:5px;">
-                                                                <input id="yourlactatingBox" autocomplete='off' type="checkbox" name="lactatingscheme" value="icds"/>
+                                                                <input id="yourlactatingBox" autocomplete='on' type="checkbox" name="lactatingscheme" value="icds"/>
                                                                 <span class="box"></span>
                                                             </label>
                                                             <p class="scheme">ICDS</p>
@@ -1018,9 +1041,9 @@
                                                 <div class="d-flex align-items-center">
                                                     <span class="input-group">Consumption of milk powder per day</span>
                                                     <div class="input-group mb-3 ">
-                                                        <input id="yourlactatingText" onkeypress="return isNumberKey(event)" type="text" class="form-control ml-auto" aria-label="" name="lactatingmilkPowderQuantity" required>
+                                                        <input id="yourlactatingText" onkeypress="return isNumberKey(event)" type="text" class="form-control ml-auto" aria-label="" name="lactatingmilkPowderQuantity" autocomplete="on" required>
                                                         <div class="input-group-append">
-                                                            <span class="input-group-text">gm</span>
+                                                            <span class="input-group-text">gm/day</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1034,7 +1057,7 @@
                     </div>
 
                      <div class="col col-12 col-md-12 text-right mt-4 mb-3">
-                        <button class="btn btnSubmitFAA footer" type="submit">SUBMIT</button>
+                        <button class="btn btnSubmitFAA footer" type="submit">NEXT</button>
                      </div>
                         </form>
                     </div>
@@ -1044,6 +1067,12 @@
 
             </div>
         </section>
+            <script>
+                if(!localStorage.getItem("firTime")){
+                    localStorage.setItem("firTime","true");
+                    introJs().start();
+                }
+            </script>
             <script>
                 $(window).scroll(function(e) {
                     $('.navbar')[$(window).scrollTop() >= 100 ? 'addClass' : 'removeClass']('navbar-hide');
@@ -1103,112 +1132,173 @@
                 var checked11 = $('input[name="lactatingPulses"]:checked').length > 0;
                 var checked12 = $('input[name="lactatingOthers"]:checked').length > 0;
 
-                if($('input[name="Cereals"]').length > 0){
-                    if(!checked){
-                        swal({
-                          text: "Please select at least 1 Cereal",
-                          icon: "warning",
-                        });
-                        return false;
+                if($("input[name='mealType']:checked").val() === 'snacks') {
+                    if(!checked && !checked2 && !checked3){
+                            swal({
+                              text: "Please select at least 1 item",
+                              icon: "warning",
+                            });
+                            return false;
                     }
                 }
+                else{
+                    if($('input[name="Cereals"]').length > 0){
+                        if(!checked){
+                            swal({
+                              text: "Please select at least 1 Cereal",
+                              icon: "warning",
+                            });
+                            return false;
+                        }
+                    }
 
-                if($('input[name="Pulses"]').length > 0){
-                    if(!checked2){
-                        swal({
-                          text: "Please select at least 1 Pulse ",
-                          icon: "warning",
-                        });
-                        return false;
+                    if($('input[name="Pulses"]').length > 0){
+                        if(!checked2){
+                            swal({
+                              text: "Please select at least 1 Pulse ",
+                              icon: "warning",
+                            });
+                            return false;
+                        }
                     }
-                }
 
-                if($('input[name="Others"]').length > 0){
-                    if(!checked3){
-                        swal({
-                          text: "Please select at least 1 other food",
-                          icon: "warning",
-                        });
-                        return false;
+                    if($('input[name="Others"]').length > 0){
+                        if(!checked3){
+                            swal({
+                              text: "Please select at least 1 other food",
+                              icon: "warning",
+                            });
+                            return false;
+                        }
                     }
-                }
 
 
-                if($('input[name="pregnantCereals"]').length > 0){
-                    if(!checked7){
-                        swal({
-                          text: "Please select at least 1 Cereal",
-                          icon: "warning",
-                        });
-                        return false;
+                    if($('input[name="pregnantCereals"]').length > 0){
+                        if(!checked7){
+                            swal({
+                              text: "Please select at least 1 Cereal",
+                              icon: "warning",
+                            });
+                            return false;
+                        }
                     }
-                }
-                if($('input[name="pregnantPulses"]').length > 0){
-                    if(!checked8){
-                        swal({
-                          text: "Please select at least 1 Pulse",
-                          icon: "warning",
-                        });
-                        return false;
-                    }
-                }
-                if($('input[name="pregnantOthers"]').length > 0){
-                    if(!checked9){
-                        swal({
-                          text: "Please select at least 1 other food",
-                          icon: "warning",
-                        });
-                        return false;
-                    }
-                }
 
-                if($('input[name="lactatingCereals"]').length > 0){
-                    if(!checked10){
-                        swal({
-                          text: "Please select at least 1 Cereal",
-                          icon: "warning",
-                        });
-                        return false;
+                    if($('input[name="pregnantPulses"]').length > 0){
+                        if(!checked8){
+                            swal({
+                              text: "Please select at least 1 Pulse",
+                              icon: "warning",
+                            });
+                            return false;
+                        }
+                    }
+                    if($('input[name="pregnantOthers"]').length > 0){
+                        if(!checked9){
+                            swal({
+                              text: "Please select at least 1 other food",
+                              icon: "warning",
+                            });
+                            return false;
+                        }
+                    }
+
+                    if($('input[name="lactatingCereals"]').length > 0){
+                        if(!checked10){
+                            swal({
+                              text: "Please select at least 1 Cereal",
+                              icon: "warning",
+                            });
+                            return false;
+                        }
+                    }
+
+                    if($('input[name="lactatingPulses"]').length > 0){
+                        if(!checked11){
+                            swal({
+                              text: "Please select at least 1 Pulse",
+                              icon: "warning",
+                            });
+                            return false;
+                        }
+                    }
+
+                    if($('input[name="lactatingOthers"]').length > 0){
+                        if(!checked12){
+                            swal({
+                              text: "Please select at least 1 other food",
+                              icon: "warning",
+                            });
+                            return false;
+                        }
                     }
                 }
-
-                if($('input[name="lactatingPulses"]').length > 0){
-                    if(!checked11){
-                        swal({
-                          text: "Please select at least 1 Pulse",
-                          icon: "warning",
-                        });
-                        return false;
-                    }
-                }
-
-                if($('input[name="lactatingOthers"]').length > 0){
-                    if(!checked12){
-                        swal({
-                          text: "Please select at least 1 other food",
-                          icon: "warning",
-                        });
-                        return false;
-                    }
-                }
-
             });
-
-            document.getElementById('yourBox').onchange = function() {
-                document.getElementById('yourText').disabled = this.checked;
-            };
-
+        </script>
+        <script>
+            $('input[name="milkpowder"]').click(function () {
+                if(!this.checked) {
+                    $("#yourText").val('');
+                    $('#yourText').attr('disabled' , true);
+                } else {
+                    $('#yourText').attr('disabled' , false);
+                }
+            });
         </script>
 
-    <script>
-         document.getElementById('yourpregnantBox').onchange = function() {
-               document.getElementById('yourpregnantText').disabled = this.checked;
-         };
-    </script>
-    <script>
-         document.getElementById('yourlactatingBox').onchange = function() {
-                document.getElementById('yourlactatingText').disabled = this.checked;
-         };
-    </script>
+        <script>
+            $('input[name="pregnantmilkpowder"]').click(function () {
+                if(!this.checked) {
+                    $("#yourpregnantText").val('');
+                    $('#yourpregnantText').attr('disabled' , true);
+                } else {
+                    $('#yourpregnantText').attr('disabled' , false);
+                }
+            });
+        </script>
+        <script>
+            $('input[name="lactatingmilkpowder"]').click(function () {
+                if(!this.checked) {
+                    $("#yourlactatingText").val('');
+                    $('#yourlactatingText').attr('disabled' , true);
+                } else {
+                    $('#yourlactatingText').attr('disabled' , false);
+                }
+            });
+        </script>
+
+        <script>
+            $(function() {
+              var checkbox = $('input[name="milkpowder"]');
+              var checkbox3 = $('input[name="pregnantmilkpowder"]');
+              var checkbox4 = $('input[name="lactatingmilkpowder"]');
+
+              checkbox.change(function() {
+                if (checkbox.is(':checked')) {
+                  $('#yourText').prop('required', true); //to add required
+                } else {
+                  $("#yourText").val("");
+                  $('#yourText').prop('required', false); //to remove required
+                }
+              });
+
+              checkbox3.change(function() {
+                if (checkbox3.is(':checked')) {
+                  $('#pregnantmilkpowder').prop('required', true); //to add required
+                } else {
+                  $("#pregnantmilkpowder").val("");
+                  $('#pregnantmilkpowder').prop('required', false); //to remove required
+                }
+              });
+
+              checkbox4.change(function() {
+                if (checkbox4.is(':checked')) {
+                  $('#yourlactatingText').prop('required', true); //to add required
+                } else {
+                  $("#yourlactatingText").val("");
+                  $('#yourlactatingText').prop('required', false); //to remove required
+                }
+              });
+            });
+        </script>
    </body>
     {% endblock %}

@@ -6,7 +6,7 @@
                         <p style="font-family: Circular Std Book;font-weight: 500; font-size: 16px;"><span style="color:#FFC000;">We suggest:</span> Try different combinations or select more food items.</p>
             {% else%}
                         <div class="d-flex align-items-center">
-                            <span class="cost-heading">CEREALS</span>
+                            <span class="cost-heading">CEREALS AND MILLET'S</span>
                         </div>
                         <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">
                         <form>
@@ -68,25 +68,27 @@
                         </div>
 
                         <!-- Milk Powder Here  -->
-                        <div class="d-flex align-items-center mt-2">
-                            <span class="cost-heading">MILK POWDER</span>
-                        </div>
-                        <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">
-                        <div class="form-row">
-                            {% for milk in milkpowder %}
-                            <div class="form-group col-md-3">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text">{{milk}}</span>
-                                    </div>
-                                    <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" value="{{ milk_prop|get_at_index:forloop.counter0}}" readonly >
-                                    <div class="input-group-append">
-                                        <span class="input-group-text">gm</span>
+                        {% if milkpowder %}
+                            <div class="d-flex align-items-center mt-2">
+                                <span class="cost-heading">MILK POWDER</span>
+                            </div>
+                            <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">
+                            <div class="form-row">
+                                {% for milk in milkpowder %}
+                                <div class="form-group col-md-3">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">{{milk}}</span>
+                                        </div>
+                                        <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" value="{{ milk_prop|get_at_index:forloop.counter0}}" readonly >
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">gm</span>
+                                        </div>
                                     </div>
                                 </div>
+                                {% endfor %}
                             </div>
-                            {% endfor %}
-                        </div>
+                        {% endif %}
 
                         {% if preSchool_Qnt_list %}
                             <!-- Others Here  -->

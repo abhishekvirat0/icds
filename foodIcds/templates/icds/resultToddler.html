@@ -13,7 +13,7 @@
                         {% else%}
 
                         <div class="d-flex align-items-center">
-                            <span class="cost-heading">CEREALS</span>
+                            <span class="cost-heading">CEREALS AND MILLET'S</span>
                         </div>
                         <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">
                         <form>
@@ -74,24 +74,25 @@
                             {% endfor %}
                         </div>
                         <!-- Milk Powder Here  -->
-                        <div class="d-flex align-items-center mt-2">
-                            <span class="cost-heading">MILK POWDER</span>
-                        </div>
-                        <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">
-                        <div class="form-row">
-                            <div class="form-group col-md-3" >
-                                <div class="input-group mb-3">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text">Milk Powder</span>
-                                    </div>
-                                    <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" value="{{milk_prop_toddler.0}}" readonly >
-                                    <div class="input-group-append">
-                                        <span class="input-group-text">gm</span>
+                        {% if toddlersmilkpowder %}
+                            <div class="d-flex align-items-center mt-2">
+                                <span class="cost-heading">MILK POWDER</span>
+                            </div>
+                            <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">
+                            <div class="form-row">
+                                <div class="form-group col-md-3" >
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">Milk Powder</span>
+                                        </div>
+                                        <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" value="{{milk_prop_toddler.0}}" readonly >
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">gm</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
+                        {% endif %}
 
                         <div class="row" style="margin-left: 0px;">
                             <div class="col-md-3point6" style="border: 2px solid #EAEAEA; border-radius: 15px; background-image: url('/static/images/bgResult3.png'); background-size: cover;">
@@ -212,24 +213,25 @@
                         </div>
 
                         <!-- Milk Powder Here  -->
-                        <div class="d-flex align-items-center mt-2">
-                            <span class="cost-heading">MILK POWDER</span>
-                        </div>
-                        <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">
-                        <div class="form-row">
-                            <div class="form-group col-md-3" >
-                                <div class="input-group mb-3">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text">Milk Powder</span>
-                                    </div>
-                                    <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" value="{{milk_prop_toddler_lessKcal.0}}" readonly >
-                                    <div class="input-group-append">
-                                        <span class="input-group-text">gm</span>
+                        {% if toddlersmilkpowder %}
+                            <div class="d-flex align-items-center mt-2">
+                                <span class="cost-heading">MILK POWDER</span>
+                            </div>
+                            <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">
+                            <div class="form-row">
+                                <div class="form-group col-md-3" >
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">Milk Powder</span>
+                                        </div>
+                                        <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" value="{{milk_prop_toddler_lessKcal.0}}" readonly >
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">gm</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
+                        {% endif %}
 
                         <div class="row" style="margin-left: 0px;">
                             <div class="col-md-3point6" style="border: 2px solid #EAEAEA; border-radius: 15px; background-image: url('/static/images/bgResult3.png'); background-size: cover;">

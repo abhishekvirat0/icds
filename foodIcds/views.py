@@ -5,7 +5,7 @@ from math import pi
 
 # Create your views here.
 from django.contrib import messages
-from django.http import JsonResponse
+from django.http import JsonResponse, FileResponse, Http404
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 from django.views.generic.base import View
@@ -74,10 +74,41 @@ def PercentagecalculationHCM(nutrition, Age_group):
     return percentage_calculation, Fat_percentage, other_nut, protein_percentage
 
 
-def LPPWOVARHCM(Age_group, Food, input_cost, scheme, quantity):
+def LPPWOVARHCM(Age_group, Food, input_cost, scheme, quantity, mealType):
     global input_EAR, EAR, EAR_11, final_optimized_cost, input_UTL, opStatus
-    if scheme is None:
-        input_cost = input_cost[input_cost["Food_Name"] != "Milk powder"]
+    if "Milk powder" not in tuple(Food):
+        quantity = 0
+    if scheme == 'icds' and "Milk powder" in tuple(Food):
+        costMilk = input_cost[input_cost['Food_Name'] == "Milk powder"]
+        optiCost = quantity * costMilk['input_cost']
+        optiCost = float(optiCost)
+
+    EARfull = pd.read_csv("Nutrition_gap_RDA_HCM.csv", encoding='unicode_escape')
+    if Age_group == "child(4-6)yrs":
+        input_EAR = EARfull["Gap4_6yrs"]
+    if Age_group == "pregnant":
+        input_EAR = EARfull["Gap_preg"]
+    if Age_group == "lactation":
+        input_EAR = EARfull["Gap_lact"]
+
+    Lab = EARfull["Lab"]
+    input_EAR = pd.concat([input_EAR, Lab], axis=1, ignore_index=True)
+    input_EAR = input_EAR.rename(columns={0: "EAR", 1: "Lab"})
+    EAR = input_EAR
+
+    if mealType == 'Meals':
+        EAR["EAR"] = np.round(EAR["EAR"] * 2 / 3, 2)
+
+    if mealType == 'snacks':
+        EAR["EAR"] = np.round(EAR["EAR"] * 1 / 3, 2)
+
+    if "Milk powder" in tuple(Food):
+        milk = pd.read_csv("Milk_powder.csv", encoding='unicode_escape')
+        EAR_11 = EAR["EAR"] - milk["Milk_powder"] * (int(quantity) / 100)
+        EAR_11[EAR_11 < 0] = 0
+        EAR["EAR"] = EAR_11
+
+    input_cost = input_cost[input_cost["Food_Name"] != "Milk powder"]
     print('input-cost-check', input_cost)
     model = LpProblem("Optimal_diet_plan", LpMinimize)
     input_cost = input_cost.sort_values(['Food_Name'])
@@ -94,34 +125,16 @@ def LPPWOVARHCM(Age_group, Food, input_cost, scheme, quantity):
 
     # input nutrient data and EARfull-----
     data = pd.read_csv("Nutrition_sheet_ICDS.csv", encoding='unicode_escape')
-    if scheme is None:
-        data = data[data["Food_Name"] != "Milk powder"]
-        Food = input_cost['Food_Name']
+
+    data = data[data["Food_Name"] != "Milk powder"]
+    Food = input_cost['Food_Name']
+
     # selecting particular food items based on input function
     data = pd.DataFrame(data.loc[data['Food_Name'].isin(Food)])
     Foodgroup = data["Food_Group"]
     data = data.sort_values(['Food_Name'])
 
     # input EARRDA2020 DATASET----
-
-    EARfull = pd.read_csv("Nutrition_gap_RDA_HCM.csv", encoding='unicode_escape')
-    if Age_group == "child(4-6)yrs":
-        input_EAR = EARfull["Gap4_6yrs"]
-    if Age_group == "pregnant":
-        input_EAR = EARfull["Gap_preg"]
-    if Age_group == "lactation":
-        input_EAR = EARfull["Gap_lact"]
-
-    Lab = EARfull["Lab"]
-    input_EAR = pd.concat([input_EAR, Lab], axis=1, ignore_index=True)
-    input_EAR = input_EAR.rename(columns={0: "EAR", 1: "Lab"})
-    EAR = input_EAR
-    if scheme is None:
-        milk = pd.read_csv("Milk_powder.csv", encoding='unicode_escape')
-        EAR_11 = EAR["EAR"] - milk["Milk_powder"] * (int(quantity) / 100)
-        EAR_11[EAR_11 < 0] = 0
-
-        EAR["EAR"] = EAR_11
 
     F = data
     colnam = ["Food_Group", "Food_Name", "Quantity", "Energy", "Protein", "Fat", "Iron", "Calcium", "Zinc", "Folate",
@@ -143,9 +156,6 @@ def LPPWOVARHCM(Age_group, Food, input_cost, scheme, quantity):
 
     A = A.fillna(0)
 
-    # ===================================#
-    ######Selection----------------
-
     # nutrient<-c('Energy','Protein','Fat','Fibre','Iron','Calcium','Zinc','Iodine','Magnesium','VB12','VA','VB1','VB2','VB3','VB6','Folate','VC')
     nutrient = ['Energy', 'Protein', "Fat", 'Iron', 'Calcium', 'Zinc', 'Folate']
 
@@ -158,20 +168,20 @@ def LPPWOVARHCM(Age_group, Food, input_cost, scheme, quantity):
     for i in range(len(allocation)):
         model += lpSum(allocation[i]) >= 0
 
-    ######TUL ##########
+    # TUL
     TULfull = pd.read_csv("UTL for nutritions_HCM.csv", encoding='unicode_escape')
-    if (Age_group == "child(4-6)yrs"):
+    if Age_group == "child(4-6)yrs":
         input_UTL = TULfull["UTL4_6yrs"]
-    if (Age_group == "pregnant"):
+    if Age_group == "pregnant":
         input_UTL = TULfull["UTL_preg"]
-    if (Age_group == "lactation"):
+    if Age_group == "lactation":
         input_UTL = TULfull["UTL_lact"]
 
     Lab = TULfull["Lab"]
     input_UTL = pd.concat([input_UTL, Lab], axis=1, ignore_index=True)
     input_UTL = input_UTL.rename(columns={0: "UTL", 1: "Lab"})
     UTL = input_UTL
-    if (Age_group == "child(4-6)yrs"):
+    if Age_group == "child(4-6)yrs":
         UTL = UTL[UTL["Lab"] != "Folate"]
 
     UTL = UTL.loc[UTL["Lab"].isin(F.columns)]
@@ -180,8 +190,7 @@ def LPPWOVARHCM(Age_group, Food, input_cost, scheme, quantity):
 
     A = A.fillna(0)
 
-    # ===================================#
-    ######Selection----------------
+    # Selection
 
     # nutrient<-c('Energy','Protein','Fat','Fibre','Iron','Calcium','Zinc','Iodine','Magnesium','VB12','VA','VB1','VB2','VB3','VB6','Folate','VC')
     nutrient = UTL["Lab"]
@@ -192,99 +201,107 @@ def LPPWOVARHCM(Age_group, Food, input_cost, scheme, quantity):
     for i in range(len(AA)):
         model += lpSum(AA.iloc[i] * allocation) <= b1.iloc[i]
 
-    #####constraints for upper limit for fat based on energy
+    # constraints for upper limit for fat based on energy
 
     model += lpSum(A.iloc[2,] * allocation) <= lpSum(A.iloc[0,] * allocation) * 0.40 / 9
     model += lpSum(A.iloc[2,] * allocation) >= lpSum(A.iloc[0,] * allocation) * 0.35 / 9
+    model += lpSum(A.iloc[1,] * allocation) <= lpSum(A.iloc[0,] * allocation) * 0.16 / 4
+    model += lpSum(A.iloc[1,] * allocation) >= lpSum(A.iloc[0,] * allocation) * 0.09 / 4
+    if scheme == 'icds' and "Milk powder" in tuple(Food):
+        if Age_group == "child(4-6)yrs":
+            model += lpSum(allocation * cost_matrix) <= 8 - optiCost
 
-    if Age_group == "child(4-6)yrs":
-        model += lpSum(allocation * cost_matrix) <= 8
+        if (Age_group == "pregnant") or (Age_group == "lactation"):
+            model += lpSum(allocation * cost_matrix) <= 21 - optiCost
+    else:
+        if Age_group == "child(4-6)yrs":
+            model += lpSum(allocation * cost_matrix) <= 8
 
-    if (Age_group == "pregnant") or (Age_group == "lactation"):
-        model += lpSum(allocation * cost_matrix) <= 21
+        if (Age_group == "pregnant") or (Age_group == "lactation"):
+            model += lpSum(allocation * cost_matrix) <= 21
 
     # sugar*********************
     # Sugar as 10% of total energy
     # 1 g of carbohydrate (sugar) = 4 kcal
+    if mealType == 'Meals' or mealType == 'compMeal' or Age_group == "pregnant" or Age_group == "lactation":
+        if "Sugar" in tuple(Foodgroup):
+            a = np.zeros((len(AA.columns)))
+            a[AA.columns == "Sugar"] = 1
+            a[AA.columns == "Jaggery"] = 1
+            MK = EAR[EAR["Lab"] == "Energy"]
+            usugar = (0.1 * MK["EAR"]) / 4
+            a = ((4 * a) - (0.08 * A.iloc[0,]))
+            model += lpSum(a * allocation) <= usugar
 
-    if "Sugar" in tuple(Foodgroup):
+        Cereals = data[data["Food_Group"] == "Cereals"]
+        Cereal = Cereals["Food_Name"]
+        Cereal.index = range(len(Cereal))
+
+        Pulses = data[data["Food_Group"] == "Pulses"]
+        Pulse = Pulses["Food_Name"]
+        Pulse.index = range(len(Pulse))
+
         a = np.zeros((len(AA.columns)))
-        a[AA.columns == "Sugar"] = 1
-        a[AA.columns == "Jaggery"] = 1
-        MK = EAR[EAR["Lab"] == "Energy"]
-        usugar = (0.1 * MK["EAR"]) / 4
-        a = ((4 * a) - (0.08 * A.iloc[0,]))
-        model += lpSum(a * allocation) <= usugar
+        for i in range(len(Cereal)):
+            a[AA.columns == Cereal[i]] = 1
 
-    Cereals = data[data["Food_Group"] == "Cereals"]
-    Cereal = Cereals["Food_Name"]
-    Cereal.index = range(len(Cereal))
+        for i in range(len(Pulse)):
+            a[AA.columns == Pulse[i]] = -2
 
-    Pulses = data[data["Food_Group"] == "Pulses"]
-    Pulse = Pulses["Food_Name"]
-    Pulse.index = range(len(Pulse))
+        model += lpSum(a * allocation) == 0
 
-    a = np.zeros((len(AA.columns)))
-    for i in range(len(Cereal)):
-        a[AA.columns == Cereal[i]] = 1
+        k = data[data["Food_Group"] == "Cereals"]
+        fcereals = k["Food_Name"]
+        fcereals.index = range(0, len(fcereals), 1)
 
-    for i in range(len(Pulse)):
-        a[AA.columns == Pulse[i]] = -2
+        k = data[data["Food_Group"] == "Pulses"]
+        fpulse = k["Food_Name"]
+        fpulse.index = range(0, len(fpulse), 1)
+        cereals = [1 / len(fcereals)] * len(fcereals)
+        pulse = [1 / len(fpulse)] * len(fpulse)
 
-    model += lpSum(a * allocation) == 0
-
-    k = data[data["Food_Group"] == "Cereals"]
-    fcereals = k["Food_Name"]
-    fcereals.index = range(0, len(fcereals), 1)
-
-    k = data[data["Food_Group"] == "Pulses"]
-    fpulse = k["Food_Name"]
-    fpulse.index = range(0, len(fpulse), 1)
-    cereals = [1 / len(fcereals)] * len(fcereals)
-    pulse = [1 / len(fpulse)] * len(fpulse)
-
-    ##fix minimum limit
-    a = np.zeros((len(AA.columns)))
-    for i in range(len(fcereals)):
-        a[AA.columns == fcereals[i]] = 1
-    model += lpSum(a * allocation) >= 20
-
-    a = np.zeros((len(AA.columns)))
-    for i in range(len(fpulse)):
-        a[AA.columns == fpulse[i]] = 1
-    model += lpSum(a * allocation) >= 20
-
-    # model += lpSum(allocation) <= 500/3 + (500/3) *0.4
-    if Age_group == "child(4-6)yrs":
-        model += lpSum(allocation) <= 250
-    # model += lpSum(allocation) >= 500/3  - (500/3) *0.2
-
-    if Age_group == "pregnant":
-        model += lpSum(allocation) <= 1350 / 3 + 1350 / 3 * 0.3
-
-    if Age_group == "lactation":
-        model += lpSum(allocation) <= 1640 / 3 + 1640 / 3 * 0.3
-
-    if "Egg" in tuple(Foodgroup):
+        # fix minimum limit
         a = np.zeros((len(AA.columns)))
-        a[AA.columns == "Egg"] = 1
-        model += lpSum(a * allocation) <= 45
+        for i in range(len(fcereals)):
+            a[AA.columns == fcereals[i]] = 1
+        model += lpSum(a * allocation) >= 20
 
-    if "Egg" in tuple(Foodgroup):
         a = np.zeros((len(AA.columns)))
-        a[AA.columns == "Egg"] = 1
-        model += lpSum(a * allocation) >= 15
+        for i in range(len(fpulse)):
+            a[AA.columns == fpulse[i]] = 1
+        model += lpSum(a * allocation) >= 20
 
-    if "Fruits" in tuple(Foodgroup):
-        a = np.zeros((len(AA.columns)))
-        a[AA.columns == "Banana"] = 1
-        model += lpSum(a * allocation) <= 20
+        # model += lpSum(allocation) <= 500/3 + (500/3) *0.4
+        if Age_group == "child(4-6)yrs":
+            model += lpSum(allocation) <= 250
+        # model += lpSum(allocation) >= 500/3  - (500/3) *0.2
 
-    if "Oil" in tuple(Foodgroup):
-        a = np.zeros((len(AA.columns)))
-        a[AA.columns == "Oil"] = 1
-        a[AA.columns == "Ghee"] = 1
-        model += lpSum(a * allocation) >= 5
+        if Age_group == "pregnant":
+            model += lpSum(allocation) <= 1350 / 3 + 1350 / 3 * 0.3
+
+        if Age_group == "lactation":
+            model += lpSum(allocation) <= 1640 / 3 + 1640 / 3 * 0.3
+
+        if "Egg" in tuple(Foodgroup):
+            a = np.zeros((len(AA.columns)))
+            a[AA.columns == "Egg"] = 1
+            model += lpSum(a * allocation) <= 45
+
+        if "Egg" in tuple(Foodgroup):
+            a = np.zeros((len(AA.columns)))
+            a[AA.columns == "Egg"] = 1
+            model += lpSum(a * allocation) >= 15
+
+        if "Fruits" in tuple(Foodgroup):
+            a = np.zeros((len(AA.columns)))
+            a[AA.columns == "Banana"] = 1
+            model += lpSum(a * allocation) <= 20
+
+        if "Oil" in tuple(Foodgroup):
+            a = np.zeros((len(AA.columns)))
+            a[AA.columns == "Oil"] = 1
+            a[AA.columns == "Ghee"] = 1
+            model += lpSum(a * allocation) >= 5
 
     datainput = data[["Food_Name", "Food_Group"]]
     datainput = datainput.sort_values(["Food_Name"])
@@ -329,8 +346,9 @@ def LPPWOVARHCM(Age_group, Food, input_cost, scheme, quantity):
     c_1 = costperitem * quan
     final_out["cost"] = c_1
     final_out["Cost (per Kg)"] = costperitem * 1000
-    if scheme is None:
-        final_out.loc[len(final_out.index)] = ['Milk powder', int(quantity), 'Milk powder', 0, 0]
+
+    final_out.loc[len(final_out.index)] = ['Milk powder', int(quantity), 'Milk powder', 0, 0]
+
     return final_out
 
 
@@ -481,8 +499,32 @@ def VEGNUTCAL(quantity_food):
 def LPPWOVAR_LESSKCAL(Age_group, Food, input_cost, scheme, quantity):
     global input_EAR, EAR, EAR_11, final_optimized_cost_lessKcal
     print(scheme)
-    if scheme is None:
-        input_cost = input_cost[input_cost["Food_Name"] != "Milk powder"]
+    if "Milk powder" not in tuple(Food):
+        quantity = 0
+    if scheme == 'icds' and "Milk powder" in tuple(Food):
+        costMilk = input_cost[input_cost['Food_Name'] == "Milk powder"]
+        optiCost = quantity * costMilk['input_cost']
+        optiCost = float(optiCost)
+
+    EARfull = pd.read_csv("Nutrition_gap_RDA.csv", encoding='unicode_escape')
+
+    if Age_group == "6-12 months":
+        input_EAR = EARfull["Gap_6-12"]
+    if Age_group == "child(1-3)yrs":
+        input_EAR = EARfull["Gap1_3yrs_250"]
+
+    Lab = EARfull["Lab"]
+    input_EAR = pd.concat([input_EAR, Lab], axis=1, ignore_index=True)
+    input_EAR = input_EAR.rename(columns={0: "EAR", 1: "Lab"})
+    EAR = input_EAR
+
+    if "Milk powder" in tuple(Food):
+        milk = pd.read_csv("Milk_powder.csv", encoding='unicode_escape')
+        EAR_11 = EAR["EAR"] - milk["Milk_powder"] * (int(quantity) / 100)
+        EAR_11[EAR_11 < 0] = 0
+        EAR["EAR"] = EAR_11
+
+    input_cost = input_cost[input_cost["Food_Name"] != "Milk powder"]
     print('input-cost-check', input_cost)
 
     model = LpProblem("Optimal_diet_plan", LpMinimize)
@@ -503,9 +545,8 @@ def LPPWOVAR_LESSKCAL(Age_group, Food, input_cost, scheme, quantity):
 
     # input nutrient data and EARfull-----
     data = pd.read_csv("Nutrition_sheet_ICDS.csv", encoding='unicode_escape')
-    if scheme is None:
-        data = data[data["Food_Name"] != "Milk powder"]
-        Food = input_cost['Food_Name']
+    data = data[data["Food_Name"] != "Milk powder"]
+    Food = input_cost['Food_Name']
     # selecting particular food items based on input function
     data = pd.DataFrame(data.loc[data['Food_Name'].isin(Food)])
     Foodgroup = data["Food_Group"]
@@ -514,24 +555,6 @@ def LPPWOVAR_LESSKCAL(Age_group, Food, input_cost, scheme, quantity):
     print(Food)
 
     # input EARRDA2020 DATASET----
-
-    EARfull = pd.read_csv("Nutrition_gap_RDA.csv", encoding='unicode_escape')
-
-    if Age_group == "6-12 months":
-        input_EAR = EARfull["Gap_6-12"]
-    if Age_group == "child(1-3)yrs":
-        input_EAR = EARfull["Gap1_3yrs_250"]
-
-    Lab = EARfull["Lab"]
-    input_EAR = pd.concat([input_EAR, Lab], axis=1, ignore_index=True)
-    input_EAR = input_EAR.rename(columns={0: "EAR", 1: "Lab"})
-    EAR = input_EAR
-
-    if scheme is None:
-        milk = pd.read_csv("Milk_powder.csv", encoding='unicode_escape')
-        EAR_11 = EAR["EAR"] - milk["Milk_powder"] * (int(quantity) / 100)
-        EAR_11[EAR_11 < 0] = 0
-        EAR["EAR"] = EAR_11
 
     F = data
     colnam = ["Food_Group", "Food_Name", "Quantity", "Energy", "Protein", "Fat", "Iron", "Calcium", "Zinc", "Folate",
@@ -572,7 +595,8 @@ def LPPWOVAR_LESSKCAL(Age_group, Food, input_cost, scheme, quantity):
 
     model += lpSum(A.iloc[2,] * allocation) <= lpSum(A.iloc[0,] * allocation) * 0.4 / 9
     model += lpSum(A.iloc[2,] * allocation) >= lpSum(A.iloc[0,] * allocation) * 0.35 / 9
-
+    model += lpSum(A.iloc[1,] * allocation) <= lpSum(A.iloc[0,] * allocation) * 0.16 / 4
+    model += lpSum(A.iloc[1,] * allocation) >= lpSum(A.iloc[0,] * allocation) * 0.09 / 4
     Cereals = data[data["Food_Group"] == "Cereals"]
     Cereal = Cereals["Food_Name"]
     Cereal.index = range(len(Cereal))
@@ -634,7 +658,10 @@ def LPPWOVAR_LESSKCAL(Age_group, Food, input_cost, scheme, quantity):
         a[AA.columns == "Ghee"] = 1
         model += lpSum(a * allocation) >= 5
 
-    model += lpSum(allocation * cost_matrix) <= 8
+    if scheme == 'icds' and "Milk powder" in tuple(Food):
+        model += lpSum(allocation * cost_matrix) <= 8 - optiCost
+    else:
+        model += lpSum(allocation * cost_matrix) <= 8
 
     datainput = data[["Food_Name", "Food_Group"]]
     datainput = datainput.sort_values(["Food_Name"])
@@ -679,17 +706,48 @@ def LPPWOVAR_LESSKCAL(Age_group, Food, input_cost, scheme, quantity):
     c_1 = costperitem * quan
     final_out_lessKcal["cost"] = c_1
     final_out_lessKcal["Cost (per Kg)"] = costperitem * 1000
-    if scheme is None:
-        final_out_lessKcal.loc[len(final_out_lessKcal.index)] = ['Milk powder', int(quantity), 'Milk powder', 0, 0]
+
+    final_out_lessKcal.loc[len(final_out_lessKcal.index)] = ['Milk powder', int(quantity), 'Milk powder', 0, 0]
+
     print(final_out_lessKcal)
     return final_out_lessKcal
 
 
 def LPPWOVAR(Age_group, Food, input_cost, scheme, quantity):
     global input_EAR, EAR, EAR_11, final_optimized_cost
-    if scheme is None:
-        input_cost = input_cost[input_cost["Food_Name"] != "Milk powder"]
+    if "Milk powder" not in tuple(Food):
+        quantity = 0
+    if scheme == 'icds' and "Milk powder" in tuple(Food):
+        costMilk = input_cost[input_cost['Food_Name'] == "Milk powder"]
+        optiCost = quantity * costMilk['input_cost']
+        optiCost = float(optiCost)
 
+    EARfull = pd.read_csv("Nutrition_gap_RDA.csv", encoding='unicode_escape')
+    if Age_group == "child(1-3)yrs":
+        input_EAR = EARfull["Gap1_3yrs"]
+    if Age_group == "pregnant":
+        input_EAR = EARfull["Gap_preg"]
+    if Age_group == "lactation":
+        input_EAR = EARfull["Gap_lact"]
+    if Age_group == "6-12 months":
+        input_EAR = EARfull["Gap_6-12-c1"]
+
+    Lab = EARfull["Lab"]
+    input_EAR = pd.concat([input_EAR, Lab], axis=1, ignore_index=True)
+    input_EAR = input_EAR.rename(columns={0: "EAR", 1: "Lab"})
+    EAR = input_EAR
+    print('Ear prev', EAR)
+
+    if "Milk powder" in tuple(Food):
+        milk = pd.read_csv("Milk_powder.csv", encoding='unicode_escape')
+        print('quan', type(quantity))
+        EAR_11 = EAR["EAR"] - milk["Milk_powder"] * (quantity / 100)
+        print('ear11', EAR_11)
+        EAR_11[EAR_11 < 0] = 0
+        EAR["EAR"] = EAR_11
+        print('Ear is', EAR)
+
+    input_cost = input_cost[input_cost["Food_Name"] != "Milk powder"]
     model = LpProblem("Optimal_diet_plan", LpMinimize)
     input_cost = input_cost.sort_values(['Food_Name'])
     print(input_cost)
@@ -708,9 +766,9 @@ def LPPWOVAR(Age_group, Food, input_cost, scheme, quantity):
 
     # input nutrient data and EARfull-----
     data = pd.read_csv("Nutrition_sheet_ICDS.csv", encoding='unicode_escape')
-    if scheme is None:
-        data = data[data["Food_Name"] != "Milk powder"]
-        Food = input_cost['Food_Name']
+
+    data = data[data["Food_Name"] != "Milk powder"]
+    Food = input_cost['Food_Name']
     # selecting particular food items based on input function
     data = pd.DataFrame(data.loc[data['Food_Name'].isin(Food)])
     Foodgroup = data["Food_Group"]
@@ -719,29 +777,6 @@ def LPPWOVAR(Age_group, Food, input_cost, scheme, quantity):
 
     # input EARRDA2020 DATASET----
 
-    EARfull = pd.read_csv("Nutrition_gap_RDA.csv", encoding='unicode_escape')
-    if Age_group == "child(1-3)yrs":
-        input_EAR = EARfull["Gap1_3yrs"]
-    if Age_group == "pregnant":
-        input_EAR = EARfull["Gap_preg"]
-    if Age_group == "lactation":
-        input_EAR = EARfull["Gap_lact"]
-    if Age_group == "6-12 months":
-        input_EAR = EARfull["Gap_6-12-c1"]
-
-    Lab = EARfull["Lab"]
-    input_EAR = pd.concat([input_EAR, Lab], axis=1, ignore_index=True)
-    input_EAR = input_EAR.rename(columns={0: "EAR", 1: "Lab"})
-    EAR = input_EAR
-    print('Ear prev', EAR)
-    if scheme is None:
-        milk = pd.read_csv("Milk_powder.csv", encoding='unicode_escape')
-        print('quan', type(quantity))
-        EAR_11 = EAR["EAR"] - milk["Milk_powder"] * (quantity / 100)
-        print('ear11', EAR_11)
-        EAR_11[EAR_11 < 0] = 0
-        EAR["EAR"] = EAR_11
-    print('Ear is', EAR)
     F = data
     colnam = ["Food_Group", "Food_Name", "Quantity", "Energy", "Protein", "Fat", "Iron", "Calcium", "Zinc", "Folate",
               "Cost"]
@@ -782,6 +817,8 @@ def LPPWOVAR(Age_group, Food, input_cost, scheme, quantity):
     model += lpSum(A.iloc[2,] * allocation) <= lpSum(A.iloc[0,] * allocation) * 0.4 / 9
     model += lpSum(A.iloc[2,] * allocation) >= lpSum(A.iloc[0,] * allocation) * 0.35 / 9
 
+    model += lpSum(A.iloc[1,] * allocation) <= lpSum(A.iloc[0,] * allocation) * 0.16 / 4
+    model += lpSum(A.iloc[1,] * allocation) >= lpSum(A.iloc[0,] * allocation) * 0.09 / 4
     # cereal
     if (Age_group == "pregnant") or (Age_group == "lactation"):
         Cereals = data[data["Food_Group"] == "Cereals"]
@@ -864,11 +901,18 @@ def LPPWOVAR(Age_group, Food, input_cost, scheme, quantity):
         a[AA.columns == "Ghee"] = 1
         model += lpSum(a * allocation) >= 5
 
-    if (Age_group == "child(1-3)yrs") or (Age_group == "6-12 months"):
-        model += lpSum(allocation * cost_matrix) <= 8
+    if scheme == 'icds' and "Milk powder" in tuple(Food):
+        if (Age_group == "child(1-3)yrs") or (Age_group == "6-12 months"):
+            model += lpSum(allocation * cost_matrix) <= 8 - optiCost
 
-    if (Age_group == "pregnant") or (Age_group == "lactation"):
-        model += lpSum(allocation * cost_matrix) <= 9.5
+        if (Age_group == "pregnant") or (Age_group == "lactation"):
+            model += lpSum(allocation * cost_matrix) <= 9.5 - optiCost
+    else:
+        if (Age_group == "child(1-3)yrs") or (Age_group == "6-12 months"):
+            model += lpSum(allocation * cost_matrix) <= 8
+
+        if (Age_group == "pregnant") or (Age_group == "lactation"):
+            model += lpSum(allocation * cost_matrix) <= 9.5
 
     datainput = data[["Food_Name", "Food_Group"]]
     datainput = datainput.sort_values(["Food_Name"])
@@ -914,8 +958,8 @@ def LPPWOVAR(Age_group, Food, input_cost, scheme, quantity):
     c_1 = costperitem * quan
     final_out["cost"] = c_1
     final_out["Cost (per Kg)"] = costperitem * 1000
-    if scheme is None:
-        final_out.loc[len(final_out.index)] = ['Milk powder', quantity, 'Milk powder', 0, 0]
+
+    final_out.loc[len(final_out.index)] = ['Milk powder', quantity, 'Milk powder', 0, 0]
     print(final_out)
     return final_out
 
@@ -1151,6 +1195,10 @@ class FoodSelection(View):
                 messages.add_message(request, messages.ERROR, 'Please enter the number of people again! ')
                 return redirect('category')
 
+            mealType = request.POST.get('mealType', None)
+            pregmealType = request.POST.get('pregmealType', None)
+            lactmealType = request.POST.get('lactmealType', None)
+
             Cereals = request.POST.getlist('Cereals', None)
             Pulses = request.POST.getlist('Pulses', None)
             Others = request.POST.getlist('Others', None)
@@ -1172,6 +1220,10 @@ class FoodSelection(View):
             lactatingmilkpowder = request.POST.getlist('lactatingmilkpowder', None)
             lactatingscheme = request.POST.get('lactatingscheme', None)
             lactatingmilkPowderQuantity = request.POST.get('lactatingmilkPowderQuantity', None)
+
+            request.session['mealType'] = mealType
+            request.session['pregmealType'] = pregmealType
+            request.session['lactmealType'] = lactmealType
 
             request.session['Cereals'] = Cereals
             request.session['Pulses'] = Pulses
@@ -1795,7 +1847,7 @@ def filter_data(request):
                                      'milk_prop_toddler': milk_prop_toddler,
                                      'final_q': final_q, 'final_optimized_cost': final_optimized_cost,
                                      'toddlersscheme': toddlersscheme,
-                                     'opStatus': opStatus,
+                                     'opStatus': opStatus, 'toddlersmilkpowder': toddlersmilkpowder,
 
                                      'cereal_prop_toddler_lessKcal': cereal_prop_toddler_lessKcal,
                                      'pulse_prop_toddler_lessKcal': pulse_prop_toddler_lessKcal,
@@ -1849,8 +1901,9 @@ def filter_data(request):
                 final_out_pregnant = LPPWOVAR(Age_group, Food, pregnantFoodCost, pregnantscheme,
                                               pregnantmilkPowderQuantity)
             elif query == 'FAA':
+                pregmealType = request.session.get('pregmealType', None)
                 final_out_pregnant = LPPWOVARHCM(Age_group, Food, pregnantFoodCost, pregnantscheme,
-                                                 pregnantmilkPowderQuantity)
+                                                 pregnantmilkPowderQuantity, pregmealType)
 
             final_out_pregnant['Amount'] = np.ceil(final_out_pregnant['Amount'])
             final_prop_pregnant = final_out_pregnant.set_index('Food_Name')['Amount'].to_dict()
@@ -1888,6 +1941,7 @@ def filter_data(request):
                                      'pregnantCereals': pregnantCereals, 'pregnantPulses': pregnantPulses,
                                      'pregnantOthers': pregnantOthers, 'cereal_prop_pregnant': cereal_prop_pregnant,
                                      'pulse_prop_pregnant': pulse_prop_pregnant,
+                                     'pregnantmilkpowder': pregnantmilkpowder,
                                      'other_prop_pregnant': other_prop_pregnant,
                                      'milk_prop_pregnant': milk_prop_pregnant,
                                      'final_q': final_q, 'final_optimized_cost': final_optimized_cost,
@@ -1937,8 +1991,9 @@ def filter_data(request):
                 final_out_lactating = LPPWOVAR(Age_group, Food, lactatingFoodCost, lactatingscheme,
                                                lactatingmilkPowderQuantity)
             elif query == 'FAA':
+                lactmealType = request.session.get('lactmealType', None)
                 final_out_lactating = LPPWOVARHCM(Age_group, Food, lactatingFoodCost, lactatingscheme,
-                                                  lactatingmilkPowderQuantity)
+                                                  lactatingmilkPowderQuantity, lactmealType)
 
             final_out_lactating['Amount'] = np.ceil(final_out_lactating['Amount'])
             final_prop_lactating = final_out_lactating.set_index('Food_Name')['Amount'].to_dict()
@@ -1976,7 +2031,7 @@ def filter_data(request):
             lw = render_to_string('icds/resultLactating.html',
                                   {
                                       'lactatingCereals': lactatingCereals, 'lactatingPulses': lactatingPulses,
-                                      'lactatingOthers': lactatingOthers,
+                                      'lactatingOthers': lactatingOthers, 'lactatingmilkpowder': lactatingmilkpowder,
                                       'cereal_prop_lactating': cereal_prop_lactating,
                                       'pulse_prop_lactating': pulse_prop_lactating,
                                       'other_prop_lactating': other_prop_lactating,
@@ -2020,8 +2075,9 @@ def filter_data(request):
             infantFoodCost['input_cost'] = infantFoodCost['input_cost'] / 1000
             Age_group = "child(4-6)yrs"
             Food = infantFoodCost['Food_Name']
-
-            final_out_infant = LPPWOVARHCM(Age_group, Food, infantFoodCost, scheme, milkPowderQuantity)
+            mealType = request.session.get('mealType', None)
+            print(mealType)
+            final_out_infant = LPPWOVARHCM(Age_group, Food, infantFoodCost, scheme, milkPowderQuantity, mealType)
 
             final_out_infant['Amount'] = np.ceil(final_out_infant['Amount'])
             final_prop_infant = final_out_infant.set_index('Food_Name')['Amount'].to_dict()
@@ -2474,8 +2530,9 @@ class GetPdf(View):
                 preSchoolFoodCost['input_cost'] = preSchoolFoodCost['input_cost'] / 1000
                 Age_group = "child(4-6)yrs"
                 Food = preSchoolFoodCost['Food_Name']
-
-                final_out_preSchool = LPPWOVARHCM(Age_group, Food, preSchoolFoodCost, scheme, milkPowderQuantity)
+                mealType = request.session.get('mealType', None)
+                final_out_preSchool = LPPWOVARHCM(Age_group, Food, preSchoolFoodCost, scheme, milkPowderQuantity,
+                                                  mealType)
                 inft_Status = opStatus
                 inft_nutrition = NUTCAL(final_out_preSchool, milkPowderQuantity)
 
@@ -2551,8 +2608,10 @@ class GetPdf(View):
                 Age_group = "pregnant"
                 Food = pregnantFoodCost['Food_Name']
 
+                pregmealType = request.session.get('pregmealType', None)
+
                 final_out_pregnant = LPPWOVARHCM(Age_group, Food, pregnantFoodCost, pregnantscheme,
-                                                 pregnantmilkPowderQuantity)
+                                                 pregnantmilkPowderQuantity, pregmealType)
                 preg_Status = opStatus
                 preg_nutrition = NUTCAL(final_out_pregnant, pregnantmilkPowderQuantity)
 
@@ -2628,8 +2687,9 @@ class GetPdf(View):
                 Age_group = "lactation"
                 Food = lactatingFoodCost['Food_Name']
 
+                lactmealType = request.session.get('lactmealType', None)
                 final_out_lactating = LPPWOVARHCM(Age_group, Food, lactatingFoodCost, lactatingscheme,
-                                                  lactatingmilkPowderQuantity)
+                                                  lactatingmilkPowderQuantity, lactmealType)
                 lact_Status = opStatus
                 lact_nutrition = NUTCAL(final_out_lactating, lactatingmilkPowderQuantity)
 
@@ -2692,7 +2752,7 @@ class GetPdf(View):
 
             params = {
                 'module': 'Hot Cooked Meal',
-                'today': datetime.now(),
+                'today': datetime.now(), 'mealType': mealType,
                 'preSchool': preSchool, 'pregnantFAA': pregnantFAA, 'lactatingFAA': lactatingFAA,
                 'preg_data': preg_data,
                 'preg_total': preg_total, 'preg_perc': preg_perc, 'preg_fat_perc': preg_fat_perc,
@@ -3102,10 +3162,11 @@ def filter_vegetable_data(request):
             Age_group = "pregnant"
             Food = pregnantFoodCost['Food_Name']
 
-            query = request.session['query']
+            query = request.session.get('query', None)
             print(query)
+            pregmealType = request.session.get('pregmealType', None)
             final_out_pregnant = LPPWOVARHCM(Age_group, Food, pregnantFoodCost, pregnantscheme,
-                                             pregnantmilkPowderQuantity)
+                                             pregnantmilkPowderQuantity, pregmealType)
             final_out_pregnant['Amount'] = np.ceil(final_out_pregnant['Amount'])
             final_prop_pregnant = final_out_pregnant.set_index('Food_Name')['Amount'].to_dict()
             print(final_prop_pregnant)
@@ -3199,10 +3260,11 @@ def filter_vegetable_data(request):
             Age_group = "lactation"
             Food = lactatingFoodCost['Food_Name']
 
-            query = request.session['query']
+            query = request.session.get('query', None)
             print(query)
+            lactmealType = request.session.get('lactmealType', None)
             final_out_lactating = LPPWOVARHCM(Age_group, Food, lactatingFoodCost, lactatingscheme,
-                                              lactatingmilkPowderQuantity)
+                                              lactatingmilkPowderQuantity, lactmealType)
 
             final_out_lactating['Amount'] = np.ceil(final_out_lactating['Amount'])
             final_prop_lactating = final_out_lactating.set_index('Food_Name')['Amount'].to_dict()
@@ -3297,8 +3359,8 @@ def filter_vegetable_data(request):
             infantFoodCost['input_cost'] = infantFoodCost['input_cost'] / 1000
             Age_group = "child(4-6)yrs"
             Food = infantFoodCost['Food_Name']
-
-            final_out_infant = LPPWOVARHCM(Age_group, Food, infantFoodCost, scheme, milkPowderQuantity)
+            mealType = request.session.get('mealType', None)
+            final_out_infant = LPPWOVARHCM(Age_group, Food, infantFoodCost, scheme, milkPowderQuantity, mealType)
 
             final_out_infant['Amount'] = np.ceil(final_out_infant['Amount'])
             final_prop_infant = final_out_infant.set_index('Food_Name')['Amount'].to_dict()
@@ -3362,3 +3424,10 @@ def filter_vegetable_data(request):
                                      'opStatus': opStatus, 'scheme': scheme, 'preSchool_Qnt_list': preSchool_Qnt_list
                                  })
             return JsonResponse({'data': i})
+
+
+def documentation(request):
+    try:
+        return FileResponse(open('documentation.pdf', 'rb'), content_type='application/pdf')
+    except FileNotFoundError:
+        raise Http404()

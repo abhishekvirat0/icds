@@ -44,23 +44,23 @@
                       {% csrf_token %}
                    <div class="row justify-content-center p-3 mt-5">
 
-                       <div class="col col-12 col-md-12 col-lg-12 " style="border: 2px solid #e0e0e0;border-radius: 15px;background-color: #ffffff;">
+                       <div data-title="Welcome!👋" data-intro="Please enter total 4 y to 6 y child, If there is none, keep it 0" class="col col-12 col-md-12 col-lg-12 " style="border: 2px solid #e0e0e0;border-radius: 15px;background-color: #ffffff;">
                             <div class="row align-items-center">
                                 <div class="col col-12 col-md-8 col-lg-8 d-flex align-items-center">
                                     <img src="/static/images/preSchool.svg" width="35px" alt=""/>
                                     <div class="col col-12 col-md-12">
-                                        <p class="heading mt-3">4 yrs to 6 yrs</p>
+                                        <p class="heading mt-3">4 y to 6 y</p>
                                         <p class="sub-heading">Enter total no. of preschooler</p>
                                     </div>
                                 </div>
 
                                 <div class="col col-12 col-md-4 col-lg-4">
-                                    <input name="preSchool" type="text" onkeypress="return isNumberKey(event)" aria-label="" placeholder="enter here" class="numInput" autofocus required>
+                                    <input name="preSchool" type="text" onkeypress="return isNumberKey(event)" aria-label="" placeholder="enter here" value="0" class="numInput" autofocus required>
                                 </div>
                             </div>
                        </div>
 
-                       <div class="col col-12 col-md-12 col-lg-12 mt-2" style="border: 2px solid #e0e0e0;border-radius: 15px;background-color: #ffffff;">
+                       <div data-intro="Please enter total Pregnant women, If there is none, keep it 0" class="col col-12 col-md-12 col-lg-12 mt-2" style="border: 2px solid #e0e0e0;border-radius: 15px;background-color: #ffffff;">
                             <div class="row align-items-center">
                                 <div class="col col-12 col-md-8 col-lg-8 d-flex align-items-center">
                                     <img src="/static/images/pregnantFAA.svg" alt=""/>
@@ -71,12 +71,12 @@
                                 </div>
 
                                 <div class="col col-12 col-md-4 col-lg-4">
-                                    <input name="pregnantFAA" type="text" onkeypress="return isNumberKey(event)" aria-label="" placeholder="enter here" class="numInput" autofocus required>
+                                    <input name="pregnantFAA" type="text" onkeypress="return isNumberKey(event)" aria-label="" placeholder="enter here" value="0" class="numInput" autofocus required>
                                 </div>
                             </div>
                        </div>
 
-                       <div class="col col-12 col-md-12 col-lg-12 mt-2" style="border: 2px solid #e0e0e0;border-radius: 15px;background-color: #ffffff;">
+                       <div data-intro="Please enter total Lactating women, If there is none, keep it 0" class="col col-12 col-md-12 col-lg-12 mt-2" style="border: 2px solid #e0e0e0;border-radius: 15px;background-color: #ffffff;">
                             <div class="row align-items-center">
                                 <div class="col col-12 col-md-8 col-lg-8 d-flex align-items-center">
                                     <img src="/static/images/lactatingFAA.svg" alt=""/>
@@ -87,13 +87,13 @@
                                 </div>
 
                                 <div class="col col-12 col-md-4 col-lg-4">
-                                    <input name="lactatingFAA" type="text" onkeypress="return isNumberKey(event)" aria-label="" placeholder="enter here" class="numInput" autofocus required>
+                                    <input name="lactatingFAA" type="text" onkeypress="return isNumberKey(event)" aria-label="" placeholder="enter here" value="0" class="numInput" autofocus required>
                                 </div>
                             </div>
                        </div>
 
                     <div class="col col-12 col-md-12 text-right mt-4">
-                        <button class="btn btnSubmitFAA footer">SUBMIT</button>
+                        <button class="btn btnSubmitFAA footer">NEXT</button>
                     </div>
 
                 </div>
@@ -118,6 +118,12 @@
                 $(window).scroll(function(e) {
                     $('.navbar')[$(window).scrollTop() >= 150 ? 'addClass' : 'removeClass']('navbar-hide');
                 });
+        </script>
+        <script>
+            if(!localStorage.getItem("fTime")){
+                localStorage.setItem("fTime","true");
+                introJs().start();
+            }
         </script>
     </body>
     {% endblock %}

@@ -78,7 +78,7 @@
 
                         <!-- Cereals Here  -->
                         <div class="d-flex align-items-center">
-                            <span class="cost-heading">CEREALS</span>
+                            <span class="cost-heading">CEREALS AND MILLET'S</span>
                         </div>
                         <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">
 
@@ -179,6 +179,7 @@
                     </div>
 
                     <!-- MILK POWDER Here  -->
+                    {% if resultMilkPowder %}
                     <div class="d-flex align-items-center mt-2">
                         <span class="cost-heading">MILK POWDER </span>
                         <span class="note ml-2">(Note: cost is considered if it's from ICDS)</span>
@@ -210,12 +211,12 @@
                             </div>
                         {% endfor %}
                     </div>
-
+                    {% endif %}
                     </div>
 
 
                    <div class="col col-12 col-md-12 text-center">
-                       <button class="btn btnSubmitFAA footer">SUBMIT</button>
+                       <button class="btn btnSubmitFAA footer">NEXT</button>
                    </div>
 
            </form>

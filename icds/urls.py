@@ -35,4 +35,5 @@ urlpatterns = [
                   path('filter-data', views.filter_data, name='filter_data'),
                   path('filter-vegetable-data', views.filter_vegetable_data, name='filter_vegetable_data'),
                   path('result/pdf/', views.GetPdf.as_view(), name='pdf'),
+                  path('documentation/', views.documentation, name='documentation'),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
