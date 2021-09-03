@@ -64,29 +64,29 @@
                                 <div id="collapseOne" class="card-body collapse show" data-parent="#accordion" >
                                     <div class="row">
 
-                                         <div class="col col-12 col-md-12">
-                                            <div class="d-flex align-items-center check">
-                                                <label tabindex="0" class="mr-2" title="33 Percent of ICDS Nutrient requirement">
-                                                      <input tabindex="-1" type="radio" name="mealType" value="snacks"/>
-                                                         <div class="icon-box">
-                                                            <span>snacks</span>
-                                                         </div>
-                                                </label>
-                                                <label tabindex="0" class="mr-2" title="67 Percent of ICDS Nutrient requirement">
-                                                      <input tabindex="-1" type="radio" name="mealType" value="Meals" />
-                                                      <div class="icon-box">
-                                                          <span>Meals</span>
-                                                      </div>
-                                                </label>
-                                                <label tabindex="0" title="Complete ICDS Nutrient requirement">
-                                                      <input tabindex="-1" type="radio" name="mealType" value="compMeal" checked/>
-                                                      <div class="icon-box">
-                                                          <span>Meals (100%)</span>
-                                                      </div>
-                                                </label>
+<!--                                         <div class="col col-12 col-md-12">-->
+<!--                                            <div class="d-flex align-items-center check">-->
+<!--                                                <label tabindex="0" class="mr-2" title="33 Percent of ICDS Nutrient requirement">-->
+<!--                                                      <input tabindex="-1" type="radio" name="mealType" value="snacks"/>-->
+<!--                                                         <div class="icon-box">-->
+<!--                                                            <span>snacks</span>-->
+<!--                                                         </div>-->
+<!--                                                </label>-->
+<!--                                                <label tabindex="0" class="mr-2" title="67 Percent of ICDS Nutrient requirement">-->
+<!--                                                      <input tabindex="-1" type="radio" name="mealType" value="Meals" />-->
+<!--                                                      <div class="icon-box">-->
+<!--                                                          <span>Meals</span>-->
+<!--                                                      </div>-->
+<!--                                                </label>-->
+<!--                                                <label tabindex="0" title="Complete ICDS Nutrient requirement">-->
+<!--                                                      <input tabindex="-1" type="radio" name="mealType" value="compMeal" checked/>-->
+<!--                                                      <div class="icon-box">-->
+<!--                                                          <span>Meals (100%)</span>-->
+<!--                                                      </div>-->
+<!--                                                </label>-->
 
-                                            </div>
-                                         </div>
+<!--                                            </div>-->
+<!--                                         </div>-->
                                         <!-- 4 yrs to 6 yrs Cereals -->
 
                                         <div class="col col-12 col-md-12">
@@ -373,7 +373,7 @@
                                                         <span class="checkbox-heading">SCHEME</span>
                                                     </div>
                                                     <div class="col col-12 col-md-6">
-                                                        <div class="d-flex align-items-center float-md-right float-sm-none" data-intro="If you select <br/> <b>Other Scheme</b> - Only the nutrition composition of milk powder is considered in optimisation <br/> <b>ICDS</b> - both nutrition composition and cost of milk powder is considered in optimisation <br> for more information, refer <a target='_blank' href='{% url 'documentation' %}'></a>">
+                                                        <div class="d-flex align-items-center float-md-right float-sm-none" data-intro="If you select <br/> <b>Other Scheme</b> - Only the nutrition composition of milk powder is considered in optimisation <br/> <b>ICDS</b> - both nutrition composition and cost of milk powder is considered in optimisation <br> for more information, refer <a target='_blank' href='{% url 'documentation' %}'>Documentation</a>">
                                                             <p class="scheme">Other Scheme</p>
                                                             <label class="toogle" style="margin-bottom:18px;margin-left:5px; margin-right:5px;">
                                                                 <input id="yourBox" autocomplete='on' type="checkbox" name="scheme" value="icds"/>
@@ -387,7 +387,7 @@
                                                 <div class="d-flex align-items-center">
                                                     <span class="input-group">Consumption of milk powder per day</span>
                                                     <div class="input-group mb-3 ">
-                                                        <input id="yourText" onkeypress="return isNumberKey(event)" type="text" class="form-control ml-auto" aria-label="" name="milkPowderQuantity" autocomplete="on" required>
+                                                        <input id="yourText" onkeypress="return isNumberKey(event)" type="text" class="form-control ml-auto" aria-label="" name="milkPowderQuantity" autocomplete="on">
                                                         <div class="input-group-append">
                                                             <span class="input-group-text">gm/day</span>
                                                         </div>
@@ -714,7 +714,7 @@
                                                 <div class="d-flex align-items-center">
                                                     <span class="input-group">Consumption of milk powder per day</span>
                                                     <div class="input-group mb-3 ">
-                                                        <input id="yourpregnantText" onkeypress="return isNumberKey(event)" type="text" class="form-control ml-auto" aria-label="" name="pregnantmilkPowderQuantity" autocomplete="on" required>
+                                                        <input id="yourpregnantText" onkeypress="return isNumberKey(event)" type="text" class="form-control ml-auto" aria-label="" name="pregnantmilkPowderQuantity" autocomplete="on">
                                                         <div class="input-group-append">
                                                             <span class="input-group-text">gm/day</span>
                                                         </div>
@@ -1041,7 +1041,7 @@
                                                 <div class="d-flex align-items-center">
                                                     <span class="input-group">Consumption of milk powder per day</span>
                                                     <div class="input-group mb-3 ">
-                                                        <input id="yourlactatingText" onkeypress="return isNumberKey(event)" type="text" class="form-control ml-auto" aria-label="" name="lactatingmilkPowderQuantity" autocomplete="on" required>
+                                                        <input id="yourlactatingText" onkeypress="return isNumberKey(event)" type="text" class="form-control ml-auto" aria-label="" name="lactatingmilkPowderQuantity" autocomplete="on">
                                                         <div class="input-group-append">
                                                             <span class="input-group-text">gm/day</span>
                                                         </div>
@@ -1132,16 +1132,7 @@
                 var checked11 = $('input[name="lactatingPulses"]:checked').length > 0;
                 var checked12 = $('input[name="lactatingOthers"]:checked').length > 0;
 
-                if($("input[name='mealType']:checked").val() === 'snacks') {
-                    if(!checked && !checked2 && !checked3){
-                            swal({
-                              text: "Please select at least 1 item",
-                              icon: "warning",
-                            });
-                            return false;
-                    }
-                }
-                else{
+
                     if($('input[name="Cereals"]').length > 0){
                         if(!checked){
                             swal({
@@ -1231,7 +1222,6 @@
                             return false;
                         }
                     }
-                }
             });
         </script>
         <script>

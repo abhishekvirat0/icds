@@ -96,12 +96,6 @@ def LPPWOVARHCM(Age_group, Food, input_cost, scheme, quantity, mealType):
     input_EAR = input_EAR.rename(columns={0: "EAR", 1: "Lab"})
     EAR = input_EAR
 
-    if mealType == 'Meals':
-        EAR["EAR"] = np.round(EAR["EAR"] * 2 / 3, 2)
-
-    if mealType == 'snacks':
-        EAR["EAR"] = np.round(EAR["EAR"] * 1 / 3, 2)
-
     if "Milk powder" in tuple(Food):
         milk = pd.read_csv("Milk_powder.csv", encoding='unicode_escape')
         EAR_11 = EAR["EAR"] - milk["Milk_powder"] * (int(quantity) / 100)
@@ -149,7 +143,7 @@ def LPPWOVARHCM(Age_group, Food, input_cost, scheme, quantity, mealType):
     A = A.iloc[2:len(A), :]
     A.columns = F["Food_Name"]
 
-    ##min value for each nutrition
+    # min value for each nutrition
     EAR = EAR.loc[EAR["Lab"].isin(F.columns)]
     b = EAR["EAR"]
     b.index = EAR["Lab"]
@@ -223,7 +217,7 @@ def LPPWOVARHCM(Age_group, Food, input_cost, scheme, quantity, mealType):
     # sugar*********************
     # Sugar as 10% of total energy
     # 1 g of carbohydrate (sugar) = 4 kcal
-    if mealType == 'Meals' or mealType == 'compMeal' or Age_group == "pregnant" or Age_group == "lactation":
+    if Age_group == "child(4-6)yrs" or Age_group == "pregnant" or Age_group == "lactation":
         if "Sugar" in tuple(Foodgroup):
             a = np.zeros((len(AA.columns)))
             a[AA.columns == "Sugar"] = 1
