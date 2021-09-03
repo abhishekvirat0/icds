@@ -1011,6 +1011,7 @@
                                                 <div class="d-flex align-items-center" data-intro="Enter the Quantity of Milk Powder">
                                                     <span class="input-group">Consumption of milk powder per day</span>
                                                     <div class="input-group mb-3 ">
+
                                                         <input id="yourpregnantText" onkeypress="return isNumberKey(event)" type="text" class="form-control ml-auto" aria-label="" name="pregnantmilkPowderQuantity" autocomplete="on">
                                                         <div class="input-group-append">
                                                             <span class="input-group-text">gm/day</span>
@@ -1621,6 +1622,7 @@
               var checkbox2 = $('input[name="toddlersmilkpowder"]');
               var checkbox3 = $('input[name="pregnantmilkpowder"]');
               var checkbox4 = $('input[name="lactatingmilkpowder"]');
+
               checkbox.change(function() {
                 if (checkbox.is(':checked')) {
                     swal({
@@ -1653,10 +1655,10 @@
                          text: "Please enter the quantity of milk powder",
                          icon: "warning",
                    });
-                  $('#pregnantmilkpowder').prop('required', true); //to add required
+                  $('#yourpregnantText').prop('required', true); //to add required
                 } else {
-                  $("#pregnantmilkpowder").val("");
-                  $('#pregnantmilkpowder').prop('required', false); //to remove required
+                  $("#yourpregnantText").val("");
+                  $('#yourpregnantText').prop('required', false); //to remove required
                 }
               });
 
@@ -1672,6 +1674,7 @@
                   $('#yourlactatingText').prop('required', false); //to remove required
                 }
               });
+
             });
         </script>
    </body>
