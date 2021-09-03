@@ -1500,7 +1500,9 @@ class Result(View):
             scheme = request.session.get('scheme', None)
 
             milkPowderQuantity = request.session.get('milkPowderQuantity', None)
-            if milkPowderQuantity is not None:
+            print(milkPowderQuantity)
+
+            if milkPowderQuantity:
                 milkPowderQuantity = int(milkPowderQuantity)
             cereal_prop = []
             pulse_prop = []
@@ -1543,7 +1545,7 @@ class Result(View):
             Others = request.session['Others']
             scheme = request.session['scheme']
             milkPowderQuantity = request.session['milkPowderQuantity']
-            if milkPowderQuantity is not None:
+            if milkPowderQuantity:
                 milkPowderQuantity = int(milkPowderQuantity)
             request.session.pop("pregnant_Qnt_list", None)
             cereal_prop = []
@@ -1588,7 +1590,7 @@ def filter_data(request):
         milkpowder = request.session['milkpowder']
         scheme = request.session['scheme']
         milkPowderQuantity = request.session['milkPowderQuantity']
-        if milkPowderQuantity is not None:
+        if milkPowderQuantity:
             milkPowderQuantity = int(milkPowderQuantity)
         cereal_prop = []
         pulse_prop = []
@@ -1723,7 +1725,8 @@ def filter_data(request):
         toddlersmilkpowder = request.session['toddlersmilkpowder']
         toddlersscheme = request.session['toddlersscheme']
         toddlersmilkPowderQuantity = request.session['toddlersmilkPowderQuantity']
-        if toddlersmilkPowderQuantity is not None:
+        print('hello', toddlersmilkPowderQuantity)
+        if toddlersmilkPowderQuantity:
             toddlersmilkPowderQuantity = int(toddlersmilkPowderQuantity)
         cereal_prop_toddler = []
         pulse_prop_toddler = []
@@ -1860,7 +1863,7 @@ def filter_data(request):
         pregnantmilkpowder = request.session['pregnantmilkpowder']
         pregnantscheme = request.session['pregnantscheme']
         pregnantmilkPowderQuantity = request.session['pregnantmilkPowderQuantity']
-        if pregnantmilkPowderQuantity is not None:
+        if pregnantmilkPowderQuantity:
             pregnantmilkPowderQuantity = int(pregnantmilkPowderQuantity)
 
         request.session.pop("lactating_Qnt_list", None)
@@ -1951,7 +1954,7 @@ def filter_data(request):
         lactatingmilkpowder = request.session['lactatingmilkpowder']
         lactatingscheme = request.session['lactatingscheme']
         lactatingmilkPowderQuantity = request.session['lactatingmilkPowderQuantity']
-        if lactatingmilkPowderQuantity is not None:
+        if lactatingmilkPowderQuantity:
             lactatingmilkPowderQuantity = int(lactatingmilkPowderQuantity)
         request.session.pop("lactating_Qnt_list", None)
         request.session.pop("pregnant_Qnt_list", None)
@@ -2043,7 +2046,7 @@ def filter_data(request):
         milkpowder = request.session['milkpowder']
         scheme = request.session['scheme']
         milkPowderQuantity = request.session['milkPowderQuantity']
-        if milkPowderQuantity is not None:
+        if milkPowderQuantity:
             milkPowderQuantity = int(milkPowderQuantity)
         request.session.pop("lactating_Qnt_list", None)
         request.session.pop("pregnant_Qnt_list", None)
@@ -2199,7 +2202,7 @@ class GetPdf(View):
             if infant > 0:
                 scheme = request.session.get('scheme', None)
                 milkPowderQuantity = request.session.get('milkPowderQuantity', None)
-                if milkPowderQuantity is not None:
+                if milkPowderQuantity:
                     milkPowderQuantity = int(milkPowderQuantity)
                 infantFood = request.session.get('infantFood', None)
                 print(infantFood)
@@ -2283,7 +2286,7 @@ class GetPdf(View):
             if toddler > 0:
                 toddlersscheme = request.session['toddlersscheme']
                 toddlersmilkPowderQuantity = request.session['toddlersmilkPowderQuantity']
-                if toddlersmilkPowderQuantity is not None:
+                if toddlersmilkPowderQuantity:
                     toddlersmilkPowderQuantity = int(toddlersmilkPowderQuantity)
                 toddlersFood = request.session['toddlersFood']
                 print(toddlersFood)
@@ -2374,7 +2377,7 @@ class GetPdf(View):
             if pregnant > 0:
                 pregnantscheme = request.session['pregnantscheme']
                 pregnantmilkPowderQuantity = request.session['pregnantmilkPowderQuantity']
-                if pregnantmilkPowderQuantity is not None:
+                if pregnantmilkPowderQuantity:
                     pregnantmilkPowderQuantity = int(pregnantmilkPowderQuantity)
                 pregnantFood = request.session['pregnantFood']
                 print(pregnantFood)
@@ -2425,7 +2428,7 @@ class GetPdf(View):
             if lactating > 0:
                 lactatingscheme = request.session['lactatingscheme']
                 lactatingmilkPowderQuantity = request.session['lactatingmilkPowderQuantity']
-                if lactatingmilkPowderQuantity is not None:
+                if lactatingmilkPowderQuantity:
                     lactatingmilkPowderQuantity = int(lactatingmilkPowderQuantity)
                 lactatingFood = request.session['lactatingFood']
                 print(lactatingFood)
@@ -2514,7 +2517,7 @@ class GetPdf(View):
             if preSchool > 0:
                 scheme = request.session['scheme']
                 milkPowderQuantity = request.session['milkPowderQuantity']
-                if milkPowderQuantity is not None:
+                if milkPowderQuantity:
                     milkPowderQuantity = int(milkPowderQuantity)
                 preSchoolFood = request.session['preSchoolFood']
                 print(preSchoolFood)
@@ -2591,7 +2594,7 @@ class GetPdf(View):
             if pregnantFAA > 0:
                 pregnantscheme = request.session['pregnantscheme']
                 pregnantmilkPowderQuantity = request.session['pregnantmilkPowderQuantity']
-                if pregnantmilkPowderQuantity is not None:
+                if pregnantmilkPowderQuantity :
                     pregnantmilkPowderQuantity = int(pregnantmilkPowderQuantity)
                 pregnantFood = request.session['pregnantFood']
                 print(pregnantFood)
@@ -2670,7 +2673,7 @@ class GetPdf(View):
             if lactatingFAA > 0:
                 lactatingscheme = request.session['lactatingscheme']
                 lactatingmilkPowderQuantity = request.session['lactatingmilkPowderQuantity']
-                if lactatingmilkPowderQuantity is not None:
+                if lactatingmilkPowderQuantity:
                     lactatingmilkPowderQuantity = int(lactatingmilkPowderQuantity)
                 lactatingFood = request.session['lactatingFood']
                 print(lactatingFood)
@@ -3089,7 +3092,7 @@ class VegResult(View):
             Others = request.session.get('Others', None)
             scheme = request.session.get('scheme', None)
             milkPowderQuantity = request.session.get('milkPowderQuantity', None)
-            if milkPowderQuantity is not None:
+            if milkPowderQuantity:
                 milkPowderQuantity = int(milkPowderQuantity)
             cereal_prop = []
             pulse_prop = []
@@ -3132,7 +3135,7 @@ def filter_vegetable_data(request):
         pregnantmilkpowder = request.session['pregnantmilkpowder']
         pregnantscheme = request.session['pregnantscheme']
         pregnantmilkPowderQuantity = request.session['pregnantmilkPowderQuantity']
-        if pregnantmilkPowderQuantity is not None:
+        if pregnantmilkPowderQuantity:
             pregnantmilkPowderQuantity = int(pregnantmilkPowderQuantity)
         cereal_prop_pregnant = []
         pulse_prop_pregnant = []
@@ -3229,7 +3232,7 @@ def filter_vegetable_data(request):
         lactatingmilkpowder = request.session['lactatingmilkpowder']
         lactatingscheme = request.session['lactatingscheme']
         lactatingmilkPowderQuantity = request.session['lactatingmilkPowderQuantity']
-        if lactatingmilkPowderQuantity is not None:
+        if lactatingmilkPowderQuantity:
             lactatingmilkPowderQuantity = int(lactatingmilkPowderQuantity)
         cereal_prop_lactating = []
         pulse_prop_lactating = []
@@ -3330,7 +3333,7 @@ def filter_vegetable_data(request):
         milkpowder = request.session['milkpowder']
         scheme = request.session['scheme']
         milkPowderQuantity = request.session['milkPowderQuantity']
-        if milkPowderQuantity is not None:
+        if milkPowderQuantity :
             milkPowderQuantity = int(milkPowderQuantity)
         cereal_prop = []
         pulse_prop = []
