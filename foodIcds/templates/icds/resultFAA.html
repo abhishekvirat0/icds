@@ -61,7 +61,7 @@
 
                     <div class="col col-12 col-md-12">
                         {% if module == 'FAA' %}
-                            <a style="font-family:Circular Std Bold;" href="{% url 'recipe' %}" class="mr-auto">Nutrition composition for recipe</a>
+                            <a data-intro="Click here to Add Additional Food to make recipe" style="font-family:Circular Std Bold;" href="{% url 'recipe' %}" class="mr-auto">Nutrition composition for recipe</a>
                         {% endif %}
                         <div class="d-flex align-items-center mt-2">
 
@@ -177,6 +177,12 @@
                             }
                     })
                 });
+        </script>
+        <script>
+            if(!localStorage.getItem("result")){
+                localStorage.setItem("result","true");
+                introJs().start();
+            }
         </script>
     </body>
     {% endblock %}

@@ -74,7 +74,7 @@
                 </div>
 
 
-                <div class="row justify-content-center p-5" style="border-radius: 15px; background-color: #fff; border: 2px solid #eaeaea; ">
+                <div data-intro="This is default cost and can be edited/updated any time"  class="row justify-content-center p-5" style="border-radius: 15px; background-color: #fff; border: 2px solid #eaeaea; ">
 
                     <form style="display: contents;" action="{% url 'FoodCost' %}" method="post" id="frmTest">
                         {% csrf_token %}
@@ -266,6 +266,11 @@
                   $('.navbar')[$(window).scrollTop() >= 100 ? 'addClass' : 'removeClass']('navbar-hide');
              });
         </script>
-
+        <script>
+            if(!localStorage.getItem("foodCostAll")){
+                localStorage.setItem("foodCostAll","true");
+                introJs().start();
+            }
+        </script>
     </body>
     {% endblock %}
