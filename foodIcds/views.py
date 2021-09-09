@@ -199,8 +199,8 @@ def LPPWOVARHCM(Age_group, Food, input_cost, scheme, quantity, mealType):
 
     model += lpSum(A.iloc[2,] * allocation) <= lpSum(A.iloc[0,] * allocation) * 0.40 / 9
     model += lpSum(A.iloc[2,] * allocation) >= lpSum(A.iloc[0,] * allocation) * 0.35 / 9
-    model += lpSum(A.iloc[1,] * allocation) <= lpSum(A.iloc[0,] * allocation) * 0.16 / 4
-    model += lpSum(A.iloc[1,] * allocation) >= lpSum(A.iloc[0,] * allocation) * 0.09 / 4
+    # model += lpSum(A.iloc[1,] * allocation) <= lpSum(A.iloc[0,] * allocation) * 0.16 / 4
+    # model += lpSum(A.iloc[1,] * allocation) >= lpSum(A.iloc[0,] * allocation) * 0.09 / 4
     if scheme == 'icds' and "Milk powder" in tuple(Food):
         if Age_group == "child(4-6)yrs":
             model += lpSum(allocation * cost_matrix) <= 8 - optiCost
@@ -589,8 +589,8 @@ def LPPWOVAR_LESSKCAL(Age_group, Food, input_cost, scheme, quantity):
 
     model += lpSum(A.iloc[2,] * allocation) <= lpSum(A.iloc[0,] * allocation) * 0.4 / 9
     model += lpSum(A.iloc[2,] * allocation) >= lpSum(A.iloc[0,] * allocation) * 0.35 / 9
-    model += lpSum(A.iloc[1,] * allocation) <= lpSum(A.iloc[0,] * allocation) * 0.16 / 4
-    model += lpSum(A.iloc[1,] * allocation) >= lpSum(A.iloc[0,] * allocation) * 0.09 / 4
+    # model += lpSum(A.iloc[1,] * allocation) <= lpSum(A.iloc[0,] * allocation) * 0.16 / 4
+    # model += lpSum(A.iloc[1,] * allocation) >= lpSum(A.iloc[0,] * allocation) * 0.09 / 4
     Cereals = data[data["Food_Group"] == "Cereals"]
     Cereal = Cereals["Food_Name"]
     Cereal.index = range(len(Cereal))
@@ -811,8 +811,8 @@ def LPPWOVAR(Age_group, Food, input_cost, scheme, quantity):
     model += lpSum(A.iloc[2,] * allocation) <= lpSum(A.iloc[0,] * allocation) * 0.4 / 9
     model += lpSum(A.iloc[2,] * allocation) >= lpSum(A.iloc[0,] * allocation) * 0.35 / 9
 
-    model += lpSum(A.iloc[1,] * allocation) <= lpSum(A.iloc[0,] * allocation) * 0.16 / 4
-    model += lpSum(A.iloc[1,] * allocation) >= lpSum(A.iloc[0,] * allocation) * 0.09 / 4
+    # model += lpSum(A.iloc[1,] * allocation) <= lpSum(A.iloc[0,] * allocation) * 0.16 / 4
+    # model += lpSum(A.iloc[1,] * allocation) >= lpSum(A.iloc[0,] * allocation) * 0.09 / 4
     # cereal
     if (Age_group == "pregnant") or (Age_group == "lactation"):
         Cereals = data[data["Food_Group"] == "Cereals"]
@@ -2749,7 +2749,7 @@ class GetPdf(View):
 
             params = {
                 'module': 'Hot Cooked Meal',
-                'today': datetime.now(), 'mealType': mealType,
+                'today': datetime.now(),
                 'preSchool': preSchool, 'pregnantFAA': pregnantFAA, 'lactatingFAA': lactatingFAA,
                 'preg_data': preg_data,
                 'preg_total': preg_total, 'preg_perc': preg_perc, 'preg_fat_perc': preg_fat_perc,
@@ -3215,7 +3215,7 @@ def filter_vegetable_data(request):
             p = render_to_string('icds/resultVegPregnant.html',
                                  {
                                      'pregnantCereals': pregnantCereals, 'pregnantPulses': pregnantPulses,
-                                     'pregnantOthers': pregnantOthers, 'cereal_prop_pregnant': cereal_prop_pregnant,
+                                     'pregnantOthers': pregnantOthers, 'cereal_prop_pregnant': cereal_prop_pregnant, 'pregnantmilkpowder': pregnantmilkpowder,
                                      'pulse_prop_pregnant': pulse_prop_pregnant,
                                      'other_prop_pregnant': other_prop_pregnant,
                                      'milk_prop_pregnant': milk_prop_pregnant,
@@ -3315,7 +3315,7 @@ def filter_vegetable_data(request):
             lw = render_to_string('icds/resultVegLactating.html',
                                   {
                                       'lactatingCereals': lactatingCereals, 'lactatingPulses': lactatingPulses,
-                                      'lactatingOthers': lactatingOthers,
+                                      'lactatingOthers': lactatingOthers, 'lactatingmilkpowder':lactatingmilkpowder,
                                       'cereal_prop_lactating': cereal_prop_lactating,
                                       'pulse_prop_lactating': pulse_prop_lactating,
                                       'other_prop_lactating': other_prop_lactating,

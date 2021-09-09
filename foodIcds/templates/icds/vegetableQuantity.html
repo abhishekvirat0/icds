@@ -68,12 +68,12 @@
                 </div>
 
 
-                <div class="row justify-content-center p-5" style="border-radius: 15px; background-color: #fff; border: 2px solid #eaeaea; ">
+                <div class="row justify-content-center p-5" style="border-radius: 15px; background-color: #fff; border: 2px solid #eaeaea; " data-intro="Add Quantity of selected food">
 
                     <form style="display: contents;" action="{% url 'vegQuantity' %}" method="post" id="frmTest">
                         {% csrf_token %}
 
-                    <div data-aos="fade-up" class="col col-12 col-md-12 mt-4">
+                    <div data-aos="fade-up" class="col col-12 col-md-12 mt-4" >
 
                         {% if preSchool > 0 %}
                             <div class="header d-flex">
@@ -468,6 +468,8 @@
                   $('.navbar')[$(window).scrollTop() >= 100 ? 'addClass' : 'removeClass']('navbar-hide');
              });
         </script>
-
+        <script>
+            introJs().start();
+        </script>
     </body>
     {% endblock %}

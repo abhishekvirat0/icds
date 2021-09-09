@@ -9,7 +9,7 @@
                         {% if opStatus == 'Infeasible' %}
                                     <p style="font-family: Circular Std Medium;font-weight: 500; font-size: 16px;">Do not Worry.</p>
                                     <p style="font-family: Circular Std Book;font-weight: 500; font-size: 16px;"> This happened because the food combinations selected by you may not be sufficient to meet all nutrient requirements.</p>
-                                    <p style="font-family: Circular Std Book;font-weight: 500; font-size: 16px;"><span style="color:#FFC000;">We suggest:</span> Try different combinations or select more food items.</p>
+                                    <p class="mt-1" style="font-family: Circular Std Book;font-weight: 500; font-size: 18px;"><span style="color:#089e2a;font-size: 27px;">We suggest:</span> Try including more Cereals and Millet's or More Pulses and Oil.</p>
                         {% else%}
 
                         <div class="d-flex align-items-center">
@@ -135,9 +135,9 @@
                         <p class="opCost mt-3">
                             OPTIMIZED-COST : ₹{{final_optimized_cost}}
                         </p>
-                        <p class="opCost mt-3">
-                            STATUS : {{opStatus}}
-                        </p>
+<!--                        <p class="opCost mt-3">-->
+<!--                            STATUS : {{opStatus}}-->
+<!--                        </p>-->
             {% endif %}
 
  <!--   for 250kcal calories-->
@@ -147,7 +147,7 @@
             {% if opStatus_lessKcal == 'Infeasible' %}
                         <p style="font-family: Circular Std Medium;font-weight: 500; font-size: 16px;">Do not Worry.</p>
                         <p style="font-family: Circular Std Book;font-weight: 500; font-size: 16px;"> This happened because the food combinations selected by you may not be sufficient to meet all nutrient requirements.</p>
-                        <p style="font-family: Circular Std Book;font-weight: 500; font-size: 16px;"><span style="color:#FFC000;">We suggest:</span> Try different combinations or select more food items.</p>
+                        <p class="mt-1" style="font-family: Circular Std Book;font-weight: 500; font-size: 18px;"><span style="color:#089e2a;font-size: 27px;">We suggest:</span> Try including more Cereals and Millet's or More Pulses and Oil.</p>
 
             {% else%}
                         <div class="d-flex align-items-center">
@@ -274,9 +274,9 @@
                                  <p class="opCost mt-3">
                                     OPTIMIZED-COST : ₹{{final_optimized_cost_lessKcal}}
                                  </p>
-                                 <p class="opCost mt-3">
-                                    STATUS : {{opStatus_lessKcal}}
-                                </p>
+<!--                                 <p class="opCost mt-3">-->
+<!--                                    STATUS : {{opStatus_lessKcal}}-->
+<!--                                </p>-->
                             </div>
 
                         </div>

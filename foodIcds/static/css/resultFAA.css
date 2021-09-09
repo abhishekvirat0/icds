@@ -207,10 +207,11 @@ input-group:focus{
     font-family: Circular Std Bold, 'Montserrat', sans-serif;
     font-style: normal;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 22px;
     line-height: 20px;
     display: flex;
     align-items: center;
+    color: #FF9505;
     letter-spacing: -0.02em;
 }
 

@@ -60,25 +60,27 @@
                             </div>
                             {% endfor %}
                         </div>
+
                         <!-- Milk Powder Here  -->
-                        <!-- Milk Powder Here  -->
-                        <div class="d-flex align-items-center mt-2">
-                            <span class="cost-heading">MILK POWDER</span>
-                        </div>
-                        <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">
-                        <div class="form-row">
-                            <div class="form-group col-md-3" >
-                                <div class="input-group mb-3">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text">Milk Powder</span>
-                                    </div>
-                                    <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" value="{{milk_prop_lactating.0}}" readonly >
-                                    <div class="input-group-append">
-                                        <span class="input-group-text">gm</span>
+                        {% if lactatingmilkpowder %}
+                            <div class="d-flex align-items-center mt-2">
+                                <span class="cost-heading">MILK POWDER</span>
+                            </div>
+                            <hr style="margin-top: 5px; border: 1px solid #e0e0e0;">
+                            <div class="form-row">
+                                <div class="form-group col-md-3" >
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">Milk Powder</span>
+                                        </div>
+                                        <input onkeypress="return isNumberKey(event)" type="text" class="form-control" aria-label="" value="{{milk_prop_lactating.0}}" readonly >
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">gm</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        {% endif %}
 
                         {% if lactating_Qnt_list %}
                             <!-- Others Here  -->
@@ -138,10 +140,12 @@
                                 <p class="card-title">Folate (μg)</p>
                                 <p class="card-subHeading">{{final_q.Folate|floatformat:2}}</p>
                             </div>
+                            <div>
+                                <p class="opCost mt-3" data-intro="Only the nutrition value is considered for the Additional Food and the cost is not considered here">
+                                    Optimized Cost : ₹{{final_optimized_cost}}
+                                </p>
+                            </div>
                         </div>
-                        <p class="opCost mt-3">
-                            OPTIMIZED-COST : ₹{{final_optimized_cost}}
-                        </p>
-                        <p class="opCost mt-3">
-                            STATUS : {{opStatus}}
-                        </p>
+<!--                        <p class="opCost mt-3">-->
+<!--                            STATUS : {{opStatus}}-->
+<!--                        </p>-->
