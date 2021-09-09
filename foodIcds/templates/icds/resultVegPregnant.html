@@ -142,7 +142,7 @@
                                 <p class="card-subHeading">{{final_q.Folate|floatformat:2}}</p>
                             </div>
                             <div>
-                                <p class="opCost mt-3" data-intro="Only the nutrition value is considered for the Additional Food and the cost is not considered here">
+                                <p class="opCost mt-3" data-hintPosition-="bottom-left">
                                     Optimized Cost : ₹{{final_optimized_cost}}
                                 </p>
                             </div>
@@ -151,6 +151,14 @@
 <!--                        <p class="opCost mt-3">-->
 <!--                            STATUS : {{opStatus}}-->
 <!--                        </p>-->
+<!--                            <p class="opCost mt-3">-->
+<!--                                    Optimized Cost : ₹{{final_optimized_cost}}-->
+<!--                            </p>-->
 <script>
     introJs().start();
+    introJs().setOptions({
+      steps: [{
+        intro: 'Only the nutrient composition is considered for the Additional Foods and the cost are not considered'
+        }]
+}).start();
 </script>
