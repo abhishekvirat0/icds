@@ -86,5 +86,40 @@
         });
 
     </script>
+      <!-- Modal -->
+        <!-- Bootstrap Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+        <!-- Modal content -->
+        <div class="modal-content" style="background-color:#ffe4e4">
+        <!-- Modal header -->
+        <div class="modal-header" style="border: none;">
+            <a class="close" data-dismiss="modal">×</a>
+        </div>
+        <!-- Modal body -->
+        <div class="modal-body" style="border: none; margin-top: -20px;">
+            <div class="text-center"><img class="mx-auto text-center mb-3" src="/static/images/logo.svg" width="100px" height="100px"></div>
+            <p class="card-sub-heading text-center mb-3">Welcome to SNO</p>
+            <p class="individual text-center mb-3">“Confused about what foods to buy… and how much to buy… to feed your beneficiaries at minimal cost? SNO (Supplementary Nutrition Optimization) Food is what you need - a tool to help you make food choices in a confusing world!”</p>
+            <p class="individual text-center"  style="color: black;">The development of this tool supported by funding received by St. John’s Research Institute from BIRAC Department of Biotechnology, Govt of India.</p>
+
+        </div>
+
+        </div> <!-- // .modal-content -->
+        </div> <!-- // .modal-dialog -->
+        </div> <!-- // #myModal -->
+
     </body>
+    <script>
+        jQuery(document).ready(function(){
+          if (sessionStorage.getItem("story") !== 'true') {
+            sessionStorage.setItem("story", "true");
+            $("#myModal").modal();
+          }
+
+          $('#reset-session').on('click',function(){
+            sessionStorage.setItem('story','');
+          });
+        });
+    </script>
     {% endblock %}
